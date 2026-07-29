@@ -8,13 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-tiger-gold: #faae33;
-            --color-ember-rust: #823513;
-            --color-saffron-glow: #9f531b;
-            --color-dark-spice: #402011;
-            --color-charred-clove: #281006;
-            --color-cardamom-brown: #6b2e12;
-            --color-chili-red: #d1255c;
+            --color-tiger-gold: #FFD600;
+            --color-ember-rust: #080808;
+            --color-saffron-glow: #1a1a1a;
+            --color-dark-spice: #121212;
+            --color-charred-clove: #040404;
+            --color-cardamom-brown: #2A2A2A;
+            --color-chili-red: #FF334B;
+            --color-white: #FFFFFF;
             
             --font-salmond: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
             
@@ -35,7 +36,7 @@
         body {
             font-family: var(--font-salmond);
             background-color: var(--color-ember-rust);
-            color: var(--color-tiger-gold);
+            color: var(--color-white);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -47,27 +48,31 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(130, 53, 19, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px dotted var(--color-tiger-gold);
+            background: rgba(8, 8, 8, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px dotted rgba(255, 214, 0, 0.3);
         }
 
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
-            padding: 16px 32px;
+            padding: 18px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 900;
-            color: var(--color-tiger-gold);
+            color: var(--color-white);
             text-decoration: none;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--color-tiger-gold);
         }
 
         .nav-links {
@@ -95,28 +100,29 @@
 
         .btn-ghost:hover {
             background: var(--color-tiger-gold);
-            color: var(--color-charred-clove);
+            color: var(--color-ember-rust);
         }
 
         .btn-primary {
             font-family: var(--font-salmond);
-            font-weight: 500;
+            font-weight: 700;
             font-size: 13px;
             letter-spacing: 0.01em;
-            color: var(--color-charred-clove);
+            color: var(--color-ember-rust);
             background: var(--color-tiger-gold);
             border: 1px solid var(--color-tiger-gold);
             border-radius: var(--radius-full);
             padding: 10px 20px;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: none;
+            box-shadow: 0 0 20px rgba(255, 214, 0, 0.3);
             display: inline-block;
-            transition: opacity 0.2s;
+            transition: transform 0.2s, background 0.2s;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
+            background: #e6c100;
+            transform: scale(1.04);
         }
 
         /* SECTIONS & LAYOUT */
@@ -124,7 +130,7 @@
             padding: 100px 32px;
             max-width: 1440px;
             margin: 0 auto;
-            border-bottom: 1px dotted var(--color-tiger-gold);
+            border-bottom: 1px dotted rgba(255, 214, 0, 0.3);
         }
 
         /* HERO SECTION */
@@ -135,40 +141,137 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 80px;
-            border-bottom: 1px dotted var(--color-tiger-gold);
+            border-bottom: 1px dotted rgba(255, 214, 0, 0.3);
             max-width: 1440px;
             margin: 0 auto;
             padding-left: 32px;
             padding-right: 32px;
+            position: relative;
+            background: radial-gradient(circle at center, #141414 0%, var(--color-ember-rust) 100%);
         }
 
         .eyebrow {
             font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.01em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             color: var(--color-tiger-gold);
             margin-bottom: 16px;
             text-transform: uppercase;
+            background: rgba(255, 214, 0, 0.08);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(255, 214, 0, 0.2);
         }
 
         .hero-display {
-            font-size: clamp(60px, 12vw, 195px);
-            font-weight: 700;
-            line-height: 0.8;
+            font-size: clamp(50px, 11vw, 170px);
+            font-weight: 900;
+            line-height: 0.82;
             letter-spacing: -0.02em;
-            color: var(--color-tiger-gold);
+            color: var(--color-white);
             text-transform: uppercase;
             margin-bottom: 32px;
         }
 
+        .hero-display span {
+            color: var(--color-tiger-gold);
+            text-shadow: 0 0 40px rgba(255, 214, 0, 0.4);
+        }
+
         .hero-sub {
             font-size: 18px;
-            font-weight: 500;
-            line-height: 1.2;
-            color: var(--color-tiger-gold);
-            max-width: 600px;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #A0A0A0;
+            max-width: 650px;
             margin-bottom: 40px;
-            opacity: 0.9;
+        }
+
+        /* INTERACTIVE EXTRACTOR DEMO */
+        .demo-section {
+            padding: 100px 32px;
+            max-width: 1440px;
+            margin: 0 auto;
+            border-bottom: 1px dotted rgba(255, 214, 0, 0.3);
+        }
+
+        .interactive-screen {
+            background: var(--color-dark-spice);
+            border: 1px solid var(--color-cardamom-brown);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+
+        .cleaning-stage {
+            height: 400px;
+            background: radial-gradient(circle, #1a1a1a 0%, #080808 100%);
+            border-radius: 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stage-dirty {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 900;
+            color: var(--color-chili-red);
+            position: absolute;
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+            text-shadow: 0 0 25px rgba(255, 51, 75, 0.4);
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .stage-clean {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 900;
+            color: var(--color-tiger-gold);
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-shadow: 0 0 30px rgba(255, 214, 0, 0.4);
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .extractor-nozzle {
+            position: absolute;
+            width: 150px;
+            height: 75px;
+            background: linear-gradient(135deg, #222, #111);
+            border: 4px solid var(--color-tiger-gold);
+            border-radius: 38px;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 45px rgba(255, 214, 0, 0.6);
+            animation: nozzleMove 5s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .extractor-nozzle::after {
+            content: '';
+            width: 95px;
+            height: 12px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 6px;
+        }
+
+        @keyframes nozzleMove {
+            0% { left: 5%; }
+            50% { left: 72%; }
+            100% { left: 5%; }
         }
 
         /* GRID / CONTENT SECTIONS */
@@ -180,20 +283,23 @@
         }
 
         .section-heading {
-            font-size: clamp(40px, 7vw, 101px);
-            font-weight: 700;
+            font-size: clamp(35px, 6vw, 85px);
+            font-weight: 900;
             line-height: 0.9;
-            letter-spacing: -0.016em;
+            letter-spacing: -0.01em;
             text-transform: uppercase;
             margin-bottom: 24px;
         }
 
+        .section-heading span {
+            color: var(--color-tiger-gold);
+        }
+
         .section-desc {
             font-size: 18px;
-            font-weight: 500;
-            line-height: 1.2;
-            color: var(--color-tiger-gold);
-            opacity: 0.85;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #A0A0A0;
             margin-bottom: 32px;
         }
 
@@ -208,43 +314,47 @@
         .surface-card {
             background-color: var(--color-dark-spice);
             border-radius: var(--radius-cards);
-            padding: 24px;
+            padding: 30px;
             border: 1px solid var(--color-cardamom-brown);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .surface-card:hover {
+            border-color: var(--color-tiger-gold);
+            transform: translateY(-5px);
         }
 
         .card-title {
-            font-size: 29px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             line-height: 1.1;
-            letter-spacing: -0.005px;
             margin-bottom: 12px;
             text-transform: uppercase;
         }
 
         .card-price {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 900;
             color: var(--color-tiger-gold);
             margin-top: 16px;
         }
 
         .card-text {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 400;
-            color: var(--color-tiger-gold);
-            opacity: 0.8;
-            line-height: 1.3;
+            color: #A0A0A0;
+            line-height: 1.4;
         }
 
         /* BADGES */
         .badge {
             display: inline-block;
             background: var(--color-tiger-gold);
-            color: var(--color-charred-clove);
+            color: var(--color-ember-rust);
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
             padding: 6px 14px;
             border-radius: var(--radius-full);
             margin-bottom: 16px;
@@ -252,11 +362,11 @@
 
         .badge-heat {
             background: var(--color-chili-red);
-            color: #ffffff;
+            color: var(--color-white);
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 700;
             text-transform: uppercase;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: var(--radius-full);
         }
 
@@ -277,14 +387,13 @@
             font-family: var(--font-salmond);
             font-size: 13px;
             font-weight: 500;
-            color: var(--color-tiger-gold);
+            color: var(--color-white);
             outline: none;
             transition: border-color 0.2s;
         }
 
         .pill-input::placeholder {
-            color: var(--color-tiger-gold);
-            opacity: 0.6;
+            color: #707070;
         }
 
         .pill-input:focus {
@@ -293,14 +402,14 @@
 
         /* FOOTER */
         footer {
-            padding: 60px 32px;
+            padding: 80px 32px;
             text-align: center;
             background: var(--color-charred-clove);
         }
 
         .footer-text {
-            font-size: 13px;
-            opacity: 0.7;
+            font-size: 14px;
+            color: #707070;
             letter-spacing: 0.01em;
         }
 
@@ -320,10 +429,11 @@
     <!-- NAVIGATION -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">CLEANZONE.PL</a>
+            <a href="#" class="logo">CLEANZONE<span>.</span>PL</a>
             <ul class="nav-links">
                 <li><a href="#uslugi" class="btn-ghost">USŁUGI</a></li>
                 <li><a href="#cennik" class="btn-ghost">CENNIK</a></li>
+                <li><a href="#technologia" class="btn-ghost">TECHNOLOGIA</a></li>
                 <li><a href="#kontakt" class="btn-ghost">KONTAKT</a></li>
             </ul>
             <a href="tel:730135133" class="btn-primary">📞 730 135 133</a>
@@ -332,30 +442,48 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <div class="eyebrow">Gdańsk i okolice • Dojeżdżamy do klienta</div>
-        <h1 class="hero-display">CZYSTE MEBLE</h1>
-        <p class="hero-sub">Profesjonalna chemia, potężny sprzęt i bezkompromisowa skuteczność. Przywracamy drugie życie Twoim kanapom i narożnikom.</p>
-        <a href="tel:730135133" class="btn-primary">ZAMÓW CZYSCZENIE TERAZ</a>
+        <div class="eyebrow">Gdańsk i okolice • Dojazd do klienta</div>
+        <h1 class="hero-display">CZYSTE <span>MEBLE</span></h1>
+        <p class="hero-sub">Maksymalna moc ssania, profesjonalna chemia i bezkompromisowa skuteczność. Przywracamy drugie życie Twoim kanapom, narożnikom i fotelom w Gdańsku.</p>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <a href="tel:730135133" class="btn-primary" style="padding: 16px 32px; font-size: 15px;">ZAMÓW CZYSZCZENIE TERAZ</a>
+            <a href="#cennik" class="btn-ghost" style="padding: 16px 32px; font-size: 15px; display: inline-flex; align-items: center;">SPRAWDŻ CENNIK</a>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE EXTRACTOR DEMO -->
+    <section class="demo-section" id="technologia">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <div class="badge">Innowacyjna technologia</div>
+            <h2 class="section-heading" style="font-size: clamp(30px, 5vw, 60px);">Jak działa głęboka ekstrakcja</h2>
+            <p class="section-desc" style="max-width: 700px; margin: 0 auto;">Zobacz, jak nasz profesjonalny sprzęt wyciąga brud, roztocza i plamy z najgłębszych warstw tapicerki.</p>
+        </div>
+        <div class="interactive-screen">
+            <div class="cleaning-stage" id="cleaningDemo">
+                <div class="stage-dirty" id="dirtyText">⚠️ GŁĘBOKI BRUD, PLAMY I ROZTOCZA</div>
+                <div class="stage-clean" id="cleanText">✨ PERFEKCYJNA CZYSTOŚĆ I ŚWIEŻOŚĆ</div>
+                <div class="extractor-nozzle"></div>
+            </div>
+        </div>
     </section>
 
     <!-- SERVICES SECTION -->
     <section id="uslugi">
-        <div class="badge">OFERTA SPECJALNA</div>
+        <div class="badge">Oferta główna</div>
         <div class="grid-split">
             <div>
-                <h2 class="section-heading">Głęboka ekstrakcja brudu</h2>
-                <p class="section-desc">Usuwamy najtrudniejsze plamy, roztocza, sierść i zapachy z najgłębszych warstw tapicerki. Pracujemy na certyfikowanych środkach bezpiecznych dla dzieci i zwierząt.</p>
+                <h2 class="section-heading">Profesjonalne czyszczenie tapicerki w <span>Gdańsku</span></h2>
+                <p class="section-desc">Usuwamy najtrudniejsze plamy, sierść i zapachy. Pracujemy na certyfikowanych środkach, które są w 100% bezpieczne dla dzieci, alergików i zwierząt domowych.</p>
                 <div class="input-group">
                     <input type="text" class="pill-input" placeholder="Wpisz swój numer telefonu...">
-                    <a href="tel:730135133" class="btn-primary">ODDZWANIAMY</a>
+                    <a href="tel:730135133" class="btn-primary" style="display: flex; align-items: center;">ODDZWANIAMY</a>
                 </div>
             </div>
             <div>
-                <!-- Product/Service visual block placeholder matching poster style -->
-                <div style="background: var(--color-dark-spice); border: 1px solid var(--color-cardamom-brown); border-radius: var(--radius-cards); padding: 40px; text-align: center;">
+                <div style="background: var(--color-dark-spice); border: 1px solid var(--color-cardamom-brown); border-radius: var(--radius-cards); padding: 40px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
                     <span style="font-size: 64px;">🛋️</span>
-                    <h3 class="card-title" style="margin-top: 16px;">100% Gwarancji Czystości</h3>
-                    <p class="card-text" style="margin-top: 8px;">Efekt widoczny od razu po zakończeniu pracy ekstraktorem.</p>
+                    <h3 class="card-title" style="margin-top: 16px; color: var(--color-white);">Gwarancja efektu</h3>
+                    <p class="card-text" style="margin-top: 8px;">Widoczna różnica od razu po wypraniu. Szybki czas schnięcia materiału.</p>
                 </div>
             </div>
         </div>
@@ -368,12 +496,12 @@
             </div>
             <div class="surface-card">
                 <h3 class="card-title">Narożnik Salonowy</h3>
-                <p class="card-text">Głębokie czyszczenie modułów oraz funkcji spania.</p>
+                <p class="card-text">Głębokie czyszczenie modułów oraz funkcji spania w systemie L / U.</p>
                 <div class="card-price">od 220 zł</div>
             </div>
             <div class="surface-card">
                 <h3 class="card-title">Fotel / Krzesło</h3>
-                <p class="card-text">Usuwanie plam ze śladów codziennego użytkowania.</p>
+                <p class="card-text">Usuwanie plam ze śladów codziennego użytkowania tapicerki.</p>
                 <div class="card-price">od 60 zł</div>
             </div>
         </div>
@@ -382,32 +510,32 @@
     <!-- PRICING / CENNIK -->
     <section id="cennik">
         <div class="badge">Przejrzyste zasady</div>
-        <h2 class="section-heading">Cennik usług</h2>
+        <h2 class="section-heading">Aktualny <span>cennik</span></h2>
         <p class="section-desc">Żadnych ukrytych kosztów. Płacisz dokładnie tyle, ile ustalimy przed rozpoczęciem pracy.</p>
 
-        <div class="cards-grid" style="grid-template-columns: 1fr; max-width: 800px;">
-            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="cards-grid" style="grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;">
+            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 class="card-title" style="font-size: 20px; margin-bottom: 4px;">Krzesło / Taboret</h3>
                     <p class="card-text">Pranie powierzchniowe i ekstrakcyjne</p>
                 </div>
                 <div class="card-price" style="font-size: 22px;">40 zł</div>
             </div>
-            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 class="card-title" style="font-size: 20px; margin-bottom: 4px;">Kanapa 2-osobowa</h3>
                     <p class="card-text">Pełne odświeżenie i usuwanie plam</p>
                 </div>
                 <div class="card-price" style="font-size: 22px;">150 zł</div>
             </div>
-            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 class="card-title" style="font-size: 20px; margin-bottom: 4px;">Narożnik duży</h3>
                     <p class="card-text">Czyszczenie całego układu w kształcie L lub U</p>
                 </div>
                 <div class="card-price" style="font-size: 22px;">od 350 zł</div>
             </div>
-            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="surface-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 class="card-title" style="font-size: 20px; margin-bottom: 4px;">Neutralizacja moczu / zapachów <span class="badge-heat">HOT</span></h3>
                     <p class="card-text">Specjalistyczna chemia enzymatyczna</p>
@@ -419,13 +547,32 @@
 
     <!-- FOOTER -->
     <footer id="kontakt">
-        <h2 class="section-heading" style="font-size: 36px; margin-bottom: 16px;">Czas odświeżyć Twoje meble?</h2>
-        <p class="footer-text" style="margin-bottom: 24px;">Zadzwoń do nas i umów dogodny termin w Gdańsku i Trójmieście.</p>
-        <a href="tel:730135133" class="btn-primary" style="font-size: 16px; padding: 14px 28px;">📞 ZADZWOŃ: 730 135 133</a>
+        <h2 class="section-heading" style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px;">Czas odświeżyć Twoje <span>meble?</span></h2>
+        <p class="footer-text" style="margin-bottom: 24px; color: #A0A0A0;">Zadzwoń do nas i umów dogodny termin w Gdańsku i Trójmieście.</p>
+        <a href="tel:730135133" class="btn-primary" style="font-size: 16px; padding: 16px 36px;">📞 ZADZWOŃ: 730 135 133</a>
         <div style="margin-top: 40px;" class="footer-text">
             &copy; 2026 Cleanzone Gdańsk. Wszelkie prawa zastrzeżone.
         </div>
     </footer>
 
+    <script>
+        // Анимация демонстрации экстрактора при прокрутке
+        window.addEventListener('scroll', function() {
+            const demo = document.getElementById('cleaningDemo');
+            const dirty = document.getElementById('dirtyText');
+            const clean = document.getElementById('cleanText');
+            
+            if(!demo) return;
+            const rect = demo.getBoundingClientRect();
+            if(rect.top < window.innerHeight && rect.bottom >= 0) {
+                setTimeout(() => {
+                    dirty.style.opacity = '0.08';
+                    dirty.style.filter = 'blur(6px)';
+                    clean.style.opacity = '1';
+                    clean.style.transform = 'scale(1)';
+                }, 500);
+            }
+        });
+    </script>
 </body>
 </html>
