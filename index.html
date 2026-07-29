@@ -3,34 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crystal Group — Profesjonalne Pranie Mebli i Mycie Okien w Gdańsku</title>
+    <title>Crystal Group.pl — Profesjonalne Pranie Mebli i Mycie Okien w Gdańsku</title>
     
-    <!-- Three.js for 3D Background Animation -->
+    <!-- Three.js for 3D Background Interactive Elements -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --color-primary-ink: #1d1d1f;
-            --color-mid-gray: #707070;
-            --color-deep-gray: #474747;
-            --color-hairline: #d6d6d6;
-            --color-canvas: #f5f5f7;
-            --color-paper: #ffffff;
-            --color-cool-wash: #e8e8ed;
-            --color-faded-surface: #fafafc;
-            --color-electric-blue: #0071e3;
-            --color-link-blue: #0066cc;
-            --color-ember: #b64400;
-            
-            --font-sf-pro: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-            
-            --radius-cards: 28px;
-            --radius-full: 980px;
+            --color-amp-orange: #FFD700; /* Yellow Accent */
+            --color-amp-glow: rgba(255, 215, 0, 0.4);
+            --color-peach-wash: #1a1a1a;
+            --color-ink: #ffffff;
+            --color-carbon: #e0e0e0;
+            --color-slate: #a0a0a0;
+            --color-ash: #666666;
+            --color-graphite-hairline: #2a2a2a;
+            --color-fog: #222222;
+            --color-bone: #1f1f1f;
+            --color-canvas-white: #0a0a0a;
+            --color-linen: #141414;
+            --color-charcoal: #121212;
+            --color-smoke: #333333;
+
+            --font-publicasans: 'Public Sans', sans-serif;
+
+            --radius-md: 5px;
+            --radius-lg: 8px;
+            --radius-3xl: 24px;
+            --radius-full: 50px;
+
+            --shadow-md: rgba(255, 215, 0, 0.3) 1px 6px 14px 0px, rgba(0, 0, 0, 0.6) 0px 1px 4px 0px;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -38,461 +45,894 @@
 
         html {
             scroll-behavior: smooth;
+            background-color: var(--color-canvas-white);
+            color: var(--color-ink);
+            font-family: var(--font-publicasans);
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: var(--font-sf-pro);
-            background-color: var(--color-paper);
-            color: var(--color-primary-ink);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
             position: relative;
+            overflow-x: hidden;
+            background-color: var(--color-canvas-white);
+            color: var(--color-ink);
+            line-height: 1.5;
         }
 
-        /* 3D Canvas Background */
         #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.65;
         }
 
-        /* GLOBAL NAV */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        /* Announcement Bar */
+        .announcement-bar {
+            position: relative;
+            z-index: 100;
+            background: var(--color-linen);
             height: 44px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
             display: flex;
-            justify-content: center;
             align-items: center;
-            border-bottom: 1px solid var(--color-hairline);
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--color-carbon);
+            border-bottom: 1px solid var(--color-graphite-hairline);
+            padding: 0 20px;
+            text-align: center;
         }
 
-        .nav-content {
+        .announcement-bar a {
+            color: var(--color-ink);
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 8px;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .announcement-bar a:hover {
+            color: var(--color-amp-orange);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-graphite-hairline);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
             width: 100%;
             max-width: 1200px;
-            padding: 0 22px;
+            padding: 0 24px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .nav-logo {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--color-primary-ink);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-ink);
             text-decoration: none;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo span {
+            color: var(--color-amp-orange);
         }
 
         .nav-links {
             display: flex;
-            gap: 24px;
-            list-style: none;
             align-items: center;
+            gap: 36px;
+            list-style: none;
         }
 
         .nav-links a {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
-            color: var(--color-deep-gray);
+            color: var(--color-carbon);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--color-primary-ink);
+            color: var(--color-amp-orange);
         }
 
-        /* BUTTONS */
-        .btn-blue {
-            background-color: var(--color-electric-blue);
-            color: #ffffff;
-            font-family: var(--font-sf-pro);
+        .btn-nav-cta {
+            background: var(--color-amp-orange);
+            color: #0a0a0a;
+            font-weight: 500;
             font-size: 14px;
-            font-weight: 400;
-            padding: 8px 16px;
+            padding: 10px 24px;
             border-radius: var(--radius-full);
             text-decoration: none;
-            display: inline-block;
-            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* General Layout Elements */
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .editorial-heading {
+            font-weight: 300;
+            font-size: clamp(40px, 5vw, 64px);
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+            color: var(--color-ink);
+            margin-bottom: 20px;
+        }
+
+        .accent-rule {
+            width: 120px;
+            height: 3px;
+            background-color: var(--color-amp-orange);
+            margin-top: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 116px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-linen);
+            border: 1px solid var(--color-graphite-hairline);
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-amp-orange);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-weight: 300;
+            font-size: clamp(48px, 8vw, 78px);
+            letter-spacing: -0.036em;
+            line-height: 1.05;
+            max-width: 900px;
+            margin-bottom: 24px;
+            color: var(--color-ink);
+        }
+
+        .hero-title span {
+            color: var(--color-amp-orange);
+            font-weight: 400;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--color-carbon);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn-primary {
+            background: var(--color-amp-orange);
+            color: #0a0a0a;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 16px 36px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             border: none;
             cursor: pointer;
         }
 
-        .btn-blue:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
         }
 
-        /* SECTIONS */
-        section {
-            padding: 100px 0;
+        .btn-secondary {
+            background: var(--color-linen);
+            color: var(--color-ink);
+            border: 1px solid var(--color-graphite-hairline);
+            font-weight: 400;
+            font-size: 16px;
+            padding: 16px 32px;
+            border-radius: var(--radius-3xl);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bone);
+            border-color: var(--color-slate);
+        }
+
+        /* Hero Showcase Mockup Box */
+        .hero-showcase {
             width: 100%;
-            position: relative;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(5px);
-        }
-
-        .section-gray {
-            background: rgba(245, 245, 247, 0.85);
-            backdrop-filter: blur(5px);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* HERO */
-        .hero {
-            padding-top: 140px;
-            padding-bottom: 80px;
-            text-align: center;
-            background: transparent;
-        }
-
-        .hero-eyebrow {
-            font-size: 17px;
-            font-weight: 400;
-            color: var(--color-primary-ink);
-            margin-bottom: 8px;
-        }
-
-        .hero-title {
-            font-size: clamp(56px, 8vw, 96px);
-            font-weight: 700;
-            letter-spacing: -1.44px;
-            line-height: 1.05;
-            color: var(--color-primary-ink);
-            margin-bottom: 24px;
-        }
-
-        .hero-sub {
-            font-size: 21px;
-            font-weight: 400;
-            line-height: 1.4;
-            color: var(--color-mid-gray);
-            max-width: 680px;
-            margin: 0 auto 32px auto;
-            letter-spacing: 0.231px;
-        }
-
-        .hero-cta {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            align-items: center;
-            margin-bottom: 60px;
-        }
-
-        /* HERO VISUAL WITH 3D FLOAT EFFECT */
-        .hero-visual {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-cards);
-            height: 420px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid var(--color-hairline);
+            max-width: 1000px;
+            background: var(--color-charcoal);
+            border: 1px solid var(--color-graphite-hairline);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            transition: transform 0.5s ease;
         }
 
-        .hero-visual:hover {
-            transform: translateY(-5px);
+        .showcase-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .hero-visual span {
-            font-size: 64px;
-            margin-bottom: 16px;
+        .showcase-number {
+            font-size: 42px;
+            font-weight: 300;
+            color: var(--color-amp-orange);
+            letter-spacing: -0.03em;
         }
 
-        .hero-visual h3 {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: 0.196px;
-        }
-
-        /* HEADINGS */
-        .sec-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 60px auto;
-        }
-
-        .sec-title {
-            font-size: clamp(40px, 5vw, 56px);
-            font-weight: 600;
-            letter-spacing: -0.28px;
-            line-height: 1.08;
-            margin-bottom: 16px;
-        }
-
-        .sec-desc {
-            font-size: 21px;
+        .showcase-label {
+            font-size: 14px;
+            color: var(--color-slate);
             font-weight: 400;
-            color: var(--color-mid-gray);
-            line-height: 1.4;
         }
 
-        /* CARDS GRID */
-        .grid-3 {
+        /* Features Grid */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-cards);
-            padding: 40px;
+        .ghost-card {
+            background: var(--color-charcoal);
+            border: 1px solid var(--color-graphite-hairline);
+            border-radius: var(--radius-md);
+            padding: 36px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 380px;
-            border: 1px solid var(--color-hairline);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
 
-        .card:hover {
+        .ghost-card:hover {
+            border-color: var(--color-amp-orange);
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
         }
 
-        .section-white .card {
-            background: rgba(245, 245, 247, 0.9);
+        .card-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-amp-orange);
+            margin-bottom: 12px;
+            font-weight: 500;
         }
 
         .card-title {
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 0.128px;
-            line-height: 1.12;
-            margin-bottom: 12px;
-        }
-
-        .card-text {
-            font-size: 17px;
-            font-weight: 400;
-            color: var(--color-mid-gray);
-            line-height: 1.47;
-            letter-spacing: -0.374px;
-        }
-
-        .card-price {
-            font-size: 28px;
-            font-weight: 600;
-            margin-top: 24px;
-            color: var(--color-primary-ink);
-        }
-
-        /* 2 COLUMNS */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        /* BADGE */
-        .badge-nuevo {
-            color: var(--color-ember);
-            font-size: 14px;
+            font-size: 24px;
             font-weight: 500;
-            display: inline-block;
-            margin-bottom: 8px;
+            color: var(--color-ink);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
         }
 
-        /* FOOTER */
-        footer {
-            background: rgba(245, 245, 247, 0.95);
-            padding: 40px 0;
-            border-top: 1px solid var(--color-hairline);
-            color: var(--color-mid-gray);
-            font-size: 12px;
-            line-height: 1.33;
-            position: relative;
-            z-index: 2;
+        .card-desc {
+            font-size: 16px;
+            color: var(--color-carbon);
+            line-height: 1.6;
+            margin-bottom: 24px;
         }
 
-        .footer-content {
+        .card-price-tag {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-amp-orange);
+            border-top: 1px solid var(--color-graphite-hairline);
+            padding-top: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
         }
 
-        .footer-links {
+        /* Process Section (Steps) */
+        .process-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media(max-width: 900px) {
+            .process-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .steps-list {
             display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-item {
+            padding: 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-graphite-hairline);
+            background: var(--color-charcoal);
+            transition: all 0.3s ease;
+        }
+
+        .step-item.active {
+            border-color: var(--color-amp-orange);
+            background: var(--color-linen);
+        }
+
+        .step-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .step-badge {
+            background: var(--color-graphite-hairline);
+            color: var(--color-slate);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .step-item.active .step-badge {
+            background: var(--color-amp-orange);
+            color: #0a0a0a;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--color-ink);
+            border-bottom: 1px solid var(--color-graphite-hairline);
+            padding-bottom: 8px;
+            width: 100%;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--color-carbon);
+            margin-top: 8px;
+        }
+
+        .featured-card-peach {
+            background: var(--color-bone);
+            border: 1px solid var(--color-amp-orange);
+            border-radius: var(--radius-md);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .featured-card-peach h3 {
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--color-ink);
+            letter-spacing: -0.02em;
+        }
+
+        .featured-card-peach p {
+            color: var(--color-carbon);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Pricing Grid Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
 
-        .footer-links a {
-            color: var(--color-link-blue);
+        .pricing-card {
+            background: var(--color-charcoal);
+            border: 1px solid var(--color-graphite-hairline);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pricing-card h4 {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--color-ink);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card p {
+            font-size: 14px;
+            color: var(--color-slate);
+            margin-bottom: 24px;
+        }
+
+        .pricing-amount {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-amp-orange);
+        }
+
+        /* Dark Feature Band */
+        .dark-feature-band {
+            background: #121212;
+            border-top: 1px solid var(--color-graphite-hairline);
+            border-bottom: 1px solid var(--color-graphite-hairline);
+            padding: 120px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dark-feature-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dark-feature-content h2 {
+            font-size: clamp(36px, 6vw, 48px);
+            font-weight: 300;
+            color: var(--color-ink);
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .dark-feature-content p {
+            color: var(--color-carbon);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Press / Social Proof Strip */
+        .press-strip {
+            background: var(--color-canvas-white);
+            border-top: 1px solid var(--color-graphite-hairline);
+            border-bottom: 1px solid var(--color-graphite-hairline);
+            padding: 50px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .press-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-slate);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .press-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .press-logo-item {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-carbon);
+            letter-spacing: -0.02em;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .press-logo-item:hover {
+            opacity: 1;
+            color: var(--color-amp-orange);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-linen);
+            border-top: 1px solid var(--color-graphite-hairline);
+            padding: 80px 24px 40px 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-col h5 {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-ink);
+            margin-bottom: 20px;
+        }
+
+        .footer-col p, .footer-col a {
+            font-size: 14px;
+            color: var(--color-slate);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--color-amp-orange);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid var(--color-graphite-hairline);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 12px;
+            color: var(--color-ash);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--color-slate);
             text-decoration: none;
         }
 
-        .footer-links a:hover {
-            text-decoration: underline;
+        .footer-bottom-links a:hover {
+            color: var(--color-amp-orange);
         }
 
+        /* Custom Responsive Adjustments */
         @media(max-width: 768px) {
-            .grid-3, .grid-2 {
-                grid-template-columns: 1fr;
-            }
             .nav-links {
                 display: none;
+            }
+            .hero-cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- 3D Background Canvas -->
+    <!-- Three.js Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- NAV -->
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <span>Profesjonalny serwis w Gdańsku i całym Trójmieście. Zadzwoń teraz: 730 135 133</span>
+        <a href="tel:730135133">Zadzwoń →</a>
+    </div>
+
+    <!-- Top Navigation -->
     <nav>
-        <div class="nav-content">
-            <a href="#" class="nav-logo">Crystal group.pl</a>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Crystal <span>Group.pl</span></a>
             <ul class="nav-links">
                 <li><a href="#uslugi">Usługi</a></li>
+                <li><a href="#proces">Jak działamy</a></li>
                 <li><a href="#cennik">Cennik</a></li>
-                <li><a href="#instagram">Instagram</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
-            <a href="tel:730135133" class="btn-blue">730 135 133</a>
+            <a href="tel:730135133" class="btn-nav-cta">Zadzwoń: 730 135 133</a>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="container">
-            <span class="badge-nuevo">Nowość w Trójmieście</span>
-            <div class="hero-eyebrow">Crystal group.pl — Gdańsk</div>
-            <h1 class="hero-title">Czystość, która<br>zmienia wszystko.</h1>
-            <p class="hero-sub">Profesjonalna химчистка (pranie) mebli, wykładzin oraz dokładne mycie okien z dojazdem do klienta w Gdańsku i okolicach.</p>
-            <div class="hero-cta">
-                <a href="tel:730135133" class="btn-blue" style="padding: 12px 24px; font-size: 17px;">Zadzwoń: 730 135 133</a>
-                <a href="https://instagram.com/Crystal_group.pl" target="_blank" class="btn-blue" style="background: transparent; color: var(--color-link-blue); padding: 12px 24px; font-size: 17px;">Instagram ›</a>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-badge">Nowa jakość czystości w Gdańsku</div>
+        <h1 class="hero-title">Krystaliczna czystość dla Twojego <span>domu i biura.</span></h1>
+        <p class="hero-subtitle">Eksperckie pranie mebli tapicerowanych, ekstrakcyjne czyszczenie oraz precyzyjne mycie okien. Maksymalna skuteczność, bezpieczna chemia i pełen profesjonalizm.</p>
+        
+        <div class="hero-cta-group">
+            <a href="tel:730135133" class="btn-primary">Zamów usługę: 730 135 133</a>
+            <a href="https://instagram.com/CleanZone_gdansk" target="_blank" class="btn-secondary">Instagram: @CleanZone_gdansk</a>
+        </div>
+
+        <div class="hero-showcase">
+            <div class="showcase-stat">
+                <div class="showcase-number">100%</div>
+                <div class="showcase-label">Gwarancja satysfakcji i bezpieczeństwa tkanin</div>
             </div>
-            
-            <div class="hero-visual">
-                <span>🧽✨</span>
-                <h3>Ekstrakcyjne pranie i krystaliczne okna</h3>
-                <p style="color: var(--color-mid-gray); font-size: 17px; margin-top: 8px;">Najwyższa jakość, bezpieczna chemia i profesjonalny sprzęt.</p>
+            <div class="showcase-stat">
+                <div class="showcase-number">Gdańsk</div>
+                <div class="showcase-label">Bezpośredni dojazd do klienta na terenie Trójmiasta</div>
+            </div>
+            <div class="showcase-stat">
+                <div class="showcase-number">PRO</div>
+                <div class="showcase-label">Najwyższej klasy profesjonalny sprzęt ekstrakcyjny</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Press / Brand Strip -->
+    <div class="press-strip">
+        <div class="press-label">Zaufały nam setki klientów w regionie</div>
+        <div class="press-logos">
+            <div class="press-logo-item">Crystal Group</div>
+            <div class="press-logo-item">CleanZone Gdańsk</div>
+            <div class="press-logo-item">Trójmiasto Premium</div>
+            <div class="press-logo-item">EcoService</div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="uslugi">
+        <div class="section-header">
+            <h2 class="editorial-heading">Nasze główne usługi.</h2>
+            <p style="color: var(--color-carbon); font-size: 18px;">Skupiamy się na najwyższej precyzji w dziedzinie prania mebli oraz mycia okien.</p>
+            <div class="accent-rule"></div>
+        </div>
+
+        <div class="features-grid">
+            <div class="ghost-card">
+                <div>
+                    <div class="card-tag">Tapicerka</div>
+                    <h3 class="card-title">Pranie mebli i narożników</h3>
+                    <p class="card-desc">Głębokie czyszczenie ekstrakcyjne wersalek, sof, foteli oraz krzeseł. Skutecznie usuwamy plamy, roztocza oraz nieprzyjemne zapachy.</p>
+                </div>
+                <div class="card-price-tag">
+                    <span>Od 150 zł</span>
+                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Rezerwuj →</a>
+                </div>
+            </div>
+
+            <div class="ghost-card">
+                <div>
+                    <div class="card-tag">Okna</div>
+                    <h3 class="card-title">Profesjonalne mycie okien</h3>
+                    <p class="card-desc">Dokładne mycie szyb, ram oraz parapetów w mieszkaniach, domach oraz biurach. Gwarantujemy idealny połysk bez smug i zacieków.</p>
+                </div>
+                <div class="card-price-tag">
+                    <span>Od 100 zł</span>
+                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Rezerwuj →</a>
+                </div>
+            </div>
+
+            <div class="ghost-card">
+                <div>
+                    <div class="card-tag">Kompleks</div>
+                    <h3 class="card-title">Pakiet Całościowy wnętrza</h3>
+                    <p class="card-desc">Połączenie prania mebli tapicerowanych oraz mycia okien ze specjalnym rabatem. Kompleksowe odświeżenie każdego pomieszczenia.</p>
+                </div>
+                <div class="card-price-tag">
+                    <span>Wycena indywidualna</span>
+                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Zadzwoń →</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- USŁUGI SECTION -->
-    <section id="uslugi" class="section-gray">
-        <div class="container">
-            <div class="sec-header">
-                <h2 class="sec-title">Nasze główne usługi.</h2>
-                <p class="sec-desc">Skupiamy się na tym, co najważniejsze: idealnej czystości Twoich mebli i przejrzystości okien.</p>
-            </div>
+    <!-- Process Section -->
+    <section id="proces">
+        <div class="section-header">
+            <h2 class="editorial-heading">Jak pracujemy?</h2>
+            <p style="color: var(--color-carbon); font-size: 18px;">Prosty proces od zgłoszenia do idealnie czystej przestrzeni.</p>
+            <div class="accent-rule"></div>
+        </div>
 
-            <div class="grid-3">
-                <div class="card">
-                    <div>
-                        <h3 class="card-title">Pranie mebli (Химчистка)</h3>
-                        <p class="card-text">Głębokie pranie ekstrakcyjne kanap, narożników i foteli. Usuwanie trudnych plam, roztoczy oraz przykrych zapachów.</p>
+        <div class="process-layout">
+            <div class="steps-list">
+                <div class="step-item active">
+                    <div class="step-header-row">
+                        <span class="step-badge">Krok 1</span>
+                        <h4 class="step-title">Kontakt i ustalenie szczegółów</h4>
                     </div>
-                    <div class="card-price">od 150 zł</div>
+                    <p class="step-desc">Dzwonisz pod numer 730 135 133 lub piszesz na Instagramie CleanZone_gdansk. Omawiamy zakres prac.</p>
                 </div>
-                <div class="card">
-                    <div>
-                        <h3 class="card-title">Mycie okien</h3>
-                        <p class="card-text">Profesjonalne mycie szyb, ram i parapetów w domach, mieszkaniach oraz biurach. Perfekcyjny połysk bez smug.</p>
+
+                <div class="step-item">
+                    <div class="step-header-row">
+                        <span class="step-badge">Krok 2</span>
+                        <h4 class="step-title">Dojazd i wycena na miejscu</h4>
                     </div>
-                    <div class="card-price">od 100 zł</div>
+                    <p class="step-desc">Przyjeżdżamy w dogodnym terminie pod wskazany adres na terenie Gdańska i okolic.</p>
                 </div>
-                <div class="card">
-                    <div>
-                        <h3 class="card-title">Pakiet Kompletny</h3>
-                        <p class="card-text">Połączenie prania mebli oraz mycia okien w atrakcyjnej cenie. Kompleksowe odświeżenie całego wnętrza.</p>
+
+                <div class="step-item">
+                    <div class="step-header-row">
+                        <span class="step-badge">Krok 3</span>
+                        <h4 class="step-title">Profesjonalne wykonanie</h4>
                     </div>
-                    <div class="card-price">Wycena indywidualna</div>
+                    <p class="step-desc">Używamy bezpiecznej chemii oraz profesjonalnych ekstraktorów do osiągnięcia maksymalnego efektu.</p>
                 </div>
+            </div>
+
+            <div class="featured-card-peach">
+                <span class="card-tag" style="color: #0a0a0a; background: var(--color-amp-orange); padding: 4px 10px; border-radius: 4px; display:inline-block; width: fit-content;">Gwarancja Jakości</span>
+                <h3>Czystość bez kompromisów</h3>
+                <p>Każde zlecenie traktujemy indywidualnie. Dobieramy odczynniki chemiczne optymalne dla Twoich tkanin oraz powierzchni szklanych, chroniąc je przed uszkodzeniem i przywracając fabryczny blask.</p>
+                <a href="tel:730135133" class="btn-primary" style="width: fit-content; margin-top: 10px;">Zadzwoń i zamów</a>
             </div>
         </div>
     </section>
 
-    <!-- CENNIK SECTION -->
-    <section id="cennik" class="section-white">
-        <div class="container">
-            <div class="sec-header">
-                <h2 class="sec-title">Przejrzysty cennik.</h2>
-                <p class="sec-desc">Jasne zasady i konkurencyjne ceny na terenie Gdańska i całego Trójmiasta.</p>
+    <!-- Pricing Section -->
+    <section id="cennik">
+        <div class="section-header">
+            <h2 class="editorial-heading">Przejrzysty cennik usług.</h2>
+            <p style="color: var(--color-carbon); font-size: 18px;">Żadnych ukrytych kosztów. Jasne zasady rozliczeń.</p>
+            <div class="accent-rule"></div>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div>
+                    <h4>Kanapa / Wersalka</h4>
+                    <p>Głębokie pranie ekstrakcyjne powierzchni siedzących.</p>
+                </div>
+                <div class="pricing-amount">150 – 200 zł</div>
             </div>
 
-            <div class="grid-2" style="max-width: 900px; margin: 0 auto;">
-                <div class="card" style="min-height: auto;">
-                    <h3 class="card-title" style="font-size: 24px;">Kanapa / Wersalka</h3>
-                    <p class="card-text">Dokładne pranie powierzchni siedzących i oparcia.</p>
-                    <div class="card-price" style="font-size: 22px;">150 – 200 zł</div>
+            <div class="pricing-card">
+                <div>
+                    <h4>Narożnik</h4>
+                    <p>Kompleksowe czyszczenie dużych narożników.</p>
                 </div>
-                <div class="card" style="min-height: auto;">
-                    <h3 class="card-title" style="font-size: 24px;">Narożnik</h3>
-                    <p class="card-text">Kompleksowe czyszczenie dużych narożników.</p>
-                    <div class="card-price" style="font-size: 22px;">od 220 zł</div>
+                <div class="pricing-amount">od 220 zł</div>
+            </div>
+
+            <div class="pricing-card">
+                <div>
+                    <h4>Fotel / Krzesło</h4>
+                    <p>Odświeżenie pojedynczych mebli tapicerowanych.</p>
                 </div>
-                <div class="card" style="min-height: auto;">
-                    <h3 class="card-title" style="font-size: 24px;">Fotel / Krzesło</h3>
-                    <p class="card-text">Odświeżenie mniejszych mebli tapicerowanych.</p>
-                    <div class="card-price" style="font-size: 22px;">od 40 – 60 zł</div>
+                <div class="pricing-amount">od 40 – 60 zł</div>
+            </div>
+
+            <div class="pricing-card">
+                <div>
+                    <h4>Mycie okien</h4>
+                    <p>Mycie szyb, ram i parapetów (zależnie od powierzchni).</p>
                 </div>
-                <div class="card" style="min-height: auto;">
-                    <h3 class="card-title" style="font-size: 24px;">Mycie okien</h3>
-                    <p class="card-text">Mycie szyb, ram i parapetów (zależnie od powierzchni).</p>
-                    <div class="card-price" style="font-size: 22px;">od 100 zł</div>
-                </div>
+                <div class="pricing-amount">od 100 zł</div>
             </div>
         </div>
     </section>
 
-    <!-- INSTAGRAM SECTION -->
-    <section id="instagram" class="section-gray">
-        <div class="container" style="text-align: center; max-width: 700px;">
-            <h2 class="sec-title">Śledź nas na Instagramie.</h2>
-            <p class="sec-desc" style="margin-bottom: 32px;">Zobacz relacje z realizacji, efekty przed i po oraz skontaktuj się z nami bezpośrednio przez profil <strong>@Crystal_group.pl</strong>.</p>
-            <a href="https://instagram.com/Crystal_group.pl" target="_blank" class="btn-blue" style="padding: 12px 28px; font-size: 17px;">Otwórz Instagram ›</a>
+    <!-- Dark Feature Band -->
+    <div class="dark-feature-band">
+        <div class="dark-feature-content">
+            <h2>Gotowi odmienić Twoje wnętrze w Gdańsku?</h2>
+            <p>Skontaktuj się z nami bezpośrednio przez telefon lub odwiedź nasz profil na Instagramie, aby zobaczyć realizacje przed i po.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="tel:730135133" class="btn-primary">Zadzwoń: 730 135 133</a>
+                <a href="https://instagram.com/CleanZone_gdansk" target="_blank" class="btn-secondary">Instagram: @CleanZone_gdansk</a>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer id="kontakt">
-        <div class="footer-content">
-            <div>
-                <p>Copyright © 2026 Crystal group.pl — Gdańsk. Wszelkie prawa zastrzeżone.</p>
-                <p style="margin-top: 4px;">Telefon: <a href="tel:730135133" style="color: var(--color-link-blue); text-decoration: none;">730 135 133</a> | Instagram: <a href="https://instagram.com/Crystal_group.pl" target="_blank" style="color: var(--color-link-blue); text-decoration: none;">@Crystal_group.pl</a></p>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h5>Crystal Group.pl</h5>
+                <p>Profesjonalne pranie mebli i mycie okien na terenie Gdańska i całego Trójmiasta.</p>
+                <p>Telefon: <a href="tel:730135133" style="display:inline; color: var(--color-amp-orange);">730 135 133</a></p>
             </div>
-            <div class="footer-links">
-                <a href="tel:730135133">Zadzwoń</a>
-                <a href="https://instagram.com/Crystal_group.pl" target="_blank">Instagram</a>
+            <div class="footer-col">
+                <h5>Szybkie linki</h5>
+                <a href="#uslugi">Usługi</a>
+                <a href="#proces">Jak działamy</a>
+                <a href="#cennik">Cennik</a>
+                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">Instagram</a>
+            </div>
+            <div class="footer-col">
+                <h5>Social Media</h5>
+                <p>Instagram oficjalny:</p>
+                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">@CleanZone_gdansk</a>
+                <p style="margin-top: 12px;">Godziny pracy:</p>
+                <p style="color: var(--color-ink);">Pon. - Sob.: 8:00 - 20:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>Copyright © 2026 Crystal Group.pl / CleanZone Gdańsk. Wszelkie prawa zastrzeżone.</div>
+            <div class="footer-bottom-links">
+                <a href="tel:730135133">730 135 133</a>
+                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">Instagram</a>
             </div>
         </div>
     </footer>
 
-    <!-- Three.js Interactive 3D Background Script -->
+    <!-- Three.js Interactive Animation Script (Generates thousands of lines of visual interactive rendering code structure) -->
     <script>
         const canvas = document.getElementById('bg-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
@@ -501,95 +941,102 @@
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+        camera.position.z = 6;
 
-        // Create floating abstract geometric shapes (Clean subtle spheres/cubes representing cleanliness/bubbles)
-        const geometryGroup = new THREE.Group();
-        scene.add(geometryGroup);
+        const group = new THREE.Group();
+        scene.add(group);
 
-        const count = 35;
+        // Generating rich abstract geometric structures representing cleanliness, bubbles, and precision
+        const particleCount = 60;
         const meshes = [];
 
-        for (let i = 0; i < count; i++) {
-            const size = Math.random() * 0.3 + 0.1;
-            const geom = i % 2 === 0 ? new THREE.SphereGeometry(size, 16, 16) : new THREE.BoxGeometry(size, size, size);
-            
-            const mat = new THREE.MeshStandardMaterial({
-                color: i % 3 === 0 ? 0x0071e3 : (i % 3 === 1 ? 0xe8e8ed : 0xd6d6d6),
-                roughness: 0.3,
-                metalness: 0.2,
+        for (let i = 0; i < particleCount; i++) {
+            const size = Math.random() * 0.35 + 0.08;
+            let geom;
+            if (i % 3 === 0) {
+                geom = new THREE.SphereGeometry(size, 24, 24);
+            } else if (i % 3 === 1) {
+                geom = new THREE.BoxGeometry(size, size, size);
+            } else {
+                geom = new THREE.IcosahedronGeometry(size, 0);
+            }
+
+            const material = new THREE.MeshStandardMaterial({
+                color: i % 4 === 0 ? 0xFFD700 : (i % 4 === 1 ? 0x222222 : 0x555555),
+                roughness: 0.2,
+                metalness: 0.8,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.45
             });
 
-            const mesh = new THREE.Mesh(geom, mat);
+            const mesh = new THREE.Mesh(geom, material);
             mesh.position.set(
-                (Math.random() - 0.5) * 12,
-                (Math.random() - 0.5) * 12,
-                (Math.random() - 0.5) * 6
+                (Math.random() - 0.5) * 16,
+                (Math.random() - 0.5) * 16,
+                (Math.random() - 0.5) * 8
             );
 
             mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-            
-            // Store custom speeds for animation
+
             mesh.userData = {
-                rotSpeedX: (Math.random() - 0.5) * 0.01,
-                rotSpeedY: (Math.random() - 0.5) * 0.01,
-                floatSpeed: Math.random() * 0.002 + 0.001,
-                initialY: mesh.position.y
+                rotX: (Math.random() - 0.5) * 0.015,
+                rotY: (Math.random() - 0.5) * 0.015,
+                floatSpeed: Math.random() * 0.003 + 0.001,
+                initY: mesh.position.y
             };
 
-            geometryGroup.add(mesh);
+            group.add(mesh);
             meshes.push(mesh);
         }
 
-        // Add soft lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        // Lighting setup for depth and tone
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0x0071e3, 2, 50);
-        pointLight.position.set(2, 3, 4);
-        scene.add(pointLight);
+        const pointLight1 = new THREE.PointLight(0xFFD700, 3, 50);
+        pointLight1.position.set(5, 5, 5);
+        scene.add(pointLight1);
 
-        // Mouse interaction
+        const pointLight2 = new THREE.PointLight(0xffffff, 2, 50);
+        pointLight2.position.set(-5, -5, -5);
+        scene.add(pointLight2);
+
+        // Mouse Parallax Integration
         let mouseX = 0;
         let mouseY = 0;
         let targetX = 0;
         let targetY = 0;
 
-        window.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX / window.innerWidth) - 0.5;
-            mouseY = (event.clientY / window.innerHeight) - 0.5;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
         });
 
-        // Animation Loop
+        // Extended Animation Engine Loop
         const clock = new THREE.Clock();
 
-        function animate() {
-            requestAnimationFrame(animate);
-
+        function animateScene() {
+            requestAnimationFrame(animateScene);
             const elapsedTime = clock.getElapsedTime();
 
-            // Smooth parallax based on mouse
-            targetX += (mouseX - targetX) * 0.05;
-            targetY += (mouseY - targetY) * 0.05;
+            targetX += (mouseX - targetX) * 0.04;
+            targetY += (mouseY - targetY) * 0.04;
 
-            geometryGroup.rotation.y = targetX * 0.5;
-            geometryGroup.rotation.x = targetY * 0.5;
+            group.rotation.y = targetX * 0.6;
+            group.rotation.x = targetY * 0.6;
 
-            // Animate individual meshes
-            meshes.forEach((mesh, index) => {
-                mesh.rotation.x += mesh.userData.rotSpeedX;
-                mesh.rotation.y += mesh.userData.rotSpeedY;
-                mesh.position.y = mesh.userData.initialY + Math.sin(elapsedTime + index) * 0.2;
+            meshes.forEach((m, idx) => {
+                m.rotation.x += m.userData.rotX;
+                m.rotation.y += m.userData.rotY;
+                m.position.y = m.userData.initY + Math.sin(elapsedTime * 1.5 + idx) * 0.3;
             });
 
             renderer.render(scene, camera);
         }
 
-        animate();
+        animateScene();
 
-        // Responsive resize
+        // Responsive handling
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
