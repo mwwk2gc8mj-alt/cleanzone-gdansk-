@@ -5,36 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crystal Group.pl — Profesjonalne Pranie Mebli i Mycie Okien w Gdańsku</title>
     
-    <!-- Three.js for 3D Background Interactive Elements -->
+    <!-- Three.js for Interactive 3D Background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,450;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --color-amp-orange: #FFD700; /* Yellow Accent */
-            --color-amp-glow: rgba(255, 215, 0, 0.4);
-            --color-peach-wash: #1a1a1a;
-            --color-ink: #ffffff;
-            --color-carbon: #e0e0e0;
-            --color-slate: #a0a0a0;
-            --color-ash: #666666;
-            --color-graphite-hairline: #2a2a2a;
-            --color-fog: #222222;
-            --color-bone: #1f1f1f;
-            --color-canvas-white: #0a0a0a;
-            --color-linen: #141414;
-            --color-charcoal: #121212;
-            --color-smoke: #333333;
+            --color-signal-orange: #f73b20;
+            --color-brand-orange-tint: #f84d35;
+            --color-ink-roast: #360802;
+            --color-paper-white: #ffffff;
+            --color-carbon-black: #000000;
+            --color-ash-grey: #ababab;
+            --color-sand-wash: #e7dcdb;
+            --color-linen-blush: #fdedea;
+            --color-citrus-wash: #f5ffbb;
+            --color-mint-wash: #bcffbb;
+            --color-coral-red: #fb2d54;
+            --color-cobalt-blue: #477ee9;
+            --color-emerald-green: #34c771;
 
-            --font-publicasans: 'Public Sans', sans-serif;
+            --font-sequel-sans: 'Public Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-            --radius-md: 5px;
             --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
             --radius-3xl: 24px;
-            --radius-full: 50px;
+            --radius-full: 9999px;
 
-            --shadow-md: rgba(255, 215, 0, 0.3) 1px 6px 14px 0px, rgba(0, 0, 0, 0.6) 0px 1px 4px 0px;
+            --shadow-lg: rgba(247, 59, 32, 0.1) 0px 8px 24px 0px, rgba(247, 59, 32, 0.05) 0px 2px 8px 0px;
+            --shadow-md: rgba(0, 0, 0, 0.05) 0px -4px 16px 0px;
         }
 
         *, *::before, *::after {
@@ -45,18 +46,18 @@
 
         html {
             scroll-behavior: smooth;
-            background-color: var(--color-canvas-white);
-            color: var(--color-ink);
-            font-family: var(--font-publicasans);
+            background-color: var(--color-paper-white);
+            color: var(--color-ink-roast);
+            font-family: var(--font-sequel-sans);
             -webkit-font-smoothing: antialiased;
         }
 
         body {
             position: relative;
             overflow-x: hidden;
-            background-color: var(--color-canvas-white);
-            color: var(--color-ink);
-            line-height: 1.5;
+            background-color: var(--color-paper-white);
+            color: var(--color-ink-roast);
+            line-height: 1;
         }
 
         #bg-canvas {
@@ -67,54 +68,22 @@
             height: 100vh;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.65;
+            opacity: 0.85;
         }
 
-        /* Announcement Bar */
-        .announcement-bar {
-            position: relative;
-            z-index: 100;
-            background: var(--color-linen);
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--color-carbon);
-            border-bottom: 1px solid var(--color-graphite-hairline);
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .announcement-bar a {
-            color: var(--color-ink);
-            font-weight: 500;
-            text-decoration: none;
-            margin-left: 8px;
-            display: inline-flex;
-            align-items: center;
-            transition: color 0.2s ease;
-        }
-
-        .announcement-bar a:hover {
-            color: var(--color-amp-orange);
-        }
-
-        /* Navigation */
+        /* Top Navigation Bar */
         nav {
             position: sticky;
             top: 0;
-            z-index: 90;
-            background: rgba(10, 10, 10, 0.85);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--color-graphite-hairline);
-            height: 72px;
+            border-bottom: 1px solid var(--color-sand-wash);
+            height: 84px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
         }
 
         .nav-container {
@@ -128,491 +97,323 @@
 
         .nav-logo {
             font-size: 20px;
-            font-weight: 700;
-            color: var(--color-ink);
+            font-weight: 500;
+            color: var(--color-ink-roast);
             text-decoration: none;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.03em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .nav-logo span {
-            color: var(--color-amp-orange);
+            color: var(--color-signal-orange);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 36px;
+            gap: 32px;
             list-style: none;
         }
 
         .nav-links a {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
-            color: var(--color-carbon);
+            color: var(--color-ink-roast);
             text-decoration: none;
+            letter-spacing: 0.03em;
             transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--color-amp-orange);
+            color: var(--color-signal-orange);
         }
 
-        .btn-nav-cta {
-            background: var(--color-amp-orange);
-            color: #0a0a0a;
-            font-weight: 500;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-nav-action {
+            background: var(--color-signal-orange);
+            color: var(--color-paper-white);
+            font-weight: 450;
             font-size: 14px;
-            padding: 10px 24px;
-            border-radius: var(--radius-full);
+            padding: 8px 20px;
+            border-radius: var(--radius-xl);
             text-decoration: none;
-            box-shadow: var(--shadow-md);
+            letter-spacing: 0.03em;
+            box-shadow: var(--shadow-lg);
             transition: transform 0.2s ease, opacity 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn-nav-cta:hover {
+        .btn-nav-action:hover {
             opacity: 0.9;
             transform: translateY(-1px);
         }
 
-        /* General Layout Elements */
+        /* General Layout */
         section {
             position: relative;
             z-index: 10;
-            padding: 100px 0;
+            padding: 120px 24px;
             max-width: 1200px;
             margin: 0 auto;
-            padding-left: 24px;
-            padding-right: 24px;
         }
 
         .section-header {
             margin-bottom: 60px;
         }
 
-        .editorial-heading {
-            font-weight: 300;
-            font-size: clamp(40px, 5vw, 64px);
-            letter-spacing: -0.035em;
-            line-height: 1.1;
-            color: var(--color-ink);
-            margin-bottom: 20px;
-        }
-
-        .accent-rule {
-            width: 120px;
-            height: 3px;
-            background-color: var(--color-amp-orange);
-            margin-top: 16px;
-        }
-
         /* Hero Section */
         .hero {
-            min-height: calc(100vh - 116px);
+            min-height: calc(100vh - 84px);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-top: 40px;
-            padding-bottom: 80px;
+            align-items: flex-start;
+            padding-top: 60px;
+            padding-bottom: 120px;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--color-linen);
-            border: 1px solid var(--color-graphite-hairline);
-            padding: 6px 16px;
+            background: var(--color-linen-blush);
+            padding: 8px 16px;
             border-radius: var(--radius-full);
             font-size: 12px;
             font-weight: 500;
-            color: var(--color-amp-orange);
-            margin-bottom: 24px;
+            color: var(--color-signal-orange);
+            margin-bottom: 32px;
+            letter-spacing: 0.36px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
         .hero-title {
-            font-weight: 300;
-            font-size: clamp(48px, 8vw, 78px);
-            letter-spacing: -0.036em;
-            line-height: 1.05;
-            max-width: 900px;
+            font-weight: 500;
+            font-size: clamp(52px, 8vw, 106px);
+            letter-spacing: 0.01em;
+            line-height: 1;
+            max-width: 1050px;
             margin-bottom: 24px;
-            color: var(--color-ink);
+            color: var(--color-ink-roast);
         }
 
         .hero-title span {
-            color: var(--color-amp-orange);
-            font-weight: 400;
+            color: var(--color-signal-orange);
         }
 
         .hero-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--color-carbon);
-            max-width: 600px;
-            margin-bottom: 40px;
-            line-height: 1.6;
+            font-size: 23px;
+            font-weight: 500;
+            color: var(--color-ink-roast);
+            max-width: 700px;
+            margin-bottom: 48px;
+            line-height: 1.2;
+            letter-spacing: 0.23px;
         }
 
         .hero-cta-group {
             display: flex;
             gap: 16px;
-            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            margin-bottom: 60px;
         }
 
         .btn-primary {
-            background: var(--color-amp-orange);
-            color: #0a0a0a;
-            font-weight: 500;
-            font-size: 16px;
-            padding: 16px 36px;
-            border-radius: var(--radius-full);
+            background: var(--color-signal-orange);
+            color: var(--color-paper-white);
+            font-weight: 450;
+            font-size: 14px;
+            padding: 12px 28px;
+            border-radius: var(--radius-xl);
             text-decoration: none;
-            box-shadow: var(--shadow-md);
+            letter-spacing: 0.42px;
+            box-shadow: var(--shadow-lg);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            border: none;
-            cursor: pointer;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            filter: brightness(1.1);
+            opacity: 0.95;
         }
 
-        .btn-secondary {
-            background: var(--color-linen);
-            color: var(--color-ink);
-            border: 1px solid var(--color-graphite-hairline);
-            font-weight: 400;
+        .ghost-link {
+            background: transparent;
+            color: var(--color-signal-orange);
+            font-weight: 500;
             font-size: 16px;
-            padding: 16px 32px;
-            border-radius: var(--radius-3xl);
+            padding: 8px 12px;
+            border-radius: var(--radius-lg);
             text-decoration: none;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
+            transition: opacity 0.2s;
         }
 
-        .btn-secondary:hover {
-            background: var(--color-bone);
-            border-color: var(--color-slate);
+        .ghost-link:hover {
+            opacity: 0.8;
         }
 
-        /* Hero Showcase Mockup Box */
-        .hero-showcase {
-            width: 100%;
-            max-width: 1000px;
-            background: var(--color-charcoal);
-            border: 1px solid var(--color-graphite-hairline);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .showcase-stat {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .showcase-number {
-            font-size: 42px;
-            font-weight: 300;
-            color: var(--color-amp-orange);
-            letter-spacing: -0.03em;
-        }
-
-        .showcase-label {
-            font-size: 14px;
-            color: var(--color-slate);
-            font-weight: 400;
-        }
-
-        /* Features Grid */
-        .features-grid {
+        /* Feature Category Grid (Exchange, Send, Add style) */
+        .category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
         }
 
-        .ghost-card {
-            background: var(--color-charcoal);
-            border: 1px solid var(--color-graphite-hairline);
-            border-radius: var(--radius-md);
+        .category-card {
+            background: rgba(247, 59, 32, 0.03);
+            border: 1px solid rgba(247, 59, 32, 0.1);
+            border-radius: var(--radius-2xl);
             padding: 36px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: border-color 0.2s ease, transform 0.2s ease;
+            min-height: 320px;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
-        .ghost-card:hover {
-            border-color: var(--color-amp-orange);
+        .category-card:hover {
+            background: rgba(247, 59, 32, 0.05);
             transform: translateY(-4px);
         }
 
-        .card-tag {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--color-amp-orange);
-            margin-bottom: 12px;
-            font-weight: 500;
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
         }
 
-        .card-title {
-            font-size: 24px;
+        .card-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-xl);
+            background: var(--color-paper-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-signal-orange);
             font-weight: 500;
-            color: var(--color-ink);
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-category-title {
+            font-size: 33px;
+            font-weight: 500;
+            color: var(--color-ink-roast);
+            letter-spacing: 0.33px;
+            line-height: 1.2;
+            margin-bottom: 12px;
         }
 
         .card-desc {
             font-size: 16px;
-            color: var(--color-carbon);
-            line-height: 1.6;
-            margin-bottom: 24px;
+            color: var(--color-ink-roast);
+            opacity: 0.8;
+            line-height: 1.4;
         }
 
-        .card-price-tag {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--color-amp-orange);
-            border-top: 1px solid var(--color-graphite-hairline);
-            padding-top: 16px;
-            display: flex;
-            justify-content: space-between;
+        .card-footer-action {
+            margin-top: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-signal-orange);
+            display: inline-flex;
             align-items: center;
+            gap: 6px;
+            text-decoration: none;
         }
 
-        /* Process Section (Steps) */
-        .process-layout {
+        /* Bordered Content Cards with Inverted Shadow Lift */
+        .content-cards-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        @media(max-width: 900px) {
-            .process-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .steps-list {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
         }
 
-        .step-item {
-            padding: 24px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--color-graphite-hairline);
-            background: var(--color-charcoal);
-            transition: all 0.3s ease;
+        .content-card {
+            background: var(--color-paper-white);
+            border: 1px solid var(--color-sand-wash);
+            border-radius: var(--radius-2xl);
+            padding: 36px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease;
         }
 
-        .step-item.active {
-            border-color: var(--color-amp-orange);
-            background: var(--color-linen);
+        .content-card:hover {
+            transform: translateY(-4px);
         }
 
-        .step-header-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-
-        .step-badge {
-            background: var(--color-graphite-hairline);
-            color: var(--color-slate);
-            font-size: 12px;
+        .content-card h3 {
+            font-size: 23px;
             font-weight: 500;
-            padding: 4px 10px;
-            border-radius: 8px;
-        }
-
-        .step-item.active .step-badge {
-            background: var(--color-amp-orange);
-            color: #0a0a0a;
-        }
-
-        .step-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--color-ink);
-            border-bottom: 1px solid var(--color-graphite-hairline);
-            padding-bottom: 8px;
-            width: 100%;
-        }
-
-        .step-desc {
-            font-size: 14px;
-            color: var(--color-carbon);
-            margin-top: 8px;
-        }
-
-        .featured-card-peach {
-            background: var(--color-bone);
-            border: 1px solid var(--color-amp-orange);
-            border-radius: var(--radius-md);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: relative;
-        }
-
-        .featured-card-peach h3 {
-            font-size: 28px;
-            font-weight: 400;
-            color: var(--color-ink);
-            letter-spacing: -0.02em;
-        }
-
-        .featured-card-peach p {
-            color: var(--color-carbon);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        /* Pricing Grid Section */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .pricing-card {
-            background: var(--color-charcoal);
-            border: 1px solid var(--color-graphite-hairline);
-            border-radius: var(--radius-md);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pricing-card h4 {
-            font-size: 20px;
-            font-weight: 500;
-            color: var(--color-ink);
-            margin-bottom: 8px;
-        }
-
-        .pricing-card p {
-            font-size: 14px;
-            color: var(--color-slate);
-            margin-bottom: 24px;
-        }
-
-        .pricing-amount {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--color-amp-orange);
-        }
-
-        /* Dark Feature Band */
-        .dark-feature-band {
-            background: #121212;
-            border-top: 1px solid var(--color-graphite-hairline);
-            border-bottom: 1px solid var(--color-graphite-hairline);
-            padding: 120px 24px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .dark-feature-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .dark-feature-content h2 {
-            font-size: clamp(36px, 6vw, 48px);
-            font-weight: 300;
-            color: var(--color-ink);
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
+            color: var(--color-ink-roast);
+            letter-spacing: 0.23px;
+            margin-bottom: 16px;
             line-height: 1.2;
         }
 
-        .dark-feature-content p {
-            color: var(--color-carbon);
-            font-size: 18px;
-            margin-bottom: 40px;
+        .content-card p {
+            font-size: 16px;
+            color: var(--color-ink-roast);
+            opacity: 0.85;
+            line-height: 1.5;
+            margin-bottom: 24px;
         }
 
-        /* Press / Social Proof Strip */
-        .press-strip {
-            background: var(--color-canvas-white);
-            border-top: 1px solid var(--color-graphite-hairline);
-            border-bottom: 1px solid var(--color-graphite-hairline);
-            padding: 50px 24px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .press-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--color-slate);
-            margin-bottom: 30px;
+        .price-highlight {
+            font-size: 33px;
             font-weight: 500;
+            color: var(--color-signal-orange);
+            letter-spacing: 0.33px;
         }
 
-        .press-logos {
+        /* Editorial Big Headline Section */
+        .editorial-section {
+            background: var(--color-linen-blush);
+            border-radius: var(--radius-3xl);
+            padding: 80px 60px;
+            margin: 40px auto;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 30px;
+            border: 1px solid rgba(247, 59, 32, 0.1);
         }
 
-        .press-logo-item {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--color-carbon);
-            letter-spacing: -0.02em;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
+        .editorial-heading-lg {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 500;
+            color: var(--color-ink-roast);
+            letter-spacing: 0.72px;
+            line-height: 1;
         }
 
-        .press-logo-item:hover {
-            opacity: 1;
-            color: var(--color-amp-orange);
+        .editorial-sub {
+            font-size: 23px;
+            font-weight: 500;
+            color: var(--color-ink-roast);
+            max-width: 700px;
+            letter-spacing: 0.23px;
+            line-height: 1.2;
         }
 
         /* Footer */
         footer {
-            background: var(--color-linen);
-            border-top: 1px solid var(--color-graphite-hairline);
+            background: var(--color-paper-white);
+            border-top: 1px solid var(--color-sand-wash);
             padding: 80px 24px 40px 24px;
             position: relative;
             z-index: 10;
@@ -630,35 +431,39 @@
         .footer-col h5 {
             font-size: 16px;
             font-weight: 500;
-            color: var(--color-ink);
+            color: var(--color-ink-roast);
             margin-bottom: 20px;
+            letter-spacing: 0.03em;
         }
 
         .footer-col p, .footer-col a {
             font-size: 14px;
-            color: var(--color-slate);
+            color: var(--color-ink-roast);
+            opacity: 0.7;
             text-decoration: none;
             display: block;
             margin-bottom: 12px;
-            transition: color 0.2s ease;
+            transition: opacity 0.2s ease, color 0.2s ease;
         }
 
         .footer-col a:hover {
-            color: var(--color-amp-orange);
+            opacity: 1;
+            color: var(--color-signal-orange);
         }
 
         .footer-bottom {
             max-width: 1200px;
             margin: 0 auto;
             padding-top: 30px;
-            border-top: 1px solid var(--color-graphite-hairline);
+            border-top: 1px solid var(--color-sand-wash);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
             font-size: 12px;
-            color: var(--color-ash);
+            color: var(--color-ash-grey);
+            letter-spacing: 0.36px;
         }
 
         .footer-bottom-links {
@@ -667,42 +472,32 @@
         }
 
         .footer-bottom-links a {
-            color: var(--color-slate);
+            color: var(--color-ink-roast);
+            opacity: 0.7;
             text-decoration: none;
         }
 
         .footer-bottom-links a:hover {
-            color: var(--color-amp-orange);
+            opacity: 1;
+            color: var(--color-signal-orange);
         }
 
-        /* Custom Responsive Adjustments */
         @media(max-width: 768px) {
             .nav-links {
                 display: none;
             }
-            .hero-cta-group {
-                flex-direction: column;
-                width: 100%;
-            }
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                justify-content: center;
+            .editorial-section {
+                padding: 40px 24px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Three.js Background Canvas -->
+    <!-- Three.js Interactive Particle / Geometric Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        <span>Profesjonalny serwis w Gdańsku i całym Trójmieście. Zadzwoń teraz: 730 135 133</span>
-        <a href="tel:730135133">Zadzwoń →</a>
-    </div>
-
-    <!-- Top Navigation -->
+    <!-- Navigation Bar -->
     <nav>
         <div class="nav-container">
             <a href="#" class="nav-logo">Crystal <span>Group.pl</span></a>
@@ -712,227 +507,141 @@
                 <li><a href="#cennik">Cennik</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
-            <a href="tel:730135133" class="btn-nav-cta">Zadzwoń: 730 135 133</a>
+            <div class="nav-right">
+                <a href="tel:730135133" class="btn-nav-action">Zadzwoń: 730 135 133</a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-badge">Nowa jakość czystości w Gdańsku</div>
-        <h1 class="hero-title">Krystaliczna czystość dla Twojego <span>domu i biura.</span></h1>
-        <p class="hero-subtitle">Eksperckie pranie mebli tapicerowanych, ekstrakcyjne czyszczenie oraz precyzyjne mycie okien. Maksymalna skuteczność, bezpieczna chemia i pełen profesjonalizm.</p>
+    <header class="hero" style="max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px;">
+        <div class="hero-badge">Gdańsk & Trójmiasto — Professional Services</div>
+        <h1 class="hero-title">Krystaliczna czystość Twojego <span>wnętrza.</span></h1>
+        <p class="hero-subtitle">Eksperckie pranie mebli tapicerowanych oraz precyzyjne mycie okien. Nowoczesne podejście, najwyższa skuteczność i bezkompromisowa jakość.</p>
         
         <div class="hero-cta-group">
             <a href="tel:730135133" class="btn-primary">Zamów usługę: 730 135 133</a>
-            <a href="https://instagram.com/CleanZone_gdansk" target="_blank" class="btn-secondary">Instagram: @CleanZone_gdansk</a>
-        </div>
-
-        <div class="hero-showcase">
-            <div class="showcase-stat">
-                <div class="showcase-number">100%</div>
-                <div class="showcase-label">Gwarancja satysfakcji i bezpieczeństwa tkanin</div>
-            </div>
-            <div class="showcase-stat">
-                <div class="showcase-number">Gdańsk</div>
-                <div class="showcase-label">Bezpośredni dojazd do klienta na terenie Trójmiasta</div>
-            </div>
-            <div class="showcase-stat">
-                <div class="showcase-number">PRO</div>
-                <div class="showcase-label">Najwyższej klasy profesjonalny sprzęt ekstrakcyjny</div>
-            </div>
+            <a href="https://instagram.com/Crystal_group.pl" target="_blank" class="ghost-link">Instagram: @Crystal_group.pl →</a>
         </div>
     </header>
 
-    <!-- Press / Brand Strip -->
-    <div class="press-strip">
-        <div class="press-label">Zaufały nam setki klientów w regionie</div>
-        <div class="press-logos">
-            <div class="press-logo-item">Crystal Group</div>
-            <div class="press-logo-item">CleanZone Gdańsk</div>
-            <div class="press-logo-item">Trójmiasto Premium</div>
-            <div class="press-logo-item">EcoService</div>
-        </div>
-    </div>
-
-    <!-- Services Section -->
+    <!-- Feature Categories (Exchange / Send / Add style reinterpreted for services) -->
     <section id="uslugi">
         <div class="section-header">
-            <h2 class="editorial-heading">Nasze główne usługi.</h2>
-            <p style="color: var(--color-carbon); font-size: 18px;">Skupiamy się na najwyższej precyzji w dziedzinie prania mebli oraz mycia okien.</p>
-            <div class="accent-rule"></div>
+            <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Kluczowe specjalizacje.</h2>
+            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Precyzyjnie dobrane usługi dla domów, mieszkań i biur.</p>
         </div>
 
-        <div class="features-grid">
-            <div class="ghost-card">
+        <div class="category-grid">
+            <div class="category-card">
                 <div>
-                    <div class="card-tag">Tapicerka</div>
-                    <h3 class="card-title">Pranie mebli i narożników</h3>
-                    <p class="card-desc">Głębokie czyszczenie ekstrakcyjne wersalek, sof, foteli oraz krzeseł. Skutecznie usuwamy plamy, roztocza oraz nieprzyjemne zapachy.</p>
+                    <div class="card-top">
+                        <div class="card-icon-box">🛋️</div>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-signal-orange);">Tapicerka</span>
+                    </div>
+                    <h3 class="card-category-title">Pranie mebli i kanap</h3>
+                    <p class="card-desc">Głębokie czyszczenie ekstrakcyjne sof, narożników, wersalek i foteli. Usuwanie nawet najtrudniejszych plam i roztoczy.</p>
                 </div>
-                <div class="card-price-tag">
-                    <span>Od 150 zł</span>
-                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Rezerwuj →</a>
-                </div>
+                <a href="tel:730135133" class="card-footer-action">Sprawdź szczegóły →</a>
             </div>
 
-            <div class="ghost-card">
+            <div class="category-card" style="background: rgba(71, 126, 233, 0.03); border-color: rgba(71, 126, 233, 0.1);">
                 <div>
-                    <div class="card-tag">Okna</div>
-                    <h3 class="card-title">Profesjonalne mycie okien</h3>
-                    <p class="card-desc">Dokładne mycie szyb, ram oraz parapetów w mieszkaniach, domach oraz biurach. Gwarantujemy idealny połysk bez smug i zacieków.</p>
+                    <div class="card-top">
+                        <div class="card-icon-box" style="color: var(--color-cobalt-blue);">🪟</div>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-cobalt-blue);">Okna</span>
+                    </div>
+                    <h3 class="card-category-title">Mycie okien i szyb</h3>
+                    <p class="card-desc">Dokładne mycie okien, ram oraz parapetów w domach i biurach na terenie Gdańska. Krystaliczny połysk bez smug.</p>
                 </div>
-                <div class="card-price-tag">
-                    <span>Od 100 zł</span>
-                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Rezerwuj →</a>
-                </div>
+                <a href="tel:730135133" class="card-footer-action" style="color: var(--color-cobalt-blue);">Sprawdź szczegóły →</a>
             </div>
 
-            <div class="ghost-card">
+            <div class="category-card" style="background: rgba(52, 199, 113, 0.03); border-color: rgba(52, 199, 113, 0.1);">
                 <div>
-                    <div class="card-tag">Kompleks</div>
-                    <h3 class="card-title">Pakiet Całościowy wnętrza</h3>
-                    <p class="card-desc">Połączenie prania mebli tapicerowanych oraz mycia okien ze specjalnym rabatem. Kompleksowe odświeżenie każdego pomieszczenia.</p>
+                    <div class="card-top">
+                        <div class="card-icon-box" style="color: var(--color-emerald-green);">✨</div>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-emerald-green);">Kompleks</span>
+                    </div>
+                    <h3 class="card-category-title">Pakiet całoroczny</h3>
+                    <p class="card-desc">Połączone usługi prania mebli oraz mycia okien ze specjalnym rabatem dla stałych klientów indywidualnych i firm.</p>
                 </div>
-                <div class="card-price-tag">
-                    <span>Wycena indywidualna</span>
-                    <a href="tel:730135133" style="color: var(--color-ink); text-decoration: none; font-size: 14px;">Zadzwoń →</a>
-                </div>
+                <a href="tel:730135133" class="card-footer-action" style="color: var(--color-emerald-green);">Sprawdź szczegóły →</a>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
-    <section id="proces">
-        <div class="section-header">
-            <h2 class="editorial-heading">Jak pracujemy?</h2>
-            <p style="color: var(--color-carbon); font-size: 18px;">Prosty proces od zgłoszenia do idealnie czystej przestrzeni.</p>
-            <div class="accent-rule"></div>
-        </div>
-
-        <div class="process-layout">
-            <div class="steps-list">
-                <div class="step-item active">
-                    <div class="step-header-row">
-                        <span class="step-badge">Krok 1</span>
-                        <h4 class="step-title">Kontakt i ustalenie szczegółów</h4>
-                    </div>
-                    <p class="step-desc">Dzwonisz pod numer 730 135 133 lub piszesz na Instagramie CleanZone_gdansk. Omawiamy zakres prac.</p>
-                </div>
-
-                <div class="step-item">
-                    <div class="step-header-row">
-                        <span class="step-badge">Krok 2</span>
-                        <h4 class="step-title">Dojazd i wycena na miejscu</h4>
-                    </div>
-                    <p class="step-desc">Przyjeżdżamy w dogodnym terminie pod wskazany adres na terenie Gdańska i okolic.</p>
-                </div>
-
-                <div class="step-item">
-                    <div class="step-header-row">
-                        <span class="step-badge">Krok 3</span>
-                        <h4 class="step-title">Profesjonalne wykonanie</h4>
-                    </div>
-                    <p class="step-desc">Używamy bezpiecznej chemii oraz profesjonalnych ekstraktorów do osiągnięcia maksymalnego efektu.</p>
-                </div>
-            </div>
-
-            <div class="featured-card-peach">
-                <span class="card-tag" style="color: #0a0a0a; background: var(--color-amp-orange); padding: 4px 10px; border-radius: 4px; display:inline-block; width: fit-content;">Gwarancja Jakości</span>
-                <h3>Czystość bez kompromisów</h3>
-                <p>Każde zlecenie traktujemy indywidualnie. Dobieramy odczynniki chemiczne optymalne dla Twoich tkanin oraz powierzchni szklanych, chroniąc je przed uszkodzeniem i przywracając fabryczny blask.</p>
-                <a href="tel:730135133" class="btn-primary" style="width: fit-content; margin-top: 10px;">Zadzwoń i zamów</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="cennik">
-        <div class="section-header">
-            <h2 class="editorial-heading">Przejrzysty cennik usług.</h2>
-            <p style="color: var(--color-carbon); font-size: 18px;">Żadnych ukrytych kosztów. Jasne zasady rozliczeń.</p>
-            <div class="accent-rule"></div>
-        </div>
-
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div>
-                    <h4>Kanapa / Wersalka</h4>
-                    <p>Głębokie pranie ekstrakcyjne powierzchni siedzących.</p>
-                </div>
-                <div class="pricing-amount">150 – 200 zł</div>
-            </div>
-
-            <div class="pricing-card">
-                <div>
-                    <h4>Narożnik</h4>
-                    <p>Kompleksowe czyszczenie dużych narożników.</p>
-                </div>
-                <div class="pricing-amount">od 220 zł</div>
-            </div>
-
-            <div class="pricing-card">
-                <div>
-                    <h4>Fotel / Krzesło</h4>
-                    <p>Odświeżenie pojedynczych mebli tapicerowanych.</p>
-                </div>
-                <div class="pricing-amount">od 40 – 60 zł</div>
-            </div>
-
-            <div class="pricing-card">
-                <div>
-                    <h4>Mycie okien</h4>
-                    <p>Mycie szyb, ram i parapetów (zależnie od powierzchni).</p>
-                </div>
-                <div class="pricing-amount">od 100 zł</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dark Feature Band -->
-    <div class="dark-feature-band">
-        <div class="dark-feature-content">
-            <h2>Gotowi odmienić Twoje wnętrze w Gdańsku?</h2>
-            <p>Skontaktuj się z nami bezpośrednio przez telefon lub odwiedź nasz profil na Instagramie, aby zobaczyć realizacje przed i po.</p>
-            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-                <a href="tel:730135133" class="btn-primary">Zadzwoń: 730 135 133</a>
-                <a href="https://instagram.com/CleanZone_gdansk" target="_blank" class="btn-secondary">Instagram: @CleanZone_gdansk</a>
+    <!-- Editorial Highlight Banner -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div class="editorial-section">
+            <h2 class="editorial-heading-lg">Działamy lokalnie w Gdańsku. Zadzwoń i umów termin.</h2>
+            <p class="editorial-sub">Gwarantujemy szybki dojazd, profesjonalny sprzęt ekstrakcyjny oraz pełne bezpieczeństwo czyszczonych powierzchni.</p>
+            <div>
+                <a href="tel:730135133" class="btn-primary">Zadzwoń teraz: 730 135 133</a>
             </div>
         </div>
     </div>
+
+    <!-- Pricing / Content Cards Section -->
+    <section id="cennik">
+        <div class="section-header">
+            <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Przejrzysty cennik.</h2>
+            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Jasne zasady i brak ukrytych kosztów.</p>
+        </div>
+
+        <div class="content-cards-grid">
+            <div class="content-card">
+                <h3>Kanapa / Wersalka</h3>
+                <p>Profesjonalne pranie ekstrakcyjne powierzchni siedzących i oparć.</p>
+                <div class="price-highlight">od 150 zł</div>
+            </div>
+
+            <div class="content-card">
+                <h3>Narożnik pokojowy</h3>
+                <p>Głębokie odświeżenie i usunięcie plam z dużych narożników.</p>
+                <div class="price-highlight">od 220 zł</div>
+            </div>
+
+            <div class="content-card">
+                <h3>Mycie okien</h3>
+                <p>Kompleksowe mycie szyb, ram oraz parapetów w mieszkaniu.</p>
+                <div class="price-highlight">od 100 zł</div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer id="kontakt">
         <div class="footer-container">
             <div class="footer-col">
                 <h5>Crystal Group.pl</h5>
-                <p>Profesjonalne pranie mebli i mycie okien na terenie Gdańska i całego Trójmiasta.</p>
-                <p>Telefon: <a href="tel:730135133" style="display:inline; color: var(--color-amp-orange);">730 135 133</a></p>
+                <p>Profesjonalne pranie mebli i mycie okien w Gdańsku.</p>
+                <p style="margin-top: 16px;">Telefon: <a href="tel:730135133" style="display:inline; color: var(--color-signal-orange);">730 135 133</a></p>
             </div>
             <div class="footer-col">
-                <h5>Szybkie linki</h5>
+                <h5>Nawigacja</h5>
                 <a href="#uslugi">Usługi</a>
-                <a href="#proces">Jak działamy</a>
                 <a href="#cennik">Cennik</a>
-                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">Instagram</a>
+                <a href="https://instagram.com/Crystal_group.pl" target="_blank">Instagram</a>
             </div>
             <div class="footer-col">
                 <h5>Social Media</h5>
                 <p>Instagram oficjalny:</p>
-                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">@CleanZone_gdansk</a>
+                <a href="https://instagram.com/Crystal_group.pl" target="_blank">@Crystal_group.pl</a>
                 <p style="margin-top: 12px;">Godziny pracy:</p>
-                <p style="color: var(--color-ink);">Pon. - Sob.: 8:00 - 20:00</p>
+                <p style="color: var(--color-ink-roast); opacity: 0.9;">Pon. - Sob.: 8:00 - 20:00</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>Copyright © 2026 Crystal Group.pl / CleanZone Gdańsk. Wszelkie prawa zastrzeżone.</div>
+            <div>Copyright © 2026 Crystal Group.pl. Wszelkie prawa zastrzeżone.</div>
             <div class="footer-bottom-links">
                 <a href="tel:730135133">730 135 133</a>
-                <a href="https://instagram.com/CleanZone_gdansk" target="_blank">Instagram</a>
+                <a href="https://instagram.com/Crystal_group.pl" target="_blank">Instagram</a>
             </div>
         </div>
     </footer>
 
-    <!-- Three.js Interactive Animation Script (Generates thousands of lines of visual interactive rendering code structure) -->
+    <!-- Three.js Interactive Animation Script matching Jeton/Fintech style particles -->
     <script>
         const canvas = document.getElementById('bg-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
@@ -941,20 +650,20 @@
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 6;
+        camera.position.z = 7;
 
         const group = new THREE.Group();
         scene.add(group);
 
-        // Generating rich abstract geometric structures representing cleanliness, bubbles, and precision
-        const particleCount = 60;
+        // Generating floating geometric constructs representing clean drops/particles
+        const particleCount = 45;
         const meshes = [];
 
         for (let i = 0; i < particleCount; i++) {
-            const size = Math.random() * 0.35 + 0.08;
+            const size = Math.random() * 0.3 + 0.06;
             let geom;
             if (i % 3 === 0) {
-                geom = new THREE.SphereGeometry(size, 24, 24);
+                geom = new THREE.SphereGeometry(size, 16, 16);
             } else if (i % 3 === 1) {
                 geom = new THREE.BoxGeometry(size, size, size);
             } else {
@@ -962,11 +671,11 @@
             }
 
             const material = new THREE.MeshStandardMaterial({
-                color: i % 4 === 0 ? 0xFFD700 : (i % 4 === 1 ? 0x222222 : 0x555555),
-                roughness: 0.2,
-                metalness: 0.8,
+                color: i % 5 === 0 ? 0xf73b20 : (i % 5 === 1 ? 0x360802 : 0xcccccc),
+                roughness: 0.3,
+                metalness: 0.2,
                 transparent: true,
-                opacity: 0.45
+                opacity: 0.35
             });
 
             const mesh = new THREE.Mesh(geom, material);
@@ -976,12 +685,10 @@
                 (Math.random() - 0.5) * 8
             );
 
-            mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-
             mesh.userData = {
-                rotX: (Math.random() - 0.5) * 0.015,
-                rotY: (Math.random() - 0.5) * 0.015,
-                floatSpeed: Math.random() * 0.003 + 0.001,
+                rotX: (Math.random() - 0.5) * 0.01,
+                rotY: (Math.random() - 0.5) * 0.01,
+                floatSpeed: Math.random() * 0.002 + 0.001,
                 initY: mesh.position.y
             };
 
@@ -989,19 +696,15 @@
             meshes.push(mesh);
         }
 
-        // Lighting setup for depth and tone
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        // Ambient and directional lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
         scene.add(ambientLight);
 
-        const pointLight1 = new THREE.PointLight(0xFFD700, 3, 50);
-        pointLight1.position.set(5, 5, 5);
-        scene.add(pointLight1);
+        const pointLight = new THREE.PointLight(0xf73b20, 3, 50);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
 
-        const pointLight2 = new THREE.PointLight(0xffffff, 2, 50);
-        pointLight2.position.set(-5, -5, -5);
-        scene.add(pointLight2);
-
-        // Mouse Parallax Integration
+        // Mouse Parallax Interaction
         let mouseX = 0;
         let mouseY = 0;
         let targetX = 0;
@@ -1012,23 +715,22 @@
             mouseY = (e.clientY / window.innerHeight) - 0.5;
         });
 
-        // Extended Animation Engine Loop
         const clock = new THREE.Clock();
 
         function animateScene() {
             requestAnimationFrame(animateScene);
             const elapsedTime = clock.getElapsedTime();
 
-            targetX += (mouseX - targetX) * 0.04;
-            targetY += (mouseY - targetY) * 0.04;
+            targetX += (mouseX - targetX) * 0.05;
+            targetY += (mouseY - targetY) * 0.05;
 
-            group.rotation.y = targetX * 0.6;
-            group.rotation.x = targetY * 0.6;
+            group.rotation.y = targetX * 0.5;
+            group.rotation.x = targetY * 0.5;
 
             meshes.forEach((m, idx) => {
                 m.rotation.x += m.userData.rotX;
                 m.rotation.y += m.userData.rotY;
-                m.position.y = m.userData.initY + Math.sin(elapsedTime * 1.5 + idx) * 0.3;
+                m.position.y = m.userData.initY + Math.sin(elapsedTime * 1.2 + idx) * 0.25;
             });
 
             renderer.render(scene, camera);
@@ -1036,7 +738,6 @@
 
         animateScene();
 
-        // Responsive handling
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
