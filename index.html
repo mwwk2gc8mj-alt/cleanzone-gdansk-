@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleanzone Gdańsk — Profesjonalne czyszczenie mebli i tapicerki</title>
-    <meta name="description" content="Cleanzone Gdańsk — profesjonalna chemia i czyszczenie mebli, kanap, narożników, foteli i materaców w Gdańsku i okolicach. Sprawdź cennik!">
+    <title>Cleanzone Gdańsk – Profesjonalne Czyszczenie Mebli</title>
+    <meta name="description" content="Cleanzone Gdańsk – profesjonalna chemiczna czystka mebli, kanap, narożników, foteli i dywanów w Gdańsku.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --yellow: #FFD600;
             --yellow-dark: #E6C100;
-            --black: #0D0D0D;
-            --black-light: #1A1A1A;
+            --black: #0A0A0A;
+            --black-card: #141414;
             --gray: #2A2A2A;
+            --text-gray: #A0A0A0;
             --white: #FFFFFF;
-            --white-soft: #F5F5F5;
         }
 
         * {
@@ -30,50 +30,44 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: var(--black);
+            background-color: var(--black);
             color: var(--white);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Navigation */
-        nav {
+        /* HEADER */
+        header {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             z-index: 1000;
-            background: rgba(13, 13, 13, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 214, 0, 0.1);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
-        .logo-container {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
         }
 
         .logo {
-            font-size: 1.4rem;
+            font-size: 24px;
             font-weight: 800;
-            color: var(--yellow);
+            color: var(--white);
+            text-decoration: none;
             letter-spacing: 1px;
         }
 
         .logo span {
-            color: var(--white);
-            font-weight: 300;
+            color: var(--yellow);
         }
 
         .nav-links {
@@ -86,1147 +80,342 @@
         .nav-links a {
             color: var(--white);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
+            font-weight: 600;
+            font-size: 14px;
             transition: color 0.3s;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--yellow);
-            transition: width 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--yellow);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-phone {
-            background: var(--yellow);
+        .btn-call {
+            background-color: var(--yellow);
             color: var(--black);
-            padding: 10px 22px;
-            border-radius: 50px;
-            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            border: 2px solid var(--yellow);
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
         }
 
-        .nav-phone:hover {
-            background: transparent;
-            color: var(--yellow);
-            box-shadow: 0 0 15px rgba(255, 214, 0, 0.3);
+        .btn-call:hover {
+            background-color: var(--yellow-dark);
+            transform: scale(1.05);
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--yellow);
-            font-size: 1.8rem;
-            cursor: pointer;
-        }
-
-        /* Hero */
+        /* HERO SECTION */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 120px 5% 80px;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(255, 214, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(255, 214, 0, 0.06) 0%, transparent 40%);
-            z-index: 0;
-        }
-
-        .hero-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 214, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 214, 0, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: 0;
+            background: radial-gradient(circle at center, #1f1f1f 0%, var(--black) 100%);
+            text-align: center;
+            padding: 0 20px;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 900px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255, 214, 0, 0.1);
-            border: 1px solid rgba(255, 214, 0, 0.3);
-            color: var(--yellow);
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            animation: fadeInDown 1s ease;
+            max-width: 800px;
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.8rem);
+            font-size: clamp(36px, 5vw, 64px);
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            animation: fadeInUp 1s ease 0.2s both;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
         }
 
-        .hero h1 .highlight {
+        .hero h1 span {
             color: var(--yellow);
-            position: relative;
         }
 
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-gray);
             margin-bottom: 40px;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInUp 1s ease 0.4s both;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
         }
 
-        .hero-buttons {
+        .hero-btns {
             display: flex;
             gap: 20px;
             justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.6s both;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.7s;
         }
 
         .btn-primary {
             background: var(--yellow);
             color: var(--black);
-            padding: 16px 40px;
-            border-radius: 50px;
-            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 4px;
             font-weight: 700;
-            font-size: 1rem;
-            border: 2px solid var(--yellow);
+            text-decoration: none;
+            font-size: 16px;
             transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            box-shadow: 0 10px 30px rgba(255, 214, 0, 0.3);
         }
 
         .btn-primary:hover {
-            background: transparent;
-            color: var(--yellow);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 214, 0, 0.25);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            padding: 16px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--yellow);
-            color: var(--yellow);
+            background: var(--yellow-dark);
             transform: translateY(-3px);
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator span {
-            display: block;
-            width: 24px;
-            height: 40px;
-            border: 2px solid rgba(255, 214, 0, 0.4);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .scroll-indicator span::before {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: var(--yellow);
-            border-radius: 2px;
-            animation: scrollDown 2s infinite;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 5%;
-            position: relative;
-        }
-
-        .section-header {
+        /* INTERACTIVE 3D EXTRACTION DEMO */
+        .interactive-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
             text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .section-label {
-            color: var(--yellow);
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
         }
 
         .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: 36px;
             font-weight: 800;
-            line-height: 1.2;
-        }
-
-        /* About */
-        .about {
-            background: var(--black-light);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 60px;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about-text h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            margin-bottom: 25px;
-        }
-
-        .about-text p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 25px 15px;
-            background: var(--gray);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 214, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-item:hover {
-            border-color: rgba(255, 214, 0, 0.4);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--yellow);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 5px;
-        }
-
-        .about-visual {
-            position: relative;
-        }
-
-        .about-visual::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 100%;
-            height: 100%;
-            border: 3px solid var(--yellow);
-            border-radius: 24px;
-            z-index: 0;
-            opacity: 0.6;
-        }
-
-        .about-visual-inner {
-            background: var(--gray);
-            border-radius: 24px;
-            padding: 50px;
-            position: relative;
-            z-index: 1;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border: 1px solid rgba(255, 214, 0, 0.15);
-        }
-
-        .about-visual-inner .icon {
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            animation: floatIcon 3s ease-in-out infinite;
-        }
-
-        .about-visual-inner h3 {
-            font-size: 1.5rem;
             margin-bottom: 15px;
         }
 
-        .about-visual-inner p {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
+        .section-subtitle {
+            color: var(--text-gray);
+            font-size: 18px;
+            margin-bottom: 60px;
         }
 
-        /* Services */
+        .vacuum-card {
+            background: var(--black-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .vacuum-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            border-color: var(--yellow);
+        }
+
+        .cleaning-visual {
+            height: 350px;
+            background: linear-gradient(45deg, #111, #222);
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .dirty-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff4757;
+            position: absolute;
+            transition: opacity 0.8s ease, filter 0.8s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .clean-text {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--yellow);
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .extractor-head {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            background: #333;
+            border: 3px solid var(--yellow);
+            border-radius: 30px;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 30px rgba(255, 214, 0, 0.5);
+            animation: moveExtractor 4s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .extractor-head::after {
+            content: '';
+            width: 80px;
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+
+        @keyframes moveExtractor {
+            0% { left: 10%; }
+            50% { left: 75%; }
+            100% { left: 10%; }
+        }
+
+        /* SERVICES GRID */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px 100px 20px;
         }
 
-        .service-card {
-            background: var(--black-light);
-            border: 1px solid rgba(255, 214, 0, 0.1);
-            border-radius: 20px;
+        .service-box {
+            background: var(--black-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 40px 30px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--yellow);
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .service-card:hover {
-            border-color: rgba(255, 214, 0, 0.4);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 214, 0, 0.1);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2rem;
-            transition: all 0.3s;
-        }
-
-        .service-card:hover .service-icon {
-            background: var(--yellow);
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .service-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
-        .service-card p {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-            font-size: 0.95px;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            background: var(--black-light);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .price-card {
-            background: var(--gray);
-            border-radius: 20px;
-            padding: 35px 25px;
-            border: 1px solid rgba(255, 214, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.3s ease;
+            border-radius: 16px;
+            transition: all 0.4s ease;
             position: relative;
         }
 
-        .price-card:hover {
+        .service-box:hover {
             border-color: var(--yellow);
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(255, 214, 0, 0.1);
         }
 
-        .price-card.featured {
-            border: 2px solid var(--yellow);
-            background: linear-gradient(145deg, var(--gray) 0%, rgba(255, 214, 0, 0.05) 100%);
-        }
-
-        .price-badge {
-            position: absolute;
-            top: -12px;
-            right: 25px;
-            background: var(--yellow);
-            color: var(--black);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .price-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--white);
-        }
-
-        .price-list {
-            list-style: none;
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .price-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.8);
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-            padding-bottom: 8px;
-        }
-
-        .price-list li span.cost {
-            font-weight: 700;
-            color: var(--yellow);
-            font-size: 1.1rem;
-        }
-
-        .price-btn {
-            display: block;
-            text-align: center;
-            background: rgba(255, 214, 0, 0.1);
-            color: var(--yellow);
-            padding: 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 214, 0, 0.3);
-        }
-
-        .price-card:hover .price-btn, .price-btn:hover {
-            background: var(--yellow);
-            color: var(--black);
-        }
-
-        /* Why Us */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 30px;
-            background: var(--black-light);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 214, 0, 0.05);
-            transition: all 0.3s;
-        }
-
-        .feature-item:hover {
-            border-color: rgba(255, 214, 0, 0.3);
-            transform: translateX(5px);
-            background: var(--gray);
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            min-width: 50px;
-            background: var(--yellow);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--black);
-        }
-
-        .feature-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .feature-text p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        /* Testimonials (Reviews Carousel/Grid) */
-        .testimonials {
-            background: var(--black-light);
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .testimonial-card {
-            background: var(--gray);
-            border-radius: 20px;
-            padding: 35px;
-            border: 1px solid rgba(255, 214, 0, 0.1);
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 214, 0, 0.3);
-        }
-
-        .stars {
-            color: var(--yellow);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-
-        .testimonial-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-style: italic;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-
-        .client-info h5 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--white);
-        }
-
-        .client-info span {
-            font-size: 0.8rem;
-            color: var(--yellow);
-        }
-
-        /* CTA */
-        .cta {
-            background: var(--yellow);
-            color: var(--black);
-            text-align: center;
-            padding: 100px 5%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .cta h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
+        .service-icon {
+            font-size: 40px;
             margin-bottom: 20px;
         }
 
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 35px;
-            opacity: 0.85;
+        .service-box h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
 
-        .cta-phone {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--black);
-            color: var(--yellow);
-            padding: 20px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 800;
-            transition: all 0.3s;
-            border: 3px solid var(--black);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .service-box p {
+            color: var(--text-gray);
+            font-size: 15px;
         }
 
-        .cta-phone:hover {
-            background: transparent;
-            color: var(--black);
-            transform: scale(1.05);
-        }
-
-        .cta-social {
-            margin-top: 35px;
-        }
-
-        .cta-social a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--black);
-            color: var(--white);
-            padding: 12px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            border: 2px solid var(--black);
-        }
-
-        .cta-social a:hover {
-            background: transparent;
-            color: var(--black);
-            border-color: var(--black);
-        }
-
-        /* Footer */
+        /* FOOTER */
         footer {
-            background: var(--black);
-            padding: 50px 5%;
+            background: #050505;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            border-top: 1px solid rgba(255, 214, 0, 0.1);
-        }
-
-        footer .logo-container {
-            justify-content: center;
-            margin-bottom: 20px;
         }
 
         footer p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-size: 14px;
         }
 
-        /* Animations & Reveal */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        @keyframes scrollDown {
-            0% { opacity: 1; top: 6px; }
-            100% { opacity: 0; top: 22px; }
-        }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-stats {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 600px) {
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-            .features-grid, .services-grid, .pricing-grid, .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-            .cta-phone {
-                font-size: 1.2rem;
-                padding: 16px 30px;
-            }
+        /* RESPONSIVE */
+        @media(max-width: 768px) {
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav id="navbar">
-        <a href="#home" class="logo-container">
-            <!-- Сюда вставлен логотип (замени text на картинку логотипа при желании, здесь используется лого-иконка или текст вместе с вашим стилем) -->
-            <div class="logo">CLEAN<span>ZONE</span></div>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#home">Strona główna</a></li>
-            <li><a href="#o-nas">O nas</a></li>
-            <li><a href="#uslugi">Usługi</a></li>
-            <li><a href="#cennik">Cennik</a></li>
-            <li><a href="#dlaczego-my">Dlaczego my</a></li>
-            <li><a href="#opinie">Opinie</a></li>
-            <li><a href="#kontakt">Kontakt</a></li>
-        </ul>
-        <a href="tel:+48730135133" class="nav-phone">730 135 133</a>
-        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-    </nav>
+    <!-- HEADER -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">CLEANZONE<span>.</span>PL</a>
+            <ul class="nav-links">
+                <li><a href="#uslugi">Usługi</a></li>
+                <li><a href="#technologia">Technologia</a></li>
+                <li><a href="https://instagram.com/cleanzone_gdansk" target="_blank">Instagram</a></li>
+            </ul>
+            <a href="tel:730135133" class="btn-call">730 135 133</a>
+        </div>
+    </header>
 
-    <!-- Hero -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-grid"></div>
+    <!-- HERO -->
+    <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">Gdańsk & okolice</div>
-            <h1>Profesjonalna <span class="highlight">химчистка mebli</span> w Twoim domu</h1>
-            <p>Cleanzone Gdańsk — Twoje meble zasługują na najlepszą opiekę. Skutecznie usuwamy trudne plamy, uporczywe zapachy i alergeny z kanap, narożników, foteli i materaców.</p>
-            <div class="hero-buttons">
-                <a href="tel:+48730135133" class="btn-primary">
-                    <span>📞</span> Zadzwoń teraz
-                </a>
-                <a href="#cennik" class="btn-secondary">Sprawdź cennik</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <span></span>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section class="about" id="o-nas">
-        <div class="about-grid">
-            <div class="about-text reveal">
-                <div class="section-label">O nas</div>
-                <h2>Twój mebel — <span style="color: var(--yellow);">nasza pasja</span></h2>
-                <p>Cleanzone Gdańsk to zespół profesjonalistów, którzy każdego dnia przywracają meblom tapicerowanym ich pierwotny blask. Używamy nowoczesnego sprzętu ekstrakcyjnego i certyfikowanych, ekologicznych środków bezpiecznych dla dzieci i zwierząt domowych.</p>
-                <p>Działamy mobilnie na terenie Gdańska i okolic. Przyjeżdżamy pod wskazany adres ze wszystkim, co niezbędne — Ty nie musisz się o nic martwić!</p>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Zadowolonych klientów</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Zaangażowania</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24h</span>
-                        <span class="stat-label">Szybka realizacja</span>
-                    </div>
-                </div>
-            </div>
-            <div class="about-visual reveal">
-                <div class="about-visual-inner">
-                    <div class="icon">✨</div>
-                    <h3>Gwarancja jakości</h3>
-                    <p>Stawiamy na bezkompromisową czystość, dbałość o detale i pełne zadowolenie każdego klienta.</p>
-                </div>
+            <h1>Profesjonalne pranie mebli w <span>Gdańsku</span></h1>
+            <p>Najwyższa jakość czyszczenia kanap, narożników i foteli. Przywracamy świeżość i idealny wygląd Twoim meblom.</p>
+            <div class="hero-btns">
+                <a href="tel:730135133" class="btn-primary">Zamów czyszczenie</a>
             </div>
         </div>
     </section>
 
-    <!-- Services -->
-    <section id="uslugi">
-        <div class="section-header reveal">
-            <div class="section-label">Oferta</div>
-            <h2 class="section-title">Nasze <span style="color: var(--yellow);">usługi</span></h2>
-        </div>
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-icon">🛋️</div>
-                <h3>Czyszczenie kanap</h3>
-                <p>Głęboka ekstrakcja brudu z kanap dwu- i trzyosobowych. Usuwanie plam, kurzu i roztoczy.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🛏️</div>
-                <h3>Czyszczenie narożników</h3>
-                <p>Kompleksowa pielęgnacja narożników standardowych oraz nowoczesnych systemów modułowych w kształcie litery U.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🪑</div>
-                <h3>Czyszczenie foteli i krzeseł</h3>
-                <p>Odświeżanie tapicerki foteli salonowych, biurowych oraz krzeseł kuchennych (ze спинкой i bez).</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🛌</div>
-                <h3>Czyszczenie materaców</h3>
-                <p>Higieniczne pranie materaców jedno- i dwustronnych. Skuteczna eliminacja roztoczy i plam potu.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🧹</div>
-                <h3>Czyszczenie dywanów</h3>
-                <p>Pranie ekstrakcyjne dywanów oraz wykładzin dywanowych w domach i biurach.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🚗</div>
-                <h3>Tapicerka samochodowa</h3>
-                <p>Detailing wnętrza auta — dokładne pranie foteli, kanap oraz elementów materiałowych.</p>
+    <!-- INTERACTIVE DEMO (ANIMACJA EKSTRAKCJI) -->
+    <section class="interactive-section" id="technologia">
+        <h2 class="section-title">Technologia głębokiego czyszczenia</h2>
+        <p class="section-subtitle">Zobacz, jak profesjonalny ekstraktor usuwa nawet najgłębszy brud i roztocza</p>
+        
+        <div class="vacuum-card">
+            <div class="cleaning-visual" id="cleaningDemo">
+                <div class="dirty-text" id="dirtyText">PLAMY, BRUD I KURZ</div>
+                <div class="clean-text" id="cleanText">IDEALNA CZYSTOŚĆ I ŚWIEŻOŚĆ</div>
+                <div class="extractor-head"></div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="cennik">
-        <div class="section-header reveal">
-            <div class="section-label">Przejrzyste ceny</div>
-            <h2 class="section-title">Nasz <span style="color: var(--yellow);">cennik</span></h2>
-            <p style="color: rgba(255,255,255,0.6); margin-top: 10px;">Wszystkie ceny są orientacyjne i mogą nieznacznie różnić się w zależności od stopnia zabrudzenia.</p>
+    <!-- SERVICES -->
+    <section class="services-grid" id="uslugi">
+        <div class="service-box">
+            <div class="service-icon">🛋️</div>
+            <h3>Pranie kanap</h3>
+            <p>Głęboka ekstrakcja brudu z kanap dwu- i trzyosobowych. Usuwanie plam, kurzu i roztoczy.</p>
         </div>
-        <div class="pricing-grid">
-            <!-- Kanapy -->
-            <div class="price-card reveal">
-                <div>
-                    <h3 class="price-title">🛋️ Kanapy i Sofy</h3>
-                    <ul class="price-list">
-                        <li>Kanapa 2-osobowa <span class="cost">od 160 zł</span></li>
-                        <li>Kanapa 3-4-osobowa <span class="cost">od 200 zł</span></li>
-                        <li>Rozkładana część kanapy <span class="cost">+40 zł</span></li>
-                    </ul>
-                </div>
-                <a href="tel:+48730135133" class="price-btn">Zamów wycenę</a>
-            </div>
-
-            <!-- Narożniki (Featured) -->
-            <div class="price-card featured reveal">
-                <div class="price-badge">Najpopularniejsze</div>
-                <div>
-                    <h3 class="price-title">🛏️ Narożniki</h3>
-                    <ul class="price-list">
-                        <li>Narożnik (4-5 os.) <span class="cost">od 240 zł</span></li>
-                        <li>Narożnik w kształcie litery U <span class="cost">od 280 zł</span></li>
-                        <li>Dodatkowa funkcja spania <span class="cost">+40 zł</span></li>
-                    </ul>
-                </div>
-                <a href="tel:+48730135133" class="price-btn">Zamów wycenę</a>
-            </div>
-
-            <!-- Fotele i Krzesła -->
-            <div class="price-card reveal">
-                <div>
-                    <h3 class="price-title">🪑 Fotele i Krzesła</h3>
-                    <ul class="price-list">
-                        <li>Klasyczny fotel <span class="cost">od 60 zł</span></li>
-                        <li>Krzesło ze спинкой <span class="cost">35 zł</span></li>
-                        <li>Krzesło kuchenne bez спинки <span class="cost">25 zł</span></li>
-                    </ul>
-                </div>
-                <a href="tel:+48730135133" class="price-btn">Zamów wycenę</a>
-            </div>
-
-            <!-- Materace -->
-            <div class="price-card reveal">
-                <div>
-                    <h3 class="price-title">🛌 Materace</h3>
-                    <ul class="price-list">
-                        <li>Mały materac (jednostronny) <span class="cost">80 zł</span></li>
-                        <li>Mały materac (dwustronny) <span class="cost">160 zł</span></li>
-                        <li>Duży materac (jednostronny) <span class="cost">140 zł</span></li>
-                        <li>Duży materac (dwustronny) <span class="cost">220 zł</span></li>
-                    </ul>
-                </div>
-                <a href="tel:+48730135133" class="price-btn">Zamów wycenę</a>
-            </div>
+        <div class="service-box">
+            <div class="service-icon">🪑</div>
+            <h3>Pranie narożników</h3>
+            <p>Profesjonalna pielęgnacja narożników standardowych oraz nowoczesnych systemów modułowych.</p>
+        </div>
+        <div class="service-box">
+            <div class="service-icon">💺</div>
+            <h3>Pranie foteli i krzeseł</h3>
+            <p>Skuteczne czyszczenie tapicerki foteli salonowych, biurowych oraz krzeseł kuchennych.</p>
         </div>
     </section>
 
-    <!-- Why Us -->
-    <section class="why-us" id="dlaczego-my">
-        <div class="section-header reveal">
-            <div class="section-label">Zalety</div>
-            <h2 class="section-title">Dlaczego <span style="color: var(--yellow);">Cleanzone?</span></h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-item reveal">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-text">
-                    <h4>Szybka realizacja</h4>
-                    <p>Większość zleceń realizujemy w ciągu 24-48h od kontaktu.</p>
-                </div>
-            </div>
-            <div class="feature-item reveal">
-                <div class="feature-icon">🌿</div>
-                <div class="feature-text">
-                    <h4>Eko środki</h4>
-                    <p>Używamy bezpiecznych, profesjonalnych preparatów chemicznych bez szkodliwych oparów.</p>
-                </div>
-            </div>
-            <div class="feature-item reveal">
-                <div class="feature-icon">🏠</div>
-                <div class="feature-text">
-                    <h4>Dojazd do klienta</h4>
-                    <p>Pracujemy u Ciebie w domu na terenie Gdańska i okolic — zero zachodu z transportem.</p>
-                </div>
-            </div>
-            <div class="feature-item reveal">
-                <div class="feature-icon">💰</div>
-                <div class="feature-text">
-                    <h4>Konkurencyjne ceny</h4>
-                    <p>Jasny i przejrzysty cennik bez ukrytych kosztów.</p>
-                </div>
-            </div>
-            <div class="feature-item reveal">
-                <div class="feature-icon">🛡️</div>
-                <div class="feature-text">
-                    <h4>Gwarancja satysfakcji</h4>
-                    <p>Dbamy o każdy detal, by efekt przerósł Twoje oczekiwania.</p>
-                </div>
-            </div>
-            <div class="feature-item reveal">
-                <div class="feature-icon">📅</div>
-                <div class="feature-text">
-                    <h4>Elastyczne terminy</h4>
-                    <p>Dostosowujemy się do Twojego grafiku — pracujemy również w weekendy.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials / Opinie -->
-    <section class="testimonials" id="opinie">
-        <div class="section-header reveal">
-            <div class="section-label">Opinie klientów</div>
-            <h2 class="section-title">Co mówią o <span style="color: var(--yellow);">nas?</span></h2>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Jestem zachwycona efektem! Narożnik wygląda jak nowy, a plamy po kawie i dziecku zniknęły bez śladu. Bardzo miła obsługa i punktualność. Polecam z całego serca!"</p>
-                <div class="client-info">
-                    <h5>Karolina M.</h5>
-                    <span>Gdańsk Przymorze</span>
-                </div>
-            </div>
-            <div class="testimonial-card reveal">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Szybki kontakt, świetna cena za duży narożnik w kształcie litery U i co najważniejsze — kanapa wyschła zaskakująco szybko. Profesjonalne podejście do klienta."</p>
-                <div class="client-info">
-                    <h5>Tomasz W.</h5>
-                    <span>Gdańsk Śródmieście</span>
-                </div>
-            </div>
-            <div class="testimonial-card reveal">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Zamawiałem czyszczenie materaca oraz fotela. Wszystko wykonane idealnie, zniknął też nieprzyjemny zapach od psa. Na pewno skorzystam ponownie!"</p>
-                <div class="client-info">
-                    <h5>Anna K.</h5>
-                    <span>Sopot</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta" id="kontakt">
-        <div class="cta-content reveal">
-            <h2>Gotowy na świeże meble?</h2>
-            <p>Zadzwoń lub napisz na Instagramie — wycenimy i umówimy dogodny termin!</p>
-            <a href="tel:+48730135133" class="cta-phone">
-                <span>📞</span> 730 135 133
-            </a>
-            <div class="cta-social">
-                <a href="https://www.instagram.com/cleanzone_gdansk?igsh=Y2luYWtvbDNreGcy&utm_source=qr" target="_blank">
-                    📸 Instagram: @cleanzone_gdansk
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <div class="logo-container">
-            <div class="logo">CLEAN<span>ZONE</span></div>
-        </div>
-        <p>Cleanzone Gdańsk — Profesjonalne czyszczenie mebli i tapicerki | tel. 730 135 133 | Gdańsk i okolice</p>
-        <p style="margin-top: 10px; font-size: 0.8rem;">© 2026 Cleanzone Gdańsk. Wszelkie prawa zastrzeżone.</p>
+        <p>&copy; 2026 Cleanzone Gdańsk. Wszelkie prawa zastrzeżone.</p>
     </footer>
 
     <script>
-        // Scroll reveal
-        const revealElements = document.querySelectorAll('.reveal');
-
-        const revealOnScroll = () => {
-            revealElements.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                const revealPoint = 100;
-
-                if (elementTop < windowHeight - revealPoint) {
-                    el.classList.add('active');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
-
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.style.padding = '12px 5%';
-                navbar.style.background = 'rgba(13, 13, 13, 0.95)';
-            } else {
-                navbar.style.padding = '15px 5%';
-                navbar.style.background = 'rgba(13, 13, 13, 0.85)';
+        // Интерактивный эффект появления чистой поверхности при скролле или анимации
+        window.addEventListener('scroll', function() {
+            const demo = document.getElementById('cleaningDemo');
+            const dirty = document.getElementById('dirtyText');
+            const clean = document.getElementById('cleanText');
+            
+            const rect = demo.getBoundingClientRect();
+            if(rect.top < window.innerHeight && rect.bottom >= 0) {
+                // Плавное переключение текста для демонстрации очистки
+                setTimeout(() => {
+                    dirty.style.opacity = '0.2';
+                    dirty.style.filter = 'blur(5px)';
+                    clean.style.opacity = '1';
+                    clean.style.transform = 'scale(1)';
+                }, 1000);
             }
         });
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            const isFlex = navLinks.style.display === 'flex';
-            navLinks.style.display = isFlex ? 'none' : 'flex';
-            if (!isFlex) {
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '70px';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.background = 'rgba(13, 13, 13, 0.98)';
-                navLinks.style.padding = '25px';
-                navLinks.style.gap = '20px';
-                navLinks.style.borderBottom = '1px solid rgba(255, 214, 0, 0.2)';
-            }
-        }
     </script>
-
 </body>
 </html>
