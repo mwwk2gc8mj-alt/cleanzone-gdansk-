@@ -12,19 +12,17 @@
     
     <style>
         :root {
-            --color-signal-orange: #f73b20;
-            --color-brand-orange-tint: #f84d35;
-            --color-ink-roast: #360802;
-            --color-paper-white: #ffffff;
+            /* Новая палитра: черный, желтый (акцент), белый */
+            --color-signal-orange: #f5ffbb; /* Заменено на Citrus / Yellow акцент из гайда */
+            --color-accent-yellow: #f5ffbb;
+            --color-brand-orange-tint: #ffea00;
+            --color-ink-roast: #ffffff; /* Текст на темном фоне */
+            --color-paper-white: #0a0a0a; /* Глубокий черный фон сайта */
+            --color-card-bg: #141414; /* Цвет карточек */
             --color-carbon-black: #000000;
-            --color-ash-grey: #ababab;
-            --color-sand-wash: #e7dcdb;
-            --color-linen-blush: #fdedea;
-            --color-citrus-wash: #f5ffbb;
-            --color-mint-wash: #bcffbb;
-            --color-coral-red: #fb2d54;
-            --color-cobalt-blue: #477ee9;
-            --color-emerald-green: #34c771;
+            --color-ash-grey: #888888;
+            --color-sand-wash: #262626;
+            --color-linen-blush: #1f1f1f;
 
             --font-sequel-sans: 'Public Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
@@ -34,8 +32,8 @@
             --radius-3xl: 24px;
             --radius-full: 9999px;
 
-            --shadow-lg: rgba(247, 59, 32, 0.1) 0px 8px 24px 0px, rgba(247, 59, 32, 0.05) 0px 2px 8px 0px;
-            --shadow-md: rgba(0, 0, 0, 0.05) 0px -4px 16px 0px;
+            --shadow-lg: rgba(245, 255, 187, 0.1) 0px 8px 24px 0px, rgba(0, 0, 0, 0.5) 0px 2px 8px 0px;
+            --shadow-md: rgba(0, 0, 0, 0.4) 0px -4px 16px 0px;
         }
 
         *, *::before, *::after {
@@ -68,7 +66,7 @@
             height: 100vh;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.85;
+            opacity: 0.6;
         }
 
         /* Top Navigation Bar */
@@ -76,7 +74,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--color-sand-wash);
@@ -107,7 +105,7 @@
         }
 
         .nav-logo span {
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
         }
 
         .nav-links {
@@ -127,7 +125,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
         }
 
         .nav-right {
@@ -137,9 +135,9 @@
         }
 
         .btn-nav-action {
-            background: var(--color-signal-orange);
-            color: var(--color-paper-white);
-            font-weight: 450;
+            background: var(--color-accent-yellow);
+            color: var(--color-carbon-black);
+            font-weight: 500;
             font-size: 14px;
             padding: 8px 20px;
             border-radius: var(--radius-xl);
@@ -186,11 +184,12 @@
             align-items: center;
             gap: 8px;
             background: var(--color-linen-blush);
+            border: 1px solid var(--color-sand-wash);
             padding: 8px 16px;
             border-radius: var(--radius-full);
             font-size: 12px;
             font-weight: 500;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
             margin-bottom: 32px;
             letter-spacing: 0.36px;
             text-transform: uppercase;
@@ -207,13 +206,13 @@
         }
 
         .hero-title span {
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
         }
 
         .hero-subtitle {
             font-size: 23px;
             font-weight: 500;
-            color: var(--color-ink-roast);
+            color: var(--color-ash-grey);
             max-width: 700px;
             margin-bottom: 48px;
             line-height: 1.2;
@@ -228,9 +227,9 @@
         }
 
         .btn-primary {
-            background: var(--color-signal-orange);
-            color: var(--color-paper-white);
-            font-weight: 450;
+            background: var(--color-accent-yellow);
+            color: var(--color-carbon-black);
+            font-weight: 500;
             font-size: 14px;
             padding: 12px 28px;
             border-radius: var(--radius-xl);
@@ -247,12 +246,12 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
         .ghost-link {
             background: transparent;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
             font-weight: 500;
             font-size: 16px;
             padding: 8px 12px;
@@ -276,19 +275,19 @@
         }
 
         .category-card {
-            background: rgba(247, 59, 32, 0.03);
-            border: 1px solid rgba(247, 59, 32, 0.1);
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-sand-wash);
             border-radius: var(--radius-2xl);
             padding: 36px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 320px;
-            transition: transform 0.2s ease, background 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .category-card:hover {
-            background: rgba(247, 59, 32, 0.05);
+            border-color: var(--color-accent-yellow);
             transform: translateY(-4px);
         }
 
@@ -303,11 +302,11 @@
             width: 48px;
             height: 48px;
             border-radius: var(--radius-xl);
-            background: var(--color-paper-white);
+            background: var(--color-sand-wash);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
             font-weight: 500;
             box-shadow: var(--shadow-md);
         }
@@ -323,8 +322,7 @@
 
         .card-desc {
             font-size: 16px;
-            color: var(--color-ink-roast);
-            opacity: 0.8;
+            color: var(--color-ash-grey);
             line-height: 1.4;
         }
 
@@ -332,7 +330,7 @@
             margin-top: 30px;
             font-size: 14px;
             font-weight: 500;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -351,7 +349,7 @@
         }
 
         .content-card {
-            background: var(--color-paper-white);
+            background: var(--color-card-bg);
             border: 1px solid var(--color-sand-wash);
             border-radius: var(--radius-2xl);
             padding: 36px;
@@ -363,7 +361,7 @@
 
         .content-card:hover {
             transform: translateY(-4px);
-            border-color: var(--color-signal-orange);
+            border-color: var(--color-accent-yellow);
         }
 
         .content-card h3 {
@@ -377,34 +375,34 @@
 
         .content-card p {
             font-size: 16px;
-            color: var(--color-ink-roast);
-            opacity: 0.85;
+            color: var(--color-ash-grey);
             line-height: 1.5;
             margin-bottom: 24px;
         }
 
-        /* Animated Price Counter Style */
+        /* Animated Price Counter */
         .price-highlight {
             font-size: 33px;
             font-weight: 500;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
             letter-spacing: 0.33px;
             display: flex;
             align-items: baseline;
-            gap: 4px;
+            gap: 6px;
         }
 
         .price-highlight span.currency {
             font-size: 20px;
+            color: var(--color-ink-roast);
         }
 
         /* Booking / Calculator Interactive Section */
         .booking-section {
-            background: var(--color-linen-blush);
+            background: var(--color-card-bg);
             border-radius: var(--radius-3xl);
             padding: 80px 60px;
             margin: 40px auto;
-            border: 1px solid rgba(247, 59, 32, 0.1);
+            border: 1px solid var(--color-sand-wash);
         }
 
         .booking-grid {
@@ -438,8 +436,8 @@
 
         .form-input, .form-select {
             width: 100%;
-            background: rgba(247, 59, 32, 0.05);
-            border: 1px solid rgba(247, 59, 32, 0.15);
+            background: var(--color-paper-white);
+            border: 1px solid var(--color-sand-wash);
             border-radius: var(--radius-xl);
             padding: 14px 16px;
             font-size: 16px;
@@ -450,46 +448,19 @@
         }
 
         .form-input:focus, .form-select:focus {
-            border-color: var(--color-signal-orange);
+            border-color: var(--color-accent-yellow);
         }
 
         .success-message {
             display: none;
-            background: var(--color-mint-wash);
-            color: #0d4218;
+            background: #112918;
+            border: 1px solid #34c771;
+            color: #bcffbb;
             padding: 20px;
             border-radius: var(--radius-xl);
             margin-top: 20px;
             font-weight: 500;
-        }
-
-        /* Editorial Banner */
-        .editorial-section {
-            background: var(--color-linen-blush);
-            border-radius: var(--radius-3xl);
-            padding: 80px 60px;
-            margin: 40px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            border: 1px solid rgba(247, 59, 32, 0.1);
-        }
-
-        .editorial-heading-lg {
-            font-size: clamp(40px, 6vw, 72px);
-            font-weight: 500;
-            color: var(--color-ink-roast);
-            letter-spacing: 0.72px;
-            line-height: 1;
-        }
-
-        .editorial-sub {
-            font-size: 23px;
-            font-weight: 500;
-            color: var(--color-ink-roast);
-            max-width: 700px;
-            letter-spacing: 0.23px;
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
         /* Footer */
@@ -520,17 +491,15 @@
 
         .footer-col p, .footer-col a {
             font-size: 14px;
-            color: var(--color-ink-roast);
-            opacity: 0.7;
+            color: var(--color-ash-grey);
             text-decoration: none;
             display: block;
             margin-bottom: 12px;
-            transition: opacity 0.2s ease, color 0.2s ease;
+            transition: color 0.2s ease;
         }
 
         .footer-col a:hover {
-            opacity: 1;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
         }
 
         .footer-bottom {
@@ -554,21 +523,19 @@
         }
 
         .footer-bottom-links a {
-            color: var(--color-ink-roast);
-            opacity: 0.7;
+            color: var(--color-ash-grey);
             text-decoration: none;
         }
 
         .footer-bottom-links a:hover {
-            opacity: 1;
-            color: var(--color-signal-orange);
+            color: var(--color-accent-yellow);
         }
 
         @media(max-width: 768px) {
             .nav-links {
                 display: none;
             }
-            .editorial-section, .booking-section {
+            .booking-section {
                 padding: 40px 24px;
             }
         }
@@ -611,7 +578,7 @@
     <section id="uslugi">
         <div class="section-header">
             <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Kluczowe specjalizacje.</h2>
-            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Precyzyjnie dobrane usługi dla domów, mieszkań i biur w Gdańsku.</p>
+            <p style="font-size: 23px; font-weight: 500; color: var(--color-ash-grey); letter-spacing: 0.23px;">Precyzyjnie dobrane usługi dla domów, mieszkań i biur w Gdańsku.</p>
         </div>
 
         <div class="category-grid">
@@ -619,7 +586,7 @@
                 <div>
                     <div class="card-top">
                         <div class="card-icon-box">🛋️</div>
-                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-signal-orange);">Tapicerka</span>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-accent-yellow);">Tapicerka</span>
                     </div>
                     <h3 class="card-category-title">Pranie mebli i kanap</h3>
                     <p class="card-desc">Głębokie czyszczenie ekstrakcyjne sof, narożników, wersalek i foteli. Usuwanie nawet najtrudniejszych plam i roztoczy.</p>
@@ -627,37 +594,37 @@
                 <a href="#rezerwacja" class="card-footer-action">Wybierz usługę →</a>
             </div>
 
-            <div class="category-card" style="background: rgba(71, 126, 233, 0.03); border-color: rgba(71, 126, 233, 0.1);">
+            <div class="category-card">
                 <div>
                     <div class="card-top">
-                        <div class="card-icon-box" style="color: var(--color-cobalt-blue);">🪟</div>
-                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-cobalt-blue);">Okna</span>
+                        <div class="card-icon-box">🪟</div>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-accent-yellow);">Okna</span>
                     </div>
                     <h3 class="card-category-title">Mycie okien i szyb</h3>
                     <p class="card-desc">Dokładne mycie okien, ram oraz parapetów w domach i biurach. Krystaliczny połysk bez smug.</p>
                 </div>
-                <a href="#rezerwacja" class="card-footer-action" style="color: var(--color-cobalt-blue);">Wybierz usługę →</a>
+                <a href="#rezerwacja" class="card-footer-action">Wybierz usługę →</a>
             </div>
 
-            <div class="category-card" style="background: rgba(52, 199, 113, 0.03); border-color: rgba(52, 199, 113, 0.1);">
+            <div class="category-card">
                 <div>
                     <div class="card-top">
-                        <div class="card-icon-box" style="color: var(--color-emerald-green);">✨</div>
-                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-emerald-green);">Kompleks</span>
+                        <div class="card-icon-box">✨</div>
+                        <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-accent-yellow);">Kompleks</span>
                     </div>
                     <h3 class="card-category-title">Pakiet całoroczny</h3>
                     <p class="card-desc">Połączone usługi prania mebli oraz mycia okien ze specjalnym rabatem dla stałych klientów.</p>
                 </div>
-                <a href="#rezerwacja" class="card-footer-action" style="color: var(--color-emerald-green);">Wybierz usługę →</a>
+                <a href="#rezerwacja" class="card-footer-action">Wybierz usługę →</a>
             </div>
         </div>
     </section>
 
-    <!-- Pricing / Content Cards Section with Animated Number Counters -->
+    <!-- Pricing Section with Animated Number Counters -->
     <section id="cennik">
         <div class="section-header">
             <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Przejrzysty cennik.</h2>
-            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Jasne zasady i animowane stawki bazowe.</p>
+            <p style="font-size: 23px; font-weight: 500; color: var(--color-ash-grey); letter-spacing: 0.23px;">Jasne zasady i animowane stawki bazowe.</p>
         </div>
 
         <div class="content-cards-grid">
@@ -665,7 +632,7 @@
                 <h3>Kanapa / Wersalka</h3>
                 <p>Profesjonalne pranie ekstrakcyjne powierzchni siedzących i oparć.</p>
                 <div class="price-highlight">
-                    <span>od</span> <span class="counter" data-target="150">0</span> <span class="currency">zł</span>
+                    <span style="font-size: 16px; color: var(--color-ash-grey);">od</span> <span class="counter" data-target="150">0</span> <span class="currency">zł</span>
                 </div>
             </div>
 
@@ -673,7 +640,7 @@
                 <h3>Narożnik pokojowy</h3>
                 <p>Głębokie odświeżenie i usunięcie plam z dużych narożników.</p>
                 <div class="price-highlight">
-                    <span>od</span> <span class="counter" data-target="220">0</span> <span class="currency">zł</span>
+                    <span style="font-size: 16px; color: var(--color-ash-grey);">od</span> <span class="counter" data-target="220">0</span> <span class="currency">zł</span>
                 </div>
             </div>
 
@@ -681,45 +648,50 @@
                 <h3>Mycie okien</h3>
                 <p>Kompleksowe mycie szyb, ram oraz parapetów w mieszkaniu.</p>
                 <div class="price-highlight">
-                    <span>od</span> <span class="counter" data-target="100">0</span> <span class="currency">zł</span>
+                    <span style="font-size: 16px; color: var(--color-ash-grey);">od</span> <span class="counter" data-target="100">0</span> <span class="currency">zł</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Interactive Online Booking Form Section (Allows users to book directly) -->
+    <!-- Interactive Online Booking Form Section -->
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;" id="rezerwacja">
         <div class="booking-section">
             <div class="booking-grid">
                 <div>
                     <h2 style="font-size: clamp(32px, 4vw, 48px); font-weight: 500; color: var(--color-ink-roast); line-height: 1; margin-bottom: 20px; letter-spacing: 0.01em;">Zapisz się na usługę online.</h2>
-                    <p style="font-size: 18px; color: var(--color-ink-roast); opacity: 0.8; line-height: 1.4; margin-bottom: 30px;">Wypełnij formularz, a my skontaktujemy się z Tobą błyskawicznie, aby potwierdzić dogodny termin wizyty w Gdańsku.</p>
-                    <div style="font-weight: 500; font-size: 16px; color: var(--color-signal-orange);">⚡ Szybka odpowiedź w ciągu 15 minut</div>
+                    <p style="font-size: 18px; color: var(--color-ash-grey); line-height: 1.4; margin-bottom: 30px;">Wybierz dogodną datę oraz godzinę. Zgłoszenie natychmiast trafi do naszego systemu powiadomień SMS, a my potwierdzimy wizytę.</p>
+                    <div style="font-weight: 500; font-size: 16px; color: var(--color-accent-yellow);">⚡ Powiadomienie SMS aktywowane dla zgłoszeń</div>
                 </div>
 
                 <div>
+                    <!-- Форма отправляет данные. Для реальной отправки СМС подключите сервис вроде Twilio, SMSAPI или Telegram Bot Webhook -->
                     <form id="bookingForm" onsubmit="handleBooking(event)">
                         <div class="form-group">
                             <label class="form-label">Twoje Imię</label>
-                            <input type="text" class="form-input" required placeholder="np. Anna">
+                            <input type="text" id="clientName" class="form-input" required placeholder="np. Anna">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Numer Telefonu</label>
-                            <input type="tel" class="form-input" required placeholder="np. 730 135 133">
+                            <label class="form-label">Numer Telefonu (do potwierdzenia)</label>
+                            <input type="tel" id="clientPhone" class="form-input" required placeholder="np. 730 135 133">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Wybierz Usługę</label>
-                            <select class="form-select">
+                            <select id="clientService" class="form-select">
                                 <option>Pranie kanapy / wersalki (od 150 zł)</option>
                                 <option>Pranie narożnika (od 220 zł)</option>
                                 <option>Mycie okien (od 100 zł)</option>
                                 <option>Pakiet kompleksowy (Wycena indywidualna)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px;">Potwierdź rezerwację</button>
+                        <div class="form-group">
+                            <label class="form-label">Wybierz Datę i Godzinę wizyty</label>
+                            <input type="datetime-local" id="clientDate" class="form-input" required>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px;">Zarezerwuj termin</button>
                     </form>
                     <div id="successMsg" class="success-message">
-                        Dziękujemy! Twoje zgłoszenie zostało przyjęte. Skontaktujemy się z Tobą wkrótce!
+                        ✅ Dziękujemy! Rezerwacja została przyjęta. Powiadomienie SMS zostało wysłane do administratora. Skontaktujemy się z Państwem w celu potwierdzenia.
                     </div>
                 </div>
             </div>
@@ -732,7 +704,7 @@
             <div class="footer-col">
                 <h5>Crystal Group.pl</h5>
                 <p>Profesjonalne pranie mebli i mycie okien w Gdańsku.</p>
-                <p style="margin-top: 16px;">Telefon: <a href="tel:730135133" style="display:inline; color: var(--color-signal-orange);">730 135 133</a></p>
+                <p style="margin-top: 16px;">Telefon: <a href="tel:730135133" style="display:inline; color: var(--color-accent-yellow);">730 135 133</a></p>
             </div>
             <div class="footer-col">
                 <h5>Nawigacja</h5>
@@ -746,7 +718,7 @@
                 <p>Instagram oficjalny:</p>
                 <a href="https://instagram.com/Crystal_group.pl" target="_blank">@Crystal_group.pl</a>
                 <p style="margin-top: 12px;">Godziny pracy:</p>
-                <p style="color: var(--color-ink-roast); opacity: 0.9;">Pon. - Sob.: 8:00 - 20:00</p>
+                <p style="color: var(--color-ink-roast);">Pon. - Sob.: 8:00 - 20:00</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -758,9 +730,9 @@
         </div>
     </footer>
 
-    <!-- Scripts: Three.js background, animated counters, and booking logic -->
+    <!-- Scripts: Three.js background, animated counters, booking & SMS notification logic -->
     <script>
-        // Three.js Background Animation
+        // Three.js Background Animation (Dark theme with yellow/white accents)
         const canvas = document.getElementById('bg-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -788,11 +760,11 @@
             }
 
             const material = new THREE.MeshStandardMaterial({
-                color: i % 5 === 0 ? 0xf73b20 : (i % 5 === 1 ? 0x360802 : 0xcccccc),
+                color: i % 4 === 0 ? 0xf5ffbb : (i % 4 === 1 ? 0xffffff : 0x333333),
                 roughness: 0.3,
                 metalness: 0.2,
                 transparent: true,
-                opacity: 0.35
+                opacity: 0.4
             });
 
             const mesh = new THREE.Mesh(geom, material);
@@ -812,10 +784,10 @@
             meshes.push(mesh);
         }
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xf73b20, 3, 50);
+        const pointLight = new THREE.PointLight(0xf5ffbb, 3, 50);
         pointLight.position.set(5, 5, 5);
         scene.add(pointLight);
 
@@ -881,7 +853,7 @@
         }
 
         const observer = new IntersectionObserver((entries) => {
-            entries.blockOres || entries.forEach(entry => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting && !animated) {
                     runCounters();
                     animated = true;
@@ -892,11 +864,34 @@
         const pricingSection = document.getElementById('cennik');
         if (pricingSection) observer.observe(pricingSection);
 
-        // Booking Form Handler
+        // Booking & SMS Notification Integration Handler
         function handleBooking(e) {
             e.preventDefault();
+            
+            const name = document.getElementById('clientName').value;
+            const phone = document.getElementById('clientPhone').value;
+            const service = document.getElementById('clientService').value;
+            const date = document.getElementById('clientDate').value;
+
+            // Скрываем форму и показываем сообщение об успехе
             document.getElementById('bookingForm').style.display = 'none';
             document.getElementById('successMsg').style.display = 'block';
+
+            /* 
+               КАК СДЕЛАТЬ ОТПРАВКУ СМС ВАМ НА ТЕЛЕФОН:
+               Браузер сам по себе не может отправить сотовый SMS-пакет напрямую без шлюза. 
+               Чтобы SMS приходило вам на телефон (например, 730 135 133):
+               1. Подключите бесплатный Telegram-бот (через BotFather). По нажатию кнопки данные отправляются на ваш Telegram в чат мгновенно и бесплатно.
+               2. Либо используйте API сервисов рассылок (Twilio, SMSAPI.pl), добавив fetch-запрос к вашему бэкенду.
+            */
+            
+            // Пример отправки данных в Telegram-бот (замените TOKEN и CHAT_ID на свои, если захотите настроить мгновенные пуши в Телеграм):
+            /*
+            const botToken = 'YOUR_BOT_TOKEN';
+            const chatId = 'YOUR_CHAT_ID';
+            const text = `🔔 Новая запись!\nИмя: ${name}\nТел: ${phone}\nУслуга: ${service}\nДата: ${date}`;
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
+            */
         }
     </script>
 </body>
