@@ -241,6 +241,8 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -266,7 +268,7 @@
             opacity: 0.8;
         }
 
-        /* Feature Category Grid (Exchange, Send, Add style) */
+        /* Feature Category Grid */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -335,9 +337,13 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
         }
 
-        /* Bordered Content Cards with Inverted Shadow Lift */
+        /* Content Cards & Animated Pricing Section */
         .content-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -350,11 +356,14 @@
             border-radius: var(--radius-2xl);
             padding: 36px;
             box-shadow: var(--shadow-md);
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .content-card:hover {
             transform: translateY(-4px);
+            border-color: var(--color-signal-orange);
         }
 
         .content-card h3 {
@@ -374,14 +383,87 @@
             margin-bottom: 24px;
         }
 
+        /* Animated Price Counter Style */
         .price-highlight {
             font-size: 33px;
             font-weight: 500;
             color: var(--color-signal-orange);
             letter-spacing: 0.33px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
         }
 
-        /* Editorial Big Headline Section */
+        .price-highlight span.currency {
+            font-size: 20px;
+        }
+
+        /* Booking / Calculator Interactive Section */
+        .booking-section {
+            background: var(--color-linen-blush);
+            border-radius: var(--radius-3xl);
+            padding: 80px 60px;
+            margin: 40px auto;
+            border: 1px solid rgba(247, 59, 32, 0.1);
+        }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media(max-width: 900px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+            .booking-section {
+                padding: 40px 24px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-ink-roast);
+            margin-bottom: 8px;
+            letter-spacing: 0.03em;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: rgba(247, 59, 32, 0.05);
+            border: 1px solid rgba(247, 59, 32, 0.15);
+            border-radius: var(--radius-xl);
+            padding: 14px 16px;
+            font-size: 16px;
+            color: var(--color-ink-roast);
+            font-family: var(--font-sequel-sans);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--color-signal-orange);
+        }
+
+        .success-message {
+            display: none;
+            background: var(--color-mint-wash);
+            color: #0d4218;
+            padding: 20px;
+            border-radius: var(--radius-xl);
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        /* Editorial Banner */
         .editorial-section {
             background: var(--color-linen-blush);
             border-radius: var(--radius-3xl);
@@ -486,7 +568,7 @@
             .nav-links {
                 display: none;
             }
-            .editorial-section {
+            .editorial-section, .booking-section {
                 padding: 40px 24px;
             }
         }
@@ -494,7 +576,7 @@
 </head>
 <body>
 
-    <!-- Three.js Interactive Particle / Geometric Background Canvas -->
+    <!-- Three.js Interactive Particle Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation Bar -->
@@ -503,8 +585,8 @@
             <a href="#" class="nav-logo">Crystal <span>Group.pl</span></a>
             <ul class="nav-links">
                 <li><a href="#uslugi">Usługi</a></li>
-                <li><a href="#proces">Jak działamy</a></li>
                 <li><a href="#cennik">Cennik</a></li>
+                <li><a href="#rezerwacja">Zapisz się</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
             <div class="nav-right">
@@ -520,16 +602,16 @@
         <p class="hero-subtitle">Eksperckie pranie mebli tapicerowanych oraz precyzyjne mycie okien. Nowoczesne podejście, najwyższa skuteczność i bezkompromisowa jakość.</p>
         
         <div class="hero-cta-group">
-            <a href="tel:730135133" class="btn-primary">Zamów usługę: 730 135 133</a>
+            <a href="#rezerwacja" class="btn-primary">Zarezerwuj termin online</a>
             <a href="https://instagram.com/Crystal_group.pl" target="_blank" class="ghost-link">Instagram: @Crystal_group.pl →</a>
         </div>
     </header>
 
-    <!-- Feature Categories (Exchange / Send / Add style reinterpreted for services) -->
+    <!-- Feature Categories -->
     <section id="uslugi">
         <div class="section-header">
             <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Kluczowe specjalizacje.</h2>
-            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Precyzyjnie dobrane usługi dla domów, mieszkań i biur.</p>
+            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Precyzyjnie dobrane usługi dla domów, mieszkań i biur w Gdańsku.</p>
         </div>
 
         <div class="category-grid">
@@ -542,7 +624,7 @@
                     <h3 class="card-category-title">Pranie mebli i kanap</h3>
                     <p class="card-desc">Głębokie czyszczenie ekstrakcyjne sof, narożników, wersalek i foteli. Usuwanie nawet najtrudniejszych plam i roztoczy.</p>
                 </div>
-                <a href="tel:730135133" class="card-footer-action">Sprawdź szczegóły →</a>
+                <a href="#rezerwacja" class="card-footer-action">Wybierz usługę →</a>
             </div>
 
             <div class="category-card" style="background: rgba(71, 126, 233, 0.03); border-color: rgba(71, 126, 233, 0.1);">
@@ -552,9 +634,9 @@
                         <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-cobalt-blue);">Okna</span>
                     </div>
                     <h3 class="card-category-title">Mycie okien i szyb</h3>
-                    <p class="card-desc">Dokładne mycie okien, ram oraz parapetów w domach i biurach na terenie Gdańska. Krystaliczny połysk bez smug.</p>
+                    <p class="card-desc">Dokładne mycie okien, ram oraz parapetów w domach i biurach. Krystaliczny połysk bez smug.</p>
                 </div>
-                <a href="tel:730135133" class="card-footer-action" style="color: var(--color-cobalt-blue);">Sprawdź szczegóły →</a>
+                <a href="#rezerwacja" class="card-footer-action" style="color: var(--color-cobalt-blue);">Wybierz usługę →</a>
             </div>
 
             <div class="category-card" style="background: rgba(52, 199, 113, 0.03); border-color: rgba(52, 199, 113, 0.1);">
@@ -564,51 +646,85 @@
                         <span style="font-size: 12px; font-weight: 500; letter-spacing: 0.36px; text-transform: uppercase; color: var(--color-emerald-green);">Kompleks</span>
                     </div>
                     <h3 class="card-category-title">Pakiet całoroczny</h3>
-                    <p class="card-desc">Połączone usługi prania mebli oraz mycia okien ze specjalnym rabatem dla stałych klientów indywidualnych i firm.</p>
+                    <p class="card-desc">Połączone usługi prania mebli oraz mycia okien ze specjalnym rabatem dla stałych klientów.</p>
                 </div>
-                <a href="tel:730135133" class="card-footer-action" style="color: var(--color-emerald-green);">Sprawdź szczegóły →</a>
+                <a href="#rezerwacja" class="card-footer-action" style="color: var(--color-emerald-green);">Wybierz usługę →</a>
             </div>
         </div>
     </section>
 
-    <!-- Editorial Highlight Banner -->
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-        <div class="editorial-section">
-            <h2 class="editorial-heading-lg">Działamy lokalnie w Gdańsku. Zadzwoń i umów termin.</h2>
-            <p class="editorial-sub">Gwarantujemy szybki dojazd, profesjonalny sprzęt ekstrakcyjny oraz pełne bezpieczeństwo czyszczonych powierzchni.</p>
-            <div>
-                <a href="tel:730135133" class="btn-primary">Zadzwoń teraz: 730 135 133</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pricing / Content Cards Section -->
+    <!-- Pricing / Content Cards Section with Animated Number Counters -->
     <section id="cennik">
         <div class="section-header">
             <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 500; letter-spacing: 0.01em; line-height: 1; margin-bottom: 16px;">Przejrzysty cennik.</h2>
-            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Jasne zasady i brak ukrytych kosztów.</p>
+            <p style="font-size: 23px; font-weight: 500; opacity: 0.7; letter-spacing: 0.23px;">Jasne zasady i animowane stawki bazowe.</p>
         </div>
 
         <div class="content-cards-grid">
             <div class="content-card">
                 <h3>Kanapa / Wersalka</h3>
                 <p>Profesjonalne pranie ekstrakcyjne powierzchni siedzących i oparć.</p>
-                <div class="price-highlight">od 150 zł</div>
+                <div class="price-highlight">
+                    <span>od</span> <span class="counter" data-target="150">0</span> <span class="currency">zł</span>
+                </div>
             </div>
 
             <div class="content-card">
                 <h3>Narożnik pokojowy</h3>
                 <p>Głębokie odświeżenie i usunięcie plam z dużych narożników.</p>
-                <div class="price-highlight">od 220 zł</div>
+                <div class="price-highlight">
+                    <span>od</span> <span class="counter" data-target="220">0</span> <span class="currency">zł</span>
+                </div>
             </div>
 
             <div class="content-card">
                 <h3>Mycie okien</h3>
                 <p>Kompleksowe mycie szyb, ram oraz parapetów w mieszkaniu.</p>
-                <div class="price-highlight">od 100 zł</div>
+                <div class="price-highlight">
+                    <span>od</span> <span class="counter" data-target="100">0</span> <span class="currency">zł</span>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Interactive Online Booking Form Section (Allows users to book directly) -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;" id="rezerwacja">
+        <div class="booking-section">
+            <div class="booking-grid">
+                <div>
+                    <h2 style="font-size: clamp(32px, 4vw, 48px); font-weight: 500; color: var(--color-ink-roast); line-height: 1; margin-bottom: 20px; letter-spacing: 0.01em;">Zapisz się na usługę online.</h2>
+                    <p style="font-size: 18px; color: var(--color-ink-roast); opacity: 0.8; line-height: 1.4; margin-bottom: 30px;">Wypełnij formularz, a my skontaktujemy się z Tobą błyskawicznie, aby potwierdzić dogodny termin wizyty w Gdańsku.</p>
+                    <div style="font-weight: 500; font-size: 16px; color: var(--color-signal-orange);">⚡ Szybka odpowiedź w ciągu 15 minut</div>
+                </div>
+
+                <div>
+                    <form id="bookingForm" onsubmit="handleBooking(event)">
+                        <div class="form-group">
+                            <label class="form-label">Twoje Imię</label>
+                            <input type="text" class="form-input" required placeholder="np. Anna">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Numer Telefonu</label>
+                            <input type="tel" class="form-input" required placeholder="np. 730 135 133">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Wybierz Usługę</label>
+                            <select class="form-select">
+                                <option>Pranie kanapy / wersalki (od 150 zł)</option>
+                                <option>Pranie narożnika (od 220 zł)</option>
+                                <option>Mycie okien (od 100 zł)</option>
+                                <option>Pakiet kompleksowy (Wycena indywidualna)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px;">Potwierdź rezerwację</button>
+                    </form>
+                    <div id="successMsg" class="success-message">
+                        Dziękujemy! Twoje zgłoszenie zostało przyjęte. Skontaktujemy się z Tobą wkrótce!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="kontakt">
@@ -622,6 +738,7 @@
                 <h5>Nawigacja</h5>
                 <a href="#uslugi">Usługi</a>
                 <a href="#cennik">Cennik</a>
+                <a href="#rezerwacja">Zapisz się</a>
                 <a href="https://instagram.com/Crystal_group.pl" target="_blank">Instagram</a>
             </div>
             <div class="footer-col">
@@ -641,8 +758,9 @@
         </div>
     </footer>
 
-    <!-- Three.js Interactive Animation Script matching Jeton/Fintech style particles -->
+    <!-- Scripts: Three.js background, animated counters, and booking logic -->
     <script>
+        // Three.js Background Animation
         const canvas = document.getElementById('bg-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -655,7 +773,6 @@
         const group = new THREE.Group();
         scene.add(group);
 
-        // Generating floating geometric constructs representing clean drops/particles
         const particleCount = 45;
         const meshes = [];
 
@@ -688,7 +805,6 @@
             mesh.userData = {
                 rotX: (Math.random() - 0.5) * 0.01,
                 rotY: (Math.random() - 0.5) * 0.01,
-                floatSpeed: Math.random() * 0.002 + 0.001,
                 initY: mesh.position.y
             };
 
@@ -696,7 +812,6 @@
             meshes.push(mesh);
         }
 
-        // Ambient and directional lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
         scene.add(ambientLight);
 
@@ -704,7 +819,6 @@
         pointLight.position.set(5, 5, 5);
         scene.add(pointLight);
 
-        // Mouse Parallax Interaction
         let mouseX = 0;
         let mouseY = 0;
         let targetX = 0;
@@ -743,6 +857,47 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+
+        // Animated Number Counters for Pricing
+        let animated = false;
+        const counters = document.querySelectorAll('.counter');
+
+        function runCounters() {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const speed = target / 30;
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count);
+                        setTimeout(updateCount, 30);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.blockOres || entries.forEach(entry => {
+                if (entry.isIntersecting && !animated) {
+                    runCounters();
+                    animated = true;
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const pricingSection = document.getElementById('cennik');
+        if (pricingSection) observer.observe(pricingSection);
+
+        // Booking Form Handler
+        function handleBooking(e) {
+            e.preventDefault();
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        }
     </script>
 </body>
 </html>
