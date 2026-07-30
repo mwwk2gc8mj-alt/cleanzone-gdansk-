@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mwwk2gc8mj-alt.github.io/cleanzone-gdansk-/sitemap.xml
