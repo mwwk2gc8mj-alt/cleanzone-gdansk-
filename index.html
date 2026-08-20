@@ -3,552 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanZone Gdańsk — Profesjonalne czyszczenie mebli i dywanów</title>
-    <meta name="description" content="Profesjonalna chemiczna czystka mebli, kanap, narożników, foteli i materacy w Gdańsku, Gdyni i Sopocie. Dojeżdżamy do klienta!">
+    <title>Pranie tapicerki meblowej i dywanów w Gdańsku | CleanZone</title>
+    <meta name="description" content="Profesjonalne pranie kanap, narożników i materaców w Gdańsku, Sopocie i Gdyni. Bezpłatny dojazd, bezpieczne środki dla dzieci i zwierząt. Zarezerwuj online!">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#0C0C0D',
-                        cardBg: '#141416',
-                        cardHover: '#1D1D21',
-                        accentYellow: '#FFE600',
-                        accentHover: '#E6CF00',
+                        dark: {
+                            DEFAULT: '#000000',
+                            900: '#0C0C0D',
+                            800: '#161618',
+                            700: '#262629'
+                        },
+                        accent: {
+                            DEFAULT: '#FFE600',
+                            hover: '#FFD700',
+                            dark: '#CCA800'
+                        }
                     },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
                         tech: ['Space Grotesk', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        mono: ['JetBrains Mono', 'monospace']
                     }
                 }
             }
         }
     </script>
     
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         body {
-            background-color: #0C0C0D;
+            background-color: #000000;
             color: #FFFFFF;
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
         }
-        .bg-grid {
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 32px 32px;
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
-        
-        /* 3D Tilt Cards */
-        .tilt-card {
-            transition: transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-        .tilt-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(255, 230, 0, 0.15);
-            border-color: rgba(255, 230, 0, 0.3);
-        }
-
-        /* Image Comparison Slider */
-        .img-comparison-slider {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            border-radius: 1rem;
-            user-select: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .img-comparison-slider img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
-        .comparison-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            z-index: 2;
-            overflow: hidden;
-        }
-        .comparison-top img {
-            width: 100vw;
-            max-width: 100%; /* Adjust in JS */
-        }
-        .comparison-handle {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background: #FFE600;
-            z-index: 3;
-            cursor: ew-resize;
-            transform: translateX(-50%);
-            box-shadow: 0 0 15px rgba(255,230,0,0.5);
-        }
-        .comparison-handle::after {
-            content: '\f337';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: #FFE600;
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
-        }
-        .comparison-handle:hover::after {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        /* Badges for Slider */
-        .slider-badge-before {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            z-index: 4;
-            background: rgba(0,0,0,0.7);
-            color: #ef4444;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            font-family: monospace;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            backdrop-filter: blur(4px);
-        }
-        .slider-badge-after {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 1;
-            background: rgba(0,0,0,0.7);
-            color: #FFE600;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            font-family: monospace;
-            border: 1px solid rgba(255, 230, 0, 0.3);
-            backdrop-filter: blur(4px);
-        }
-        
-        /* Floating Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
+        .glow-accent {
+            box-shadow: 0 0 30px -5px rgba(255, 230, 0, 0.2);
         }
     </style>
 </head>
-<body class="bg-grid text-white antialiased selection:bg-accentYellow selection:text-black">
+<body class="bg-dark text-white bg-grid-pattern antialiased selection:bg-accent selection:text-black">
 
-    <!-- TOP BAR / HEADER -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-dark/80 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-accentYellow flex items-center justify-center text-black font-tech font-bold text-xl shadow-lg shadow-accentYellow/20 group-hover:scale-110 transition-transform duration-300">
-                    CZ
+                <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-black transition-all duration-300">
+                    <i data-lucide="spray-can" class="w-5 h-5"></i>
                 </div>
-                <div>
-                    <span class="font-tech font-bold text-lg tracking-wider text-white">CLEAN<span class="text-accentYellow">ZONE</span></span>
-                    <span class="block text-[10px] text-zinc-400 tracking-widest uppercase">Gdańsk & Okolice</span>
+                <div class="flex flex-col">
+                    <span class="font-tech font-bold text-xl tracking-wider text-white">Clean<span class="text-accent">Zone</span></span>
+                    <span class="font-mono text-[10px] text-white/50 tracking-widest uppercase">Trójmiasto</span>
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-300">
-                <a href="#uslugi" class="hover:text-accentYellow transition-colors relative group">
-                    Usługi
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentYellow transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#kalkulator" class="hover:text-accentYellow transition-colors relative group">
-                    Cennik
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentYellow transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#efekty" class="hover:text-accentYellow transition-colors relative group">
-                    Galeria Efektów
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentYellow transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#kontakt" class="hover:text-accentYellow transition-colors relative group">
-                    Kontakt
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentYellow transition-all group-hover:w-full"></span>
-                </a>
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-white/80">
+                <a href="#uslugi" class="hover:text-accent transition-colors">Usługi</a>
+                <a href="#cennik" class="hover:text-accent transition-colors">Cennik</a>
+                <a href="#efekty" class="hover:text-accent transition-colors">Realizacje</a>
+                <a href="#dlaczego-my" class="hover:text-accent transition-colors">O nas</a>
+                <a href="#kontakt" class="hover:text-accent transition-colors">Kontakt</a>
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="tel:794136273" class="hidden sm:flex items-center gap-2 font-mono text-xs bg-cardBg border border-white/10 px-4 py-2.5 rounded-full hover:border-accentYellow hover:text-accentYellow transition-colors">
-                    <i class="fa-solid fa-phone"></i>
-                    <span>794 136 273</span>
+                <a href="tel:794136273" class="hidden sm:flex items-center gap-2 font-mono text-sm font-bold text-white hover:text-accent transition-colors">
+                    <i data-lucide="phone" class="w-4 h-4 text-accent"></i>
+                    794 136 273
+                </a>
+                <a href="#kontakt" class="bg-accent hover:bg-accent-hover text-black font-semibold px-5 py-2.5 rounded-xl text-sm transition-all duration-300 shadow-lg shadow-accent/10 hover:shadow-accent/25 active:scale-95">
+                    Szybka wycena
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accentYellow/10 blur-[150px] rounded-full pointer-events-none"></div>
-
+    <section class="relative pt-20 pb-32 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+        
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cardBg border border-white/10 text-xs font-mono text-accentYellow mb-8 animate-pulse shadow-lg shadow-accentYellow/5">
-                    <i class="fa-solid fa-location-dot"></i> GDAŃSK, GDYNIA, SOPOT
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                    <span class="font-mono text-xs text-white/80 tracking-wide uppercase">Gdańsk &bull; Sopot &bull; Gdynia</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight drop-shadow-2xl">
-                    Przywracamy meblom <br/><span class="text-accentYellow">fabryczną świeżość</span>
+                <h1 class="font-sans text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+                    Profesjonalna <span class="text-accent underline decoration-accent/30 underline-offset-8">czystka mebli</span> w Twoim domu
                 </h1>
 
-                <p class="text-lg sm:text-xl text-zinc-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                    Profesjonalne pranie ekstrakcyjne u Ciebie w domu. Usuwamy plamy, kurz, roztocza i przykre zapachy. Bezpieczna chemia i nowoczesny sprzęt.
+                <p class="text-lg sm:text-xl text-white/70 mb-10 leading-relaxed font-light">
+                    Twoje meble zasługują na najlepszą opiekę. Oferujemy głęboką ekstrakcyjną higienę kanap, narożników, materaców i dywanów. Bezpiecznie dla dzieci i zwierząt.
                 </p>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                    <a href="#kalkulator" class="w-full sm:w-auto bg-accentYellow hover:bg-accentHover text-black font-bold px-8 py-4 rounded-xl text-base transition-all transform hover:-translate-y-1 shadow-xl shadow-accentYellow/20 flex items-center justify-center gap-3">
-                        <span>Zobacz Cennik i Zamów</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                    <a href="#kontakt" class="bg-accent hover:bg-accent-hover text-black font-bold px-8 py-4 rounded-xl text-center transition-all duration-300 shadow-xl shadow-accent/20 flex items-center justify-center gap-3 group">
+                        <span>Zamów wycenę online</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                     </a>
-                    <a href="#efekty" class="w-full sm:w-auto bg-cardBg hover:bg-cardHover border border-white/10 hover:border-accentYellow/50 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all flex items-center justify-center gap-3 group">
-                        <i class="fa-solid fa-images text-accentYellow group-hover:scale-110 transition-transform"></i>
-                        <span>Efekty Przed / Po</span>
+                    <a href="https://wa.me/48794136273" target="_blank" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold px-8 py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-3 backdrop-blur-sm">
+                        <i data-lucide="message-square" class="w-5 h-5 text-green-400"></i>
+                        <span>WhatsApp / SMS</span>
                     </a>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section id="uslugi" class="py-24 bg-cardBg/30 border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-accentYellow font-mono text-xs uppercase tracking-widest block mb-3">// Nasze Specjalizacje</span>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Czym się zajmujemy?</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="tilt-card bg-cardBg border border-white/10 rounded-2xl p-8 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-accentYellow/5 rounded-bl-full -z-10 transition-all group-hover:scale-125"></div>
-                    <div class="w-16 h-16 rounded-xl bg-darkBg border border-white/10 text-accentYellow flex items-center justify-center text-3xl mb-6 shadow-md">
-                        <i class="fa-solid fa-couch"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Pranie Kanap i Narożników</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed">
-                        Głębokie czyszczenie tapicerki, usuwanie uporczywych plam i odzyskiwanie oryginalnych kolorów.
-                    </p>
-                </div>
-                <!-- Card 2 -->
-                <div class="tilt-card bg-cardBg border border-white/10 rounded-2xl p-8 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-accentYellow/5 rounded-bl-full -z-10 transition-all group-hover:scale-125"></div>
-                    <div class="w-16 h-16 rounded-xl bg-darkBg border border-white/10 text-accentYellow flex items-center justify-center text-3xl mb-6 shadow-md">
-                        <i class="fa-solid fa-bed"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Czyszczenie Materacy</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed">
-                        Zabijanie roztoczy, usuwanie plam potu, martwego naskórka i dezodoryzacja. Zadbaj o zdrowy sen.
-                    </p>
-                </div>
-                <!-- Card 3 -->
-                <div class="tilt-card bg-cardBg border border-white/10 rounded-2xl p-8 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-accentYellow/5 rounded-bl-full -z-10 transition-all group-hover:scale-125"></div>
-                    <div class="w-16 h-16 rounded-xl bg-darkBg border border-white/10 text-accentYellow flex items-center justify-center text-3xl mb-6 shadow-md">
-                        <i class="fa-solid fa-rug"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Pranie Dywanów i Wykładzin</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed">
-                        Pranie na wskroś, rozczesywanie runa, eliminacja piasku i sierści zwierząt.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BEFORE / AFTER INTERACTIVE SLIDER SECTION -->
-    <section id="efekty" class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-accentYellow font-mono text-xs uppercase tracking-widest block mb-3">// Galeria Realizacji</span>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Efekty mówią same za siebie</h2>
-                <p class="text-zinc-400 text-sm">Przesuń suwak, aby zobaczyć magię profesjonalnego prania. Używamy zdjęć <strong>IMG_2818.jpg</strong> (przed) oraz <strong>IMG_2819.jpg</strong> (po).</p>
-            </div>
-
-            <div class="max-w-4xl mx-auto animate-float">
-                <div class="img-comparison-slider" id="comparisonSlider">
-                    <div class="slider-badge-after">PO CZYSZCZENIU</div>
-                    
-                    <!-- AFTER IMAGE (Background) -->
-                    <!-- Здесь мы загружаем последнее фото как ПОСЛЕ -->
-                    <img src="IMG_2819.jpg" alt="Po czyszczeniu" id="imgAfter" onerror="this.src='https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=1200&auto=format&fit=crop'" class="w-full h-full object-cover">
-                    
-                    <div class="comparison-top" id="comparisonTop">
-                        <div class="slider-badge-before">PRZED CZYSZCZENIEM</div>
-                        <!-- BEFORE IMAGE (Foreground layer) -->
-                        <!-- Здесь фото ПЕРЕД -->
-                        <img src="IMG_2818.jpg" alt="Przed czyszczeniem" id="imgBefore" onerror="this.src='https://images.unsplash.com/photo-1527515637-60ee1f391a62?q=80&w=1200&auto=format&fit=crop&sepia=1'" class="object-cover h-full" style="width: 896px; max-width: none;">
-                    </div>
-
-                    <div class="comparison-handle" id="comparisonHandle"></div>
-                </div>
-            </div>
-            
-            <!-- Дополнительная галерея маленьких фото -->
-            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-                <img src="IMG_2815.jpg" alt="Realizacja" class="w-full h-32 object-cover rounded-lg border border-white/10 hover:border-accentYellow/50 transition-colors" onerror="this.style.display='none'">
-                <img src="IMG_2816.jpg" alt="Realizacja" class="w-full h-32 object-cover rounded-lg border border-white/10 hover:border-accentYellow/50 transition-colors" onerror="this.style.display='none'">
-                <img src="IMG_2817.jpg" alt="Realizacja" class="w-full h-32 object-cover rounded-lg border border-white/10 hover:border-accentYellow/50 transition-colors" onerror="this.style.display='none'">
-                <div class="w-full h-32 rounded-lg bg-cardBg border border-white/10 flex items-center justify-center flex-col gap-2">
-                    <i class="fa-solid fa-camera-retro text-accentYellow text-2xl"></i>
-                    <span class="text-xs font-mono text-zinc-400">Więcej na IG</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- DETAILED PRICING / CALCULATOR -->
-    <section id="kalkulator" class="py-24 bg-cardBg/40 border-t border-white/5">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-accentYellow font-mono text-xs uppercase tracking-widest block mb-3">// Przejrzyste Ceny</span>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Cennik i Kalkulator</h2>
-                <p class="text-zinc-400 text-sm">Wybierz usługi z listy. Dokładna cena zależy od stopnia zabrudzenia i rodzaju materiału.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
-                <div class="lg:col-span-2 bg-darkBg border border-white/10 rounded-2xl p-2 sm:p-6">
-                    <div class="space-y-2" id="priceList">
-                        <!-- Items generated via JS for cleaner code -->
-                    </div>
-                </div>
-
-                <div class="bg-cardBg border border-white/10 rounded-2xl p-8 sticky top-24 h-fit shadow-2xl">
-                    <h3 class="text-xl font-bold mb-6 border-b border-white/10 pb-4">Twoje zamówienie</h3>
-                    
-                    <div id="selectedItemsList" class="space-y-3 mb-6 min-h-[100px] text-sm text-zinc-400">
-                        <div class="text-center text-zinc-600 italic mt-8">Wybierz usługi z listy obok</div>
-                    </div>
-
-                    <div class="border-t border-white/10 pt-6">
-                        <div class="flex justify-between items-end mb-6">
-                            <span class="text-sm font-mono text-zinc-400">RAZEM (SZACUNKOWO):</span>
-                            <span class="text-3xl font-extrabold text-accentYellow font-mono" id="totalPrice">0 zł</span>
-                        </div>
-                        <a href="#kontakt" class="w-full block bg-accentYellow hover:bg-accentHover text-black font-bold px-6 py-4 rounded-xl transition-all text-center shadow-lg shadow-accentYellow/20 hover:-translate-y-1">
-                            Zamów Usługę
-                        </a>
-                        <p class="text-xs text-center text-zinc-500 mt-4">
-                            Dojazd na terenie Gdańska <strong>GRATIS</strong> przy zamówieniu powyżej 150 zł.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="kontakt" class="py-24 relative overflow-hidden">
-        <!-- Decor -->
-        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-accentYellow/5 rounded-full blur-[100px]"></div>
-
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h2 class="text-4xl sm:text-5xl font-black mb-8">Zarezerwuj termin już dziś</h2>
-            <p class="text-xl text-zinc-400 mb-12 font-light">Pracujemy 7 dni w tygodniu. Zadzwoń, opisz plamę, a my podamy dokładną cenę i przyjedziemy na miejsce.</p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="tel:794136273" class="bg-cardBg border-2 border-accentYellow text-white hover:bg-accentYellow hover:text-black font-bold px-8 py-5 rounded-2xl text-lg transition-all flex items-center justify-center gap-4">
-                    <i class="fa-solid fa-phone text-2xl"></i>
-                    <span>794 136 273</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="border-t border-white/10 bg-darkBg py-8 text-center text-sm text-zinc-500 font-mono">
-        &copy; 2026 CleanZone - Profesjonalne pranie tapicerki w Gdańsku.
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        // --- 1. PRICING DATA & CALCULATOR LOGIC ---
-        const services = [
-            { id: 's1', name: 'Kanapa 2-osobowa / Sofa', price: 150, icon: 'fa-couch', category: 'Meble' },
-            { id: 's2', name: 'Narożnik (standardowy)', price: 200, icon: 'fa-couch', category: 'Meble' },
-            { id: 's3', name: 'Narożnik duży (U-kształtny)', price: 250, icon: 'fa-couch', category: 'Meble' },
-            { id: 's4', name: 'Fotel wypoczynkowy', price: 70, icon: 'fa-chair', category: 'Meble' },
-            { id: 's5', name: 'Krzesło tapicerowane', price: 25, icon: 'fa-chair', category: 'Meble' },
-            { id: 's6', name: 'Materac 1-osobowy (obustronnie)', price: 100, icon: 'fa-bed', category: 'Materace' },
-            { id: 's7', name: 'Materac 2-osobowy (obustronnie)', price: 160, icon: 'fa-bed', category: 'Materace' },
-            { id: 's8', name: 'Dywan / Wykładzina (za 1 m²)', price: 15, icon: 'fa-rug', category: 'Dywany' },
-            { id: 's9', name: 'Usuwanie zapachu / Impregnacja', price: 50, icon: 'fa-spray-can', category: 'Dodatki' }
-        ];
-
-        const priceListContainer = document.getElementById('priceList');
-        const selectedItemsContainer = document.getElementById('selectedItemsList');
-        const totalPriceEl = document.getElementById('totalPrice');
-        let selectedServices = {};
-
-        // Render list
-        services.forEach(srv => {
-            const label = document.createElement('label');
-            label.className = "flex items-center justify-between p-4 rounded-xl bg-cardBg border border-white/5 hover:border-accentYellow/50 cursor-pointer transition-all group";
-            label.innerHTML = `
-                <div class="flex items-center gap-4">
-                    <div class="relative flex items-center justify-center">
-                        <input type="checkbox" id="${srv.id}" value="${srv.price}" class="peer sr-only">
-                        <div class="w-6 h-6 border-2 border-zinc-600 rounded flex items-center justify-center peer-checked:bg-accentYellow peer-checked:border-accentYellow transition-all">
-                            <i class="fa-solid fa-check text-black text-xs opacity-0 peer-checked:opacity-100 scale-50 peer-checked:scale-100 transition-all"></i>
-                        </div>
+                <div class="grid grid-cols-3 gap-6 pt-16 mt-16 border-t border-white/10">
+                    <div>
+                        <div class="font-tech text-2xl font-bold text-accent">100%</div>
+                        <div class="text-xs text-white/50 mt-1">Bezpieczna chemia dla alergików</div>
                     </div>
                     <div>
-                        <div class="font-medium group-hover:text-accentYellow transition-colors">${srv.name}</div>
-                        <div class="text-xs text-zinc-500 font-mono">${srv.category}</div>
+                        <div class="font-tech text-2xl font-bold text-accent">Do 24h</div>
+                        <div class="text-xs text-white/50 mt-1">Czas schnięcia mebli</div>
+                    </div>
+                    <div>
+                        <div class="font-tech text-2xl font-bold text-accent">0 PLN</div>
+                        <div class="text-xs text-white/50 mt-1">Dojazd do klienta w Trójmieście</div>
                     </div>
                 </div>
-                <div class="font-mono text-accentYellow font-semibold bg-darkBg px-3 py-1 rounded border border-white/5 group-hover:border-accentYellow/30">
-                    od ${srv.price} zł
+            </div>
+        </div>
+    </section>
+
+    <section id="uslugi" class="py-24 bg-dark-900 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3">Nasza oferta</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold tracking-tight">Co dokładnie możemy dla Ciebie wyczyścić?</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="sofa" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Kanapy i Narożniki</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Usuwanie głębokich zabrudzeń, plam po jedzeniu, napojach oraz zapachów odzwierzęcych.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
                 </div>
-            `;
-            
-            const checkbox = label.querySelector('input');
-            checkbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    selectedServices[srv.id] = srv;
-                } else {
-                    delete selectedServices[srv.id];
-                }
-                updateCart();
-            });
 
-            priceListContainer.appendChild(label);
-        });
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bed-double" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Materace</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Głęboka dezinfekcja, eliminacja roztoczy, kurzu, potu i plam. Śpij higienicznie i zdrowo.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                </div>
 
-        function updateCart() {
-            selectedItemsContainer.innerHTML = '';
-            let total = 0;
-            
-            const keys = Object.keys(selectedServices);
-            if (keys.length === 0) {
-                selectedItemsContainer.innerHTML = '<div class="text-center text-zinc-600 italic mt-8">Wybierz usługi z listy obok</div>';
-            } else {
-                keys.forEach(key => {
-                    const item = selectedServices[key];
-                    total += item.price;
-                    const div = document.createElement('div');
-                    div.className = "flex justify-between items-center border-b border-white/5 pb-2";
-                    div.innerHTML = `
-                        <span class="truncate pr-2">${item.name}</span>
-                        <span class="font-mono text-white">${item.price} zł</span>
-                    `;
-                    selectedItemsContainer.appendChild(div);
-                });
-            }
-            
-            // Animation counter for total
-            let currentVal = parseInt(totalPriceEl.textContent) || 0;
-            animateValue(totalPriceEl, currentVal, total, 300);
-        }
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Dywany i Wykładziny</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Pranie ekstrakcyjne runa dywanowego, przywracanie pierwotnych kolorów i miękkości tkaniny.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                </div>
 
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start) + ' zł';
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="armchair" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Fotele i Krzesła</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Odświeżenie mebli tapicerowanych biurowych oraz domowych. Szybko i bez demontażu.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                </div>
 
-        // --- 2. BEFORE/AFTER SLIDER LOGIC ---
-        const slider = document.getElementById('comparisonSlider');
-        const sliderTop = document.getElementById('comparisonTop');
-        const sliderHandle = document.getElementById('comparisonHandle');
-        const imgBefore = document.getElementById('imgBefore');
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Skóra i Zamsz</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Specjalistyczne czyszczenie i konserwacja mebli skórzanych z użyciem dedykowanych preparatów.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                </div>
 
-        // Fix inner image width to match the container width exactly
-        function resizeImages() {
-            const rect = slider.getBoundingClientRect();
-            imgBefore.style.width = rect.width + 'px';
-        }
-        window.addEventListener('resize', resizeImages);
-        // Initial setup timeout to ensure DOM is rendered
-        setTimeout(resizeImages, 100);
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="app-window" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mycie Okien</h3>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">Kompleksowe mycie szyb, ram oraz przeszkleń w mieszkaniach i lokalach komercyjnych w Gdańsku.</p>
+                    <span class="font-mono text-xs text-accent flex items-center gap-2">Sprawdź szczegóły <i data-lucide="chevron-right" class="w-4 h-4"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        let isDragging = false;
+    <section id="dlaczego-my" class="py-24 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3">Technologia i Jakość</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6">Dlaczego mieszkańcy Trójmiasta wybierają CleanZone?</p>
+                    <p class="text-white/70 leading-relaxed mb-8">
+                        Nie jesteśmy zwykłą firmą sprzątającą. Stawiamy na nowoczesny sprzęt ekstrakcyjny oraz pełną transparentność usług bezpośrednio u klienta.
+                    </p>
 
-        function updateSlider(clientX) {
-            const rect = slider.getBoundingClientRect();
-            let position = clientX - rect.left;
-            
-            if (position < 0) position = 0;
-            if (position > rect.width) position = rect.width;
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Bezpieczna chemia ekologiczna</h4>
+                                <p class="text-sm text-white/60 mt-1">Środki w pełni bezpieczne dla małych dzieci, alergików oraz zwierząt domowych.</p>
+                            </div>
+                        </div>
 
-            const percentage = (position / rect.width) * 100;
-            sliderTop.style.width = percentage + '%';
-            sliderHandle.style.left = percentage + '%';
-        }
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Mobilny serwis w Twoim domu</h4>
+                                <p class="text-sm text-white/60 mt-1">Dojeżdżamy na terenie Gdańska, Sopotu i Gdyni. Nie musisz nigdzie wozi ciężkich mebli.</p>
+                            </div>
+                        </div>
 
-        slider.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            updateSlider(e.clientX);
-        });
-        window.addEventListener('mouseup', () => { isDragging = false; });
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            updateSlider(e.clientX);
-        });
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Usuwanie trudnych plam i zapachów</h4>
+                                <p class="text-sm text-white/60 mt-1">Skutecznie radzimy sobie z zapachami organicznymi, sierścią oraz plamami po kawie i winie.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        // Touch support
-        slider.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            updateSlider(e.touches[0].clientX);
-            // Prevent scrolling while sliding
-            e.preventDefault(); 
-        }, { passive: false });
-        window.addEventListener('touchend', () => { isDragging = false; });
-        window.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            updateSlider(e.touches[0].clientX);
-            e.preventDefault();
-        }, { passive: false });
+                <div class="bg-dark-900 border border-white/10 rounded-3xl p-8 relative overflow-hidden glow-accent">
+                    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <h3 class="font-tech text-xl font-bold mb-6 flex items-center gap-3">
+                        <i data-lucide="shield-check" class="text-accent w-6 h-6"></i>
+                        <span>Gwarancja CleanZone</span>
+                    </h3>
+                    <ul class="space-y-6 text-sm text-white/80">
+                        <li class="flex items-center gap-3 pb-4 border-b border-white/10">
+                            <span class="font-mono text-accent">01.</span>
+                            <span>Bezpłatna wycena przed rozpoczęciem prac</span>
+                        </li>
+                        <li class="flex items-center gap-3 pb-4 border-b border-white/10">
+                            <span class="font-mono text-accent">02.</span>
+                            <span>Profesjonalny sprzęt ekstrakcyjny wysokiej mocy</span>
+                        </li>
+                        <li class="flex items-center gap-3 pb-4 border-b border-white/10">
+                            <span class="font-mono text-accent">03.</span>
+                            <span>Punktualność i terminowa realizacja zleceń</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="font-mono text-accent">04.</span>
+                            <span>Płatność dopiero po wykonaniu usługi i akceptacji efektu</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="cennik" class="py-24 bg-dark-900 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3">Przejrzyste ceny</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold tracking-tight">Orientacyjny cennik usług</p>
+                <p class="text-white/60 text-sm mt-2">Dokładna wycena zależy od stopnia zabrudzenia oraz gabarytów mebla.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold mb-2">Kanapy i Sofy</h3>
+                        <p class="text-xs text-white/50 mb-6">Małe i średnie formy wypoczynkowe</p>
+                        <div class="font-tech text-3xl font-bold text-accent mb-6">od 150 zł</div>
+                        <ul class="space-y-3 text-sm text-white/70 mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Sofa 2-osobowa</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Sofa 3-osobowa</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Pranie z dwóch stron</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-semibold py-3 rounded-xl text-center text-sm transition-all duration-300">Wybierz</a>
+                </div>
+
+                <div class="bg-dark-800 border-2 border-accent rounded-2xl p-8 flex flex-col justify-between relative shadow-2xl shadow-accent/10">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-black font-mono text-[10px] font-bold uppercase px-3 py-1 rounded-full">Najpopularniejsze</div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-2">Narożniki</h3>
+                        <p class="text-xs text-white/50 mb-6">Narożniki L-kształtne i U-kształtne</p>
+                        <div class="font-tech text-3xl font-bold text-accent mb-6">od 220 zł</div>
+                        <ul class="space-y-3 text-sm text-white/70 mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Narożnik mały / średni</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Funkcja spania w cenie</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Neutralizacja zapachów</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full bg-accent hover:bg-accent-hover text-black font-bold py-3 rounded-xl text-center text-sm transition-all duration-300">Wybierz</a>
+                </div>
+
+                <div class="bg-dark-800 border border-white/10 rounded-2xl p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold mb-2">Materace i Dywany</h3>
+                        <p class="text-xs text-white/50 mb-6">Higiena snu i czyste podłogi</p>
+                        <div class="font-tech text-3xl font-bold text-accent mb-6">od 100 zł</div>
+                        <ul class="space-y-3 text-sm text-white/70 mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Materac jednostronny/dwustronny</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Dywany z krótkim i długim runem</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent"></i> Usuwanie roztoczy</li>
+                        </ul>
+                    </div>
+                    <a href="#kontakt" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-semibold py-3 rounded-xl text-center text-sm transition-all duration-300">Wybierz</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="efekty" class="py-24 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3">Efekty naszej pracy</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold tracking-tight">Zobacz różnicę przed i po</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-dark-900 border border-white/10 rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-dark-800 relative flex items-center justify-center border-b border-white/10">
+                        <div class="text-center p-6">
+                            <i data-lucide="image" class="w-12 h-12 text-white/20 mx-auto mb-2"></i>
+                            <span class="text-sm font-mono text-white/40">Narożnik w Gdańsku (Przed / Po)</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-1">Głębokie pranie jasnego narożnika</h4>
+                        <p class="text-sm text-white/60">Usunięte trudne plamy po kawie i codzienne zabrudzenia. Czas schnięcia: ok. 8 godzin.</p>
+                    </div>
+                </div>
+
+                <div class="bg-dark-900 border border-white/10 rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-dark-800 relative flex items-center justify-center border-b border-white/10">
+                        <div class="text-center p-6">
+                            <i data-lucide="image" class="w-12 h-12 text-white/20 mx-auto mb-2"></i>
+                            <span class="text-sm font-mono text-white/40">Materac dwuosobowy Sopot</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-lg mb-1">Dezynfekcja materaca sypialnianego</h4>
+                        <p class="text-sm text-white/60">Całkowita eliminacja roztoczy oraz odświeżenie struktury tkaniny obiciowej.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-24 bg-dark-900 border-t border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3">Zarezerwuj termin</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6">Skontaktuj się z nami</p>
+                    <p class="text-white/70 leading-relaxed mb-8">
+                        Masz pytania lub chcesz zamówić darmową wycenę? Zadzwoń, napisz na WhatsApp lub wypełnij formularz. Odpowiadamy błyskawicznie.
+                    </p>
+
+                    <div class="space-y-6">
+                        <a href="tel:794136273" class="flex items-center gap-4 p-4 rounded-xl bg-dark-800 border border-white/10 hover:border-accent transition-all group">
+                            <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-white/50 font-mono">Zadzwoń teraz</div>
+                                <div class="font-bold text-lg">794 136 273</div>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/48794136273" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-dark-800 border border-white/10 hover:border-accent transition-all group">
+                            <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                <i data-lucide="message-square" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-white/50 font-mono">Napisz na WhatsApp</div>
+                                <div class="font-bold text-lg">Szybka wycena ze zdjęcia</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8">
+                    <h3 class="font-tech text-xl font-bold mb-6">Formularz szybkiego kontaktu</h3>
+                    <form action="#" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-mono text-white/60 mb-2 uppercase">Twoje Imię</label>
+                            <input type="text" placeholder="np. Anna" required class="w-full bg-dark-900 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-white/60 mb-2 uppercase">Numer telefonu</label>
+                            <input type="tel" placeholder="+48 ..." required class="w-full bg-dark-900 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-white/60 mb-2 uppercase">Co chcesz wyczyścić?</label>
+                            <select class="w-full bg-dark-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors">
+                                <option>Narożnik / Sofa</option>
+                                <option>Materac</option>
+                                <option>Dywan / Wykładzina</option>
+                                <option>Fotele / Krzesła</option>
+                                <option>Mycie okien</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-accent hover:bg-accent-hover text-black font-bold py-4 rounded-xl transition-all shadow-lg shadow-accent/10 mt-2">
+                            Wyślij zapytanie o wycenę
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/10 text-white/50 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="font-tech font-bold text-white text-base">Clean<span class="text-accent">Zone</span></span>
+                <span>&copy; 2026 Wszelkie prawa zastrzeżone. Gdańsk, Sopot, Gdynia.</span>
+            </div>
+            <div class="flex items-center gap-6 font-mono">
+                <a href="#uslugi" class="hover:text-accent transition-colors">Usługi</a>
+                <a href="#cennik" class="hover:text-accent transition-colors">Cennik</a>
+                <a href="#kontakt" class="hover:text-accent transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
     </script>
 </body>
 </html>
