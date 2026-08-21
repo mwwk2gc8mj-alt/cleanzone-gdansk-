@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pranie tapicerki meblowej i dywanów Gdańsk, Sopot, Gdynia | CleanZone</title>
-    <meta name="description" content="Profesjonalne pranie kanap, narożników i materaców z dojazdem w Trójmieście. Oblicz cenę w kalkulatorze online i zamów ekologiczną czystkę!">
+    <title>CleanZone — Ekskluzywne pranie tapicerki i mebli w Trójmieście</title>
+    <meta name="description" content="Poznaj nową jakość czystości. Profesjonalne pranie kanap, narożników i dywanów w Gdańsku, Sopocie i Gdyni. Wybierz usługę jak z katalogu!">
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,10 +35,12 @@
         }
     </script>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -47,212 +50,286 @@
             font-family: 'Montserrat', sans-serif;
         }
         .bg-grid-pattern {
-            background-size: 50px 50px;
+            background-size: 60px 60px;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
         }
         .glow-accent {
-            box-shadow: 0 0 40px -10px rgba(255, 230, 0, 0.15);
+            box-shadow: 0 0 50px -10px rgba(255, 230, 0, 0.12);
         }
     </style>
 </head>
 <body class="bg-dark text-white bg-grid-pattern antialiased selection:bg-accent selection:text-black">
 
+    <!-- Header / Brand Bar -->
     <header class="sticky top-0 z-50 backdrop-blur-xl bg-dark/90 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-black transition-all duration-300 shadow-lg shadow-accent/5">
-                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <div class="w-11 h-11 rounded-2xl bg-accent text-black flex items-center justify-center font-tech font-black text-xl shadow-lg shadow-accent/20 group-hover:scale-105 transition-transform">
+                    CZ
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-tech font-bold text-xl tracking-wider text-white">Clean<span class="text-accent">Zone</span></span>
-                    <span class="font-mono text-[10px] text-accent/80 tracking-widest uppercase">Trójmiasto 24/7</span>
+                    <span class="font-tech font-extrabold text-xl tracking-wider text-white">Clean<span class="text-accent">Zone</span></span>
+                    <span class="font-mono text-[9px] text-accent/80 tracking-widest uppercase">Trójmiasto Store</span>
                 </div>
             </a>
 
             <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-white/80">
-                <a href="#kalkulator" class="hover:text-accent transition-colors">Kalkulator cen</a>
-                <a href="#uslugi" class="hover:text-accent transition-colors">Usługi</a>
-                <a href="#dlaczego" class="hover:text-accent transition-colors">Dlaczego my</a>
+                <a href="#katalog" class="hover:text-accent transition-colors">Katalog usług</a>
+                <a href="#kreator" class="hover:text-accent transition-colors">Szybka wycena</a>
+                <a href="#standard" class="hover:text-accent transition-colors">Technologia</a>
                 <a href="#kontakt" class="hover:text-accent transition-colors">Kontakt</a>
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="tel:794136273" class="hidden sm:flex items-center gap-2 font-mono text-sm font-bold text-white hover:text-accent transition-colors bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
+                <a href="tel:794136273" class="hidden sm:flex items-center gap-2 font-mono text-sm font-bold text-white hover:text-accent transition-colors bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
                     <i data-lucide="phone" class="w-4 h-4 text-accent"></i>
                     794 136 273
                 </a>
-                <a href="#kalkulator" class="bg-accent hover:bg-accent-hover text-black font-bold px-5 py-2.5 rounded-xl text-sm transition-all duration-300 shadow-xl shadow-accent/20">
-                    Szybka Wycena
+                <a href="#kreator" class="bg-accent hover:bg-accent-hover text-black font-bold px-6 py-3 rounded-xl text-sm transition-all duration-300 shadow-xl shadow-accent/20">
+                    Zamów online
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="relative pt-16 pb-28 overflow-hidden">
-        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <!-- Hero Section (Brand Energy Style) -->
+    <section class="relative pt-20 pb-32 overflow-hidden border-b border-white/10">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[140px] pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-7">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/30 mb-6">
-                        <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
-                        <span class="font-mono text-xs text-accent tracking-wide uppercase font-semibold">Gdańsk &bull; Sopot &bull; Gdynia &bull; Dojazd 0 zł</span>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-8">
+                    <span class="w-2.5 h-2.5 rounded-full bg-accent animate-ping"></span>
+                    <span class="font-mono text-xs text-accent tracking-widest uppercase font-bold">Nowa generacja czystości mebli</span>
+                </div>
+
+                <h1 class="font-sans text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-8">
+                    Mocna ekstrakcja. <span class="text-accent">Zero brudu.</span>
+                </h1>
+
+                <p class="text-xl text-white/70 mb-10 leading-relaxed font-light">
+                    Zamów profesjonalną higienę kanap, narożników i dywanów w Gdańsku, Sopocie i Gdyni. Działamy szybko, precyzyjnie i w 100% bezpiecznie dla Twojej rodziny.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                    <a href="#katalog" class="bg-accent hover:bg-accent-hover text-black font-extrabold px-8 py-4 rounded-2xl text-center transition-all duration-300 shadow-2xl shadow-accent/20 flex items-center justify-center gap-3 text-base">
+                        <span>Przeglądaj katalog usług</span>
+                        <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://wa.me/48794136273?text=Cześć,%20chcę%20wycenić%20pranie%20mebli%20ze%20zdjęcia" target="_blank" class="bg-dark-800 hover:bg-dark-700 border border-white/10 text-white font-semibold px-8 py-4 rounded-2xl text-center transition-all duration-300 flex items-center justify-center gap-3">
+                        <i data-lucide="message-square" class="w-5 h-5 text-green-400"></i>
+                        <span>Wyślij foto na WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section (E-Commerce Style Grid) -->
+    <section id="katalog" class="py-24 bg-dark-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="font-tech text-xs uppercase tracking-widest text-accent font-bold">Katalog / Oferta</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">Wybierz swoją usługę</h2>
+                </div>
+                <p class="text-white/60 text-sm max-w-md">
+                    Wszystkie ceny zawierają dojazd na terenie Trójmiasta, bezpieczną chemię organiczną oraz neutralizację zapachów.
+                </p>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-accent/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-xs uppercase font-bold">Najpopularniejsze</span>
+                            <i data-lucide="sofa" class="w-6 h-6 text-white/40 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Kanapa / Sofa</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Głębokie pranie dwustronne sof 2-3 osobowych. Usuwanie plam po kawie, winie i sierści.</p>
                     </div>
-
-                    <h1 class="font-sans text-4xl sm:text-6xl font-black tracking-tight leading-[1.08] mb-6">
-                        Głęboka <span class="text-accent">czystka mebli</span> u Ciebie w domu
-                    </h1>
-
-                    <p class="text-lg sm:text-xl text-white/70 mb-8 leading-relaxed font-light">
-                        Usuwamy najtrudniejsze plamy, roztocza, sierść i nieprzyjemne zapachy. Nowoczesny sprzęt ekstrakcyjny i w 100% bezpieczna chemia dla dzieci oraz zwierząt.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-12">
-                        <a href="#kalkulator" class="bg-accent hover:bg-accent-hover text-black font-bold px-8 py-4 rounded-xl text-center transition-all duration-300 shadow-2xl shadow-accent/20 flex items-center justify-center gap-3 group text-base">
-                            <span>Oblicz cenę i zamów</span>
-                            <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
-                        </a>
-                        <a href="https://wa.me/48794136273?text=Dzień%20dobry,%20chcę%20zamówić%20wycenę%20prania%20mebli%20ze%20zdjęcia" target="_blank" class="bg-dark-800 hover:bg-dark-700 border border-white/10 text-white font-semibold px-8 py-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-3">
-                            <i data-lucide="message-square" class="w-5 h-5 text-green-400"></i>
-                            <span>Wyślij zdjęcie na WhatsApp</span>
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
-                        <div>
-                            <div class="font-tech text-3xl font-extrabold text-accent">24h</div>
-                            <div class="text-xs text-white/50 mt-1">Czas schnięcia mebli</div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">180 zł</span>
                         </div>
-                        <div>
-                            <div class="font-tech text-3xl font-extrabold text-accent">100%</div>
-                            <div class="text-xs text-white/50 mt-1">Bezpieczeństwo tkanin</div>
-                        </div>
-                        <div>
-                            <div class="font-tech text-3xl font-extrabold text-accent">0 PLN</div>
-                            <div class="text-xs text-white/50 mt-1">Dojazd do klienta</div>
-                        </div>
+                        <a href="#kreator" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
                     </div>
                 </div>
 
-                <div class="lg:col-span-5">
-                    <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 glow-accent relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl"></div>
-                        <h3 class="font-tech text-xl font-bold mb-4 flex items-center gap-3 text-accent">
-                            <i data-lucide="shield-check" class="w-6 h-6"></i>
-                            <span>Standard CleanZone</span>
-                        </h3>
-                        <p class="text-sm text-white/70 leading-relaxed mb-6">
-                            Nie maskujemy brudu, lecz wyciągamy go z najgłębszych warstw gąbki metodą ekstrakcyjną pod ciśnieniem.
-                        </p>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3 text-sm text-white/90 bg-dark-900/80 p-3 rounded-xl border border-white/5">
-                                <i data-lucide="check-circle-2" class="w-5 h-5 text-accent shrink-0"></i>
-                                <span>Płacisz dopiero po wykonaniu usługi</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-white/90 bg-dark-900/80 p-3 rounded-xl border border-white/5">
-                                <i data-lucide="check-circle-2" class="w-5 h-5 text-accent shrink-0"></i>
-                                <span>Usuwanie zapachów pozwierzęcych w cenie</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-white/90 bg-dark-900/80 p-3 rounded-xl border border-white/5">
-                                <i data-lucide="check-circle-2" class="w-5 h-5 text-accent shrink-0"></i>
-                                <span>Pracujemy 7 dni w tygodniu w Trójmieście</span>
-                            </div>
+                <!-- Card 2 -->
+                <div class="bg-dark-800 border-2 border-accent rounded-3xl p-8 flex flex-col justify-between relative glow-accent">
+                    <div class="absolute -top-3.5 left-8 bg-accent text-black font-mono text-[10px] font-black uppercase px-3.5 py-1 rounded-full tracking-wider">Bestseller Store</div>
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-xs uppercase font-bold">Kompleks</span>
+                            <i data-lucide="layers" class="w-6 h-6 text-accent"></i>
                         </div>
+                        <h3 class="text-2xl font-bold mb-3">Narożnik</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Narożniki L-kształtne oraz duże formy U. Pełna ekstrakcja z funkcją spania w cenie.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">250 zł</span>
+                        </div>
+                        <a href="#kreator" class="w-full bg-accent hover:bg-accent-hover text-black font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-accent/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-mono text-xs uppercase font-bold">Zdrowie</span>
+                            <i data-lucide="bed-double" class="w-6 h-6 text-white/40 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Materac</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Dezynfekcja antyalergiczna i usuwanie roztoczy, kurzu oraz plam z potu z obu stron.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">120 zł</span>
+                        </div>
+                        <a href="#kreator" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-accent/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-mono text-xs uppercase font-bold">Podłogi</span>
+                            <i data-lucide="sparkles" class="w-6 h-6 text-white/40 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Dywan / Wykładzina</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Ekstrakcyjne pranie runa dywanowego. Przywracamy głębię kolorów i miękkość.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">80 zł</span>
+                        </div>
+                        <a href="#kreator" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-accent/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-mono text-xs uppercase font-bold">Detale</span>
+                            <i data-lucide="armchair" class="w-6 h-6 text-white/40 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Fotel wypoczynkowy</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Dokładne czyszczenie foteli domowych i biurowych. Usuwanie zabrudzeń podłokietników.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">60 zł</span>
+                        </div>
+                        <a href="#kreator" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-accent/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-mono text-xs uppercase font-bold">Pakiet</span>
+                            <i data-lucide="app-window" class="w-6 h-6 text-white/40 group-hover:text-accent transition-colors"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Mycie okien</h3>
+                        <p class="text-white/60 text-sm leading-relaxed mb-6">Kompleksowe mycie szyb, ram oraz parapetów w mieszkaniach i domach w Trójmieście.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between pt-6 border-t border-white/10 mb-6">
+                            <span class="text-xs text-white/50 font-mono uppercase">Cena od</span>
+                            <span class="font-tech text-2xl font-black text-accent">150 zł</span>
+                        </div>
+                        <a href="#kreator" class="w-full bg-white/5 hover:bg-accent hover:text-black border border-white/10 font-bold py-3.5 rounded-xl text-center block transition-all text-sm">Dodaj do wyceny</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="kalkulator" class="py-24 bg-dark-900 border-t border-white/10 relative">
+    <!-- Interactive Configurator / Cart Section -->
+    <section id="kreator" class="py-24 border-t border-white/10">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-14">
-                <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3 font-bold">Wygodne narzedzie</h2>
-                <p class="text-3xl sm:text-4xl font-extrabold tracking-tight">Kalkulator orientacyjnej ceny</p>
-                <p class="text-white/60 text-sm mt-2">Zaznacz interesujące Cię usługi, aby natychmiast poznać szacowany koszt.</p>
+                <span class="font-tech text-xs uppercase tracking-widest text-accent font-bold">Wózek zamówienia</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">Kreator Szybkiej Wyceny</h2>
+                <p class="text-white/60 text-sm mt-3">Zaznacz pozycje, które chcesz odświeżyć. Suma oszacuje się automatycznie.</p>
             </div>
 
-            <div class="bg-dark-800 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="180" data-name="Kanapa / Sofa 2-3 osobowa" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Kanapa / Sofa</span>
-                                <span class="text-xs text-white/50">2-3 osobowa</span>
-                            </div>
+                            <input type="checkbox" name="service" value="180" data-name="Kanapa / Sofa" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Kanapa / Sofa</span>
                         </div>
                         <span class="font-mono font-bold text-accent">180 zł</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="250" data-name="Narożnik duży / średni" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Narożnik</span>
-                                <span class="text-xs text-white/50">L-kształtny / U-kształtny</span>
-                            </div>
+                            <input type="checkbox" name="service" value="250" data-name="Narożnik" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Narożnik</span>
                         </div>
-                        <span class="font-mono font-bold text-accent">od 250 zł</span>
+                        <span class="font-mono font-bold text-accent">250 zł</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="120" data-name="Materac (dwustronny)" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Materac</span>
-                                <span class="text-xs text-white/50">Dezynfekcja dwustronna</span>
-                            </div>
+                            <input type="checkbox" name="service" value="120" data-name="Materac" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Materac</span>
                         </div>
                         <span class="font-mono font-bold text-accent">120 zł</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="80" data-name="Dywan / Wykładzina (za szt.)" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Dywan / Wykładzina</span>
-                                <span class="text-xs text-white/50">Pranie ekstrakcyjne</span>
-                            </div>
+                            <input type="checkbox" name="service" value="80" data-name="Dywan / Wykładzina" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Dywan / Wykładzina</span>
                         </div>
-                        <span class="font-mono font-bold text-accent">od 80 zł</span>
+                        <span class="font-mono font-bold text-accent">80 zł</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="60" data-name="Fotel wypoczynkowy" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Fotel</span>
-                                <span class="text-xs text-white/50">Standardowy</span>
-                            </div>
+                            <input type="checkbox" name="service" value="60" data-name="Fotel" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Fotel</span>
                         </div>
                         <span class="font-mono font-bold text-accent">60 zł</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-900 border border-white/10 hover:border-accent/50 cursor-pointer transition-all">
+                    <label class="flex items-center justify-between p-4 rounded-2xl bg-dark-800 border border-white/10 hover:border-accent cursor-pointer transition-all">
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" name="service" value="150" data-name="Mycie okien (pakiet mieszkanie)" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
-                            <div>
-                                <span class="font-bold block text-sm">Mycie okien</span>
-                                <span class="text-xs text-white/50">Kompleksowe z ramami</span>
-                            </div>
+                            <input type="checkbox" name="service" value="150" data-name="Mycie okien" class="w-5 h-5 accent-yellow-400 rounded cursor-pointer calc-item">
+                            <span class="font-bold text-sm">Mycie okien</span>
                         </div>
-                        <span class="font-mono font-bold text-accent">od 150 zł</span>
+                        <span class="font-mono font-bold text-accent">150 zł</span>
                     </label>
                 </div>
 
-                <div id="kontakt" class="bg-dark-900 border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div id="kontakt" class="bg-dark-800 border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div>
-                        <span class="text-xs font-mono text-white/50 uppercase block">Szacowana kwota:</span>
+                        <span class="text-xs font-mono text-white/50 uppercase block">Łączna kwota szacunkowa:</span>
                         <div class="font-tech text-4xl font-black text-accent mt-1"><span id="totalPrice">0</span> zł</div>
                     </div>
 
                     <form id="calcForm" class="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
-                        <input type="text" id="calcPhone" placeholder="Twój numer telefonu" required class="bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-accent">
-                        <button type="submit" id="calcSubmitBtn" class="bg-accent hover:bg-accent-hover text-black font-bold px-6 py-3 rounded-xl text-sm transition-all shadow-lg cursor-pointer">
-                            Zamów z wyceną
+                        <input type="text" id="calcPhone" placeholder="Twój telefon (+48)" required class="bg-dark-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-accent">
+                        <button type="submit" id="calcSubmitBtn" class="bg-accent hover:bg-accent-hover text-black font-extrabold px-6 py-3 rounded-xl text-sm transition-all shadow-lg cursor-pointer">
+                            Wyślij zamówienie
                         </button>
                     </form>
                 </div>
@@ -260,122 +337,66 @@
         </div>
     </section>
 
-    <section id="uslugi" class="py-24 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3 font-bold">Pełen zakres</h2>
-                <p class="text-3xl sm:text-4xl font-extrabold tracking-tight">Co dokładnie robimy?</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-dark-900 border border-white/10 rounded-3xl p-8 hover:border-accent/40 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-6">
-                        <i data-lucide="sofa" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Kanapy i Narożniki</h3>
-                    <p class="text-white/60 text-sm leading-relaxed mb-6">
-                        Czyszczenie tapicerki materiałowej i zamszowej. Usuwamy plamy po kawie, winie, tłuszczu i dziecięcych mazakach.
-                    </p>
-                    <a href="#kalkulator" class="font-mono text-xs text-accent flex items-center gap-2 hover:underline font-bold">Wybierz w kalkulatorze <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-                </div>
-
-                <div class="bg-dark-900 border border-white/10 rounded-3xl p-8 hover:border-accent/40 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-6">
-                        <i data-lucide="bed-double" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Materace i Higiena Snu</h3>
-                    <p class="text-white/60 text-sm leading-relaxed mb-6">
-                        Usuwanie roztoczy, kurzu, plam z potu i rosnących alergenów. Twoje łóżko znów będzie pachnące i świeże.
-                    </p>
-                    <a href="#kalkulator" class="font-mono text-xs text-accent flex items-center gap-2 hover:underline font-bold">Wybierz w kalkulatorze <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-                </div>
-
-                <div class="bg-dark-900 border border-white/10 rounded-3xl p-8 hover:border-accent/40 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-6">
-                        <i data-lucide="layers" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Dywany i Wykładziny</h3>
-                    <p class="text-white/60 text-sm leading-relaxed mb-6">
-                        Ekstrakcyjne pranie dywanów z krótkim i długim runem. Przywracamy głębię kolorów i miękkość materiału.
-                    </p>
-                    <a href="#kalkulator" class="font-mono text-xs text-accent flex items-center gap-2 hover:underline font-bold">Wybierz w kalkulatorze <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="dlaczego" class="py-24 bg-dark-900 border-t border-white/10">
+    <!-- Technology / Standard Section -->
+    <section id="standard" class="py-24 bg-dark-900 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="font-tech text-xs uppercase tracking-widest text-accent mb-3 font-bold">Profesjonalizm</h2>
-                    <p class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6">Dlaczego warto nam powierzyć swoje meble?</p>
+                    <span class="font-tech text-xs uppercase tracking-widest text-accent font-bold">Bezkompromisowa jakość</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight mt-2 mb-6">Technologia CleanZone</h2>
                     <p class="text-white/70 leading-relaxed mb-8">
-                        Nie jesteśmy wielką korporacją z szablonowym podejściem. Dbamy o każdy szczegół u klienta w Gdańsku, Sopocie i Gdyni.
+                        Wykorzystujemy potężne ekstraktory ciśnieniowe oraz chemię nowej generacji. Brud nie jest maskowany — jest całkowicie wypłukiwany z głębi wypełnienia mebla.
                     </p>
 
                     <div class="space-y-4">
-                        <div class="flex items-start gap-4 bg-dark-800 p-4 rounded-2xl border border-white/5">
-                            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-0.5">
-                                <i data-lucide="check" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Bezpieczna chemia organiczna</h4>
-                                <p class="text-xs text-white/60 mt-1">Stosujemy profesjonalne preparaty renomowanych marek, które nie zostawiają toksycznych oparów.</p>
-                            </div>
+                        <div class="flex items-center gap-4 bg-dark-800 p-4 rounded-2xl border border-white/5">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-accent shrink-0"></i>
+                            <span class="font-semibold text-sm">Płatność dopiero po akceptacji efektu przez klienta</span>
                         </div>
-
-                        <div class="flex items-start gap-4 bg-dark-800 p-4 rounded-2xl border border-white/5">
-                            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-0.5">
-                                <i data-lucide="check" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Potężne maszyny ekstrakcyjne</h4>
-                                <p class="text-xs text-white/60 mt-1">Silne ssanie ekstraktora pozwala na maksymalne odessanie brudu i wody, skracając schnięcie.</p>
-                            </div>
+                        <div class="flex items-center gap-4 bg-dark-800 p-4 rounded-2xl border border-white/5">
+                            <i data-lucide="zap" class="w-6 h-6 text-accent shrink-0"></i>
+                            <span class="font-semibold text-sm">Schnięcie mebli w zaledwie do 24 godzin</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 relative overflow-hidden">
-                    <h3 class="font-tech text-xl font-bold mb-6 flex items-center gap-3">
-                        <i data-lucide="map-pin" class="text-accent w-6 h-6"></i>
-                        <span>Obszar działania w Trójmieście</span>
-                    </h3>
-                    <p class="text-sm text-white/70 leading-relaxed mb-6">
-                        Dojazdy realizujemy całkowicie bezpłatnie na terenie całego Gdańska, Sopotu oraz Gdyni.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        <span class="px-3.5 py-1.5 rounded-full bg-dark-900 border border-white/10 text-xs font-mono">Gdańsk (Wrzeszcz, Przymorze, Śródmieście...)</span>
-                        <span class="px-3.5 py-1.5 rounded-full bg-dark-900 border border-white/10 text-xs font-mono">Sopot</span>
-                        <span class="px-3.5 py-1.5 rounded-full bg-dark-900 border border-white/10 text-xs font-mono">Gdynia</span>
+                <div class="bg-dark-800 border border-white/10 rounded-3xl p-8 glow-accent">
+                    <h3 class="font-tech text-2xl font-bold mb-6 text-accent">Obszar Dostawy Usług</h3>
+                    <p class="text-sm text-white/70 mb-6">Dojeżdżamy całkowicie bezpłatnie do wszystkich dzielnic w aglomeracji:</p>
+                    <div class="grid grid-cols-3 gap-3 mb-8 font-mono text-center">
+                        <div class="bg-dark-900 p-3 rounded-xl border border-white/5 text-sm font-bold">Gdańsk</div>
+                        <div class="bg-dark-900 p-3 rounded-xl border border-white/5 text-sm font-bold">Sopot</div>
+                        <div class="bg-dark-900 p-3 rounded-xl border border-white/5 text-sm font-bold">Gdynia</div>
                     </div>
-                    <a href="tel:794136273" class="w-full bg-accent hover:bg-accent-hover text-black font-bold py-4 rounded-xl text-center block transition-all">
-                        Zadzwoń teraz: 794 136 273
+                    <a href="tel:794136273" class="w-full bg-accent hover:bg-accent-hover text-black font-extrabold py-4 rounded-xl text-center block transition-all shadow-lg">
+                        Infolinia: 794 136 273
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="py-12 border-t border-white/10 text-white/50 text-xs bg-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-3">
-                <span class="font-tech font-bold text-white text-base">Clean<span class="text-accent">Zone</span></span>
-                <span>&copy; 2026 Wszelkie prawa zastrzeżone. Pranie tapicerki Trójmiasto.</span>
+                <span class="font-tech font-bold text-white text-base">Clean<span class="text-accent">Zone</span> Store</span>
+                <span>&copy; 2026 Wszelkie prawa zastrzeżone. Gdańsk, Sopot, Gdynia.</span>
             </div>
             <div class="flex items-center gap-6 font-mono">
-                <a href="#kalkulator" class="hover:text-accent transition-colors">Kalkulator</a>
-                <a href="#uslugi" class="hover:text-accent transition-colors">Usługi</a>
-                <a href="tel:794136273" class="text-accent hover:underline">794 136 273</a>
+                <a href="#katalog" class="hover:text-accent transition-colors">Katalog</a>
+                <a href="#kreator" class="hover:text-accent transition-colors">Wycena</a>
+                <a href="tel:794136273" class="text-accent font-bold hover:underline">794 136 273</a>
             </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/48794136273?text=Dzień%20dobry,%20chcę%20zamówić%20pranie%20tapicerki" target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center hover:scale-110">
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/48794136273?text=Cześć,%20chcę%20złożyć%20zamówienie%20na%20pranie%20mebli" target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center hover:scale-110">
         <i data-lucide="message-square" class="w-6 h-6"></i>
     </a>
 
+    <!-- Scripts -->
     <script>
         lucide.createIcons();
 
@@ -397,7 +418,7 @@
             cb.addEventListener('change', updateCalculator);
         });
 
-        // Telegram Integration for Calculator Order
+        // Telegram Bot Integration
         const BOT_TOKEN = "8648969996:AAH2HVZS955ds7pw-ygC75AI3DXa2o6YrHc";
         const CHAT_ID = "831181407";
 
@@ -413,7 +434,7 @@
             });
 
             if(selectedServices.length === 0) {
-                alert('Proszę zaznaczyć przynajmniej jedną usługę w kalkulatorze.');
+                alert('Proszę zaznaczyć przynajmniej jedną usługę w katalogu/kreatorze.');
                 return;
             }
 
@@ -423,7 +444,7 @@
             btn.textContent = 'Wysyłanie...';
             btn.disabled = true;
 
-            const message = `🔥 Nowe zamówienie z kalkulatora CleanZone!\n\n📞 Telefon: ${phone}\n🧹 Usługi: ${selectedServices.join(', ')}\n💰 Szacowana cena: ${total} zł`;
+            const message = `⚡ Nowe zamówienie ze sklepu CleanZone!\n\n📞 Telefon: ${phone}\n🛒 Usługi: ${selectedServices.join(', ')}\n💰 Razem: ${total} zł`;
 
             try {
                 const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -437,16 +458,16 @@
                 });
 
                 if(response.ok) {
-                    alert('Dziękujemy! Twoje zamówienie zostało wysłane bezpośrednio do naszego zespołu. Skontaktujemy się z Tobą wkrótce.');
+                    alert('Dziękujemy! Twoje zamówienie trafiło do systemu CleanZone. Wkrótce oddzwonimy.');
                     document.getElementById('calcPhone').value = '';
                     checkboxes.forEach(cb => cb.checked = false);
                     updateCalculator();
                 } else {
-                    alert('Wystąpił błąd przy wysyłaniu. Proszę o kontakt telefoniczny.');
+                    alert('Wystąpił błąd sieciowy. Proszę o kontakt telefoniczny.');
                 }
             } catch(err) {
                 console.error(err);
-                alert('Błąd sieciowy.');
+                alert('Błąd połączenia.');
             } finally {
                 btn.textContent = originalText;
                 btn.disabled = false;
