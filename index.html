@@ -1,44 +1,22 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pranie tapicerki Gdańsk — Cleanzone | Czyszczenie kanap, foteli i dywanów</title>
-<meta name="description" content="Profesjonalne pranie tapicerki meblowej w Gdańsku. Pełny cennik na stronie, dojazd do klienta gratis, efekt widoczny od razu. Zadzwoń: 730 135 133.">
-<meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="data:image/png;base64,...">
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17004498635"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17004498635');
 </script>
-
-<!-- Event snippet for Контакт conversion page -->
+<!-- Event snippet for Контакт conversion -->
 <script>
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
+function gtag_report_conversion() {
   gtag('event', 'conversion', {
-      'send_to': 'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
-      'event_callback': callback
+      'send_to': 'AW-17004498635/Ymz2CPKt3eccEMudsKw_'
   });
-  return false;
 }
 </script>
-</head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pranie tapicerki Gdańsk — Cleanzone | Czyszczenie kanap, foteli i dywanów</title>
@@ -984,11 +962,10 @@ if(bookingForm){
       if(tasks.length === 0){
         throw new Error('not-configured');
       }
-      await Promise.all(tasks);if (typeof gtag_report_conversion === 'function') {
-    gtag_report_conversion();
-}
+      await Promise.all(tasks);
       status.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane — oddzwonimy wkrótce.';
       status.className = 'booking-status ok';
+      if(typeof gtag_report_conversion === 'function'){ gtag_report_conversion(); }
       bookingForm.reset();
     }catch(err){
       status.textContent = 'Nie udało się wysłać. Zadzwoń: 730 135 133.';
