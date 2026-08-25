@@ -946,7 +946,9 @@ if(bookingForm){
       if(tasks.length === 0){
         throw new Error('not-configured');
       }
-      await Promise.all(tasks);
+      await Promise.all(tasks);if (typeof gtag_report_conversion === 'function') {
+    gtag_report_conversion();
+}
       status.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane — oddzwonimy wkrótce.';
       status.className = 'booking-status ok';
       bookingForm.reset();
