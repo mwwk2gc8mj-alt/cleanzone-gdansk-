@@ -1,7 +1,9 @@
-/* Google Ads: load only after opt-in; count only the confirmed booking hook. */
+/* Google Ads + GA4: load only after opt-in; count only server-confirmed leads. */
 (() => {
   'use strict';
-  const key = 'cleanzone-ads-consent-v2';
+  const key = 'cleanzone-measurement-consent-v3';
+  const measurementId = 'G-DD4EGC87V8';
+  window['ga-disable-' + measurementId] = true;
   let allowed = false;
   let loaded = false;
   window.dataLayer = window.dataLayer || [];
@@ -41,12 +43,15 @@
   const denied = {ad_storage:'denied', analytics_storage:'denied', ad_user_data:'denied', ad_personalization:'denied'};
   gtag('consent', 'default', denied);
   function enable() {
+    if (allowed) return;
     allowed = true;
-    gtag('consent', 'update', {...denied, ad_storage:'granted', ad_user_data:'granted'});
+    window['ga-disable-' + measurementId] = false;
+    gtag('consent', 'update', {...denied, ad_storage:'granted', analytics_storage:'granted', ad_user_data:'granted'});
     if (loaded) { configureCalls(); return; }
     loaded = true;
     gtag('js', new Date());
     gtag('config', 'AW-17004498635', {allow_ad_personalization_signals:false});
+    gtag('config', measurementId, {allow_google_signals:false, allow_ad_personalization_signals:false});
     configureCalls();
     const script = document.createElement('script');
     script.async = true;
@@ -56,7 +61,7 @@
   const panel = document.createElement('section');
   panel.className = 'ads-consent';
   panel.setAttribute('aria-label', 'Ustawienia prywatności');
-  panel.innerHTML = '<strong>Pomóż nam mierzyć skuteczność reklam</strong><p>Za Twoją zgodą użyjemy Google Ads do pomiaru wizyt, wysłanych zapytań i połączeń telefonicznych. Google może wyświetlić numer przekierowujący do Cleanzone oraz zmierzyć czas i długość połączenia. Bez personalizacji reklam i bez treści formularza. Odmowa nie wpływa na zamówienie usługi. Zgodę możesz wycofać w stopce.</p><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
+  panel.innerHTML = '<strong>Pomóż nam mierzyć odwiedziny i skuteczność reklam</strong><p>Za Twoją zgodą użyjemy Google Analytics 4 i Google Ads do pomiaru odwiedzin, źródeł ruchu, wysłanych zapytań i połączeń telefonicznych. Google może wyświetlić numer przekierowujący do Cleanzone oraz zmierzyć czas i długość połączenia. Bez personalizacji reklam i bez treści formularza. Odmowa nie wpływa na zamówienie usługi. Zgodę możesz wycofać w stopce.</p><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
   document.body.append(panel);
   const privacy = document.querySelector('#privacyDialog');
   if (privacy) {
@@ -77,11 +82,12 @@
     if (choice === 'yes') enable();
     else {
       allowed = false;
+      window['ga-disable-' + measurementId] = true;
       restorePhones();
       if (loaded) gtag('consent', 'update', denied);
       for (const cookie of document.cookie.split(';')) {
         const name = cookie.split('=')[0].trim();
-        if (!/^(_gcl_|_gac_|gwcc$)/.test(name)) continue;
+        if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$)/.test(name)) continue;
         for (const domain of ['', location.hostname, '.'+location.hostname, '.cleanzone-uslugi.pl']) {
           document.cookie = name+'=; Max-Age=0; path=/'+(domain?'; domain='+domain:'');
         }
@@ -99,6 +105,7 @@
   } catch (_) {}
   window.cleanzoneConfirmedConversion = () => {
     if (!allowed) return;
+    gtag('event', 'generate_lead', {send_to:measurementId});
     gtag('event', 'conversion', {
       send_to:'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
       transaction_id:crypto.randomUUID(), value:0, currency:'PLN'
