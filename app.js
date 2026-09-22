@@ -4,6 +4,7 @@
   const $$ = (s) => [...document.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   if (window.initCleaningScene) window.initCleaningScene($('#cleaning-story'));
+  if (window.initDryingScene) window.initDryingScene($('#drying-story'));
 
   const menu = $('.menu-toggle');
   const nav = $('#navigation');
@@ -39,6 +40,27 @@
 
   const chosen = new Map(); const form = $('#bookingForm'); const select = $('#serviceSelect');
   const summary = $('#selectionSummary'); const toast = $('.selection-toast'); let toastTimer;
+  const drying = $('#expressDrying');
+  function dryingSubtotal() {
+    return window.cleanzoneDryingPrice.selection(chosen.size ? [...chosen.keys()] : select.value ? [select.value] : []);
+  }
+  function renderDrying() {
+    const subtotal = dryingSubtotal();
+    const free = subtotal !== null && subtotal >= 400;
+    $('#dryingOptionLabel').textContent = free ? 'Ekspresowe suszenie — GRATIS ✓' : 'Ekspresowe suszenie +50 zł';
+    let copy = 'Ostateczną cenę prania i suszenia potwierdzimy przed wizytą.';
+    if (drying.checked && subtotal !== null) {
+      const quote = window.cleanzoneDryingPrice.quote(subtotal, true);
+      copy = `Wybrane meble: pranie od ${quote.cleaning} zł. Suszenie: ${free ? 'GRATIS' : '+50 zł jednorazowo'}. `;
+      // Range/from prices may cross the free-drying threshold: do not show a false minimum total.
+      copy += free ? 'Próg 400 zł osiągnięty już przy cenach wyjściowych.' : 'Jeśli potwierdzona cena samego prania osiągnie 400 zł, suszenie będzie GRATIS.';
+      copy += ' Kwotę końcową potwierdzimy po wycenie.';
+    } else if (drying.checked) copy = 'Suszenie: +50 zł za całe zamówienie albo GRATIS przy potwierdzonej cenie samego prania od 400 zł. Opisz liczbę i rodzaj mebli powyżej — potwierdzimy wycenę.';
+    $('#dryingEstimate').textContent = copy;
+  }
+  drying.addEventListener('change', renderDrying);
+  $$('[data-add-drying]').forEach(link => link.addEventListener('click', () => { drying.checked = true; renderDrying(); }));
+  renderDrying();
   function renderSelection() {
     summary.replaceChildren(); summary.hidden = chosen.size === 0;
     if (chosen.size) {
@@ -51,6 +73,7 @@
     if (chosen.size === 1) select.value = [...chosen.keys()][0];
     if (chosen.size > 1) select.value = 'multiple';
     if (!chosen.size) { toast.hidden = true; }
+    renderDrying();
   }
   $$('.choose-service').forEach(button => button.addEventListener('click', () => {
     const id = button.dataset.service;
@@ -113,6 +136,12 @@
     const data = Object.fromEntries(new FormData(form));
     const selectedDescription = [...chosen.values()].join(', ');
     data.service = selectedDescription || select.selectedOptions[0].textContent;
+    if (drying.checked) {
+      const subtotal = dryingSubtotal();
+      data.service += subtotal !== null && subtotal >= 400
+        ? ' | Ekspresowe suszenie: GRATIS (pranie od 400 zł)'
+        : ' | Ekspresowe suszenie: +50 zł za całe zamówienie; GRATIS, jeśli wycena samego prania wyniesie min. 400 zł';
+    }
     data.startedAt = startedAt;
     if (ticket) data.ticket = ticket;
     button.disabled = true; button.firstElementChild.textContent = 'Wysyłanie…';
