@@ -12,23 +12,28 @@
     host.dataset.dryingReady = 'true';
     const prefix = 'dry-' + Math.random().toString(36).slice(2, 9);
     const id = name => prefix + '-' + name;
-    const ribs = Array.from({length: 10}, (_, i) => `<ellipse cx="0" cy="${-14 + i * 9}" rx="113" ry="48" fill="none" stroke="#737970" stroke-width="2" opacity=".42"/>`).join('');
-    const grille = Array.from({length: 9}, (_, i) => `<circle r="${17 + i * 10}" fill="none" stroke="#80867a" stroke-width="1.7"/>`).join('');
-    const blades = Array.from({length: 5}, (_, i) => `<path transform="rotate(${i * 72})" d="M0 -13C11 -37 28 -70 54 -75Q82 -78 86 -51C64 -21 37 0 11 9Z" fill="#a0a79a" stroke="#c5ccba" stroke-width="1"/>`).join('');
-    const streams = Array.from({length: 6}, (_, i) => `<path class="drying-air" d="M${790 - i * 8} ${353 + i * 13}C${686 - i * 15} ${226 + i * 12} ${495 - i * 18} ${219 + i * 21} ${231 - i * 9} ${270 + i * 19}" fill="none" stroke="url(#${id('air')})" stroke-width="${1.5 + i % 2}" stroke-linecap="round" stroke-dasharray="48 29 11 38"/>`).join('');
+    const ribs = Array.from({length: 12}, (_, i) => `<path d="M-104 ${i*6} Q0 ${65+i*6} 104 ${i*6}" fill="none" stroke="#090c0d" stroke-width="3.5"/><path d="M-104 ${i*6-1.5} Q0 ${63.5+i*6} 104 ${i*6-1.5}" fill="none" stroke="#6d7576" stroke-width=".7" opacity=".38"/>`).join('');
+    const grille = Array.from({length: 13}, (_, i) => `<circle r="${16+i*7}" fill="none" stroke="#929c9d" stroke-width="1.05"/>`).join('') + Array.from({length: 16}, (_, i) => `<path d="M15 0H102" transform="rotate(${i*22.5})" stroke="#7e8789" stroke-width=".85"/>`).join('');
+    const blades = Array.from({length: 7}, (_, i) => `<g transform="rotate(${i*360/7})"><path d="M9 -14C15 -37 19 -75 42 -89Q61 -94 70 -77C65 -48 35 -20 14 5Z" fill="url(#${id('blade')})"/><path d="M15 -18C30 -42 37 -69 51 -84" fill="none" stroke="#bec5c5" stroke-width=".8" opacity=".3"/></g>`).join('');
+    const streams = Array.from({length: 4}, (_, i) => `<path class="drying-air" d="M${790-i*8} ${353+i*13}C${686-i*15} ${226+i*12} ${495-i*18} ${219+i*21} ${231-i*9} ${270+i*19}" fill="none" stroke="url(#${id('air')})" stroke-width="${.85+i*.12}" stroke-linecap="round" stroke-dasharray="95 150 24 190"/>`).join('');
     visual.innerHTML = `<svg class="drying-svg" viewBox="0 0 1060 670" role="img" aria-labelledby="${id('title')} ${id('desc')}">
       <title id="${id('title')}">Ekspresowe suszenie tapicerki po praniu</title>
       <desc id="${id('desc')}">Ilustracja procesu: profesjonalny wentylator kieruje powietrze na wyprany materac, a wilgotna powierzchnia stopniowo jaśnieje. Animacja jest poglądowa i nie określa czasu suszenia.</desc>
       <defs>
         <linearGradient id="${id('top')}" x2="1" y2="1"><stop stop-color="#fffef3"/><stop offset=".6" stop-color="#e2e5d9"/><stop offset="1" stop-color="#aebcaf"/></linearGradient>
         <linearGradient id="${id('edge')}" x2="0" y2="1"><stop stop-color="#c6cfc0"/><stop offset="1" stop-color="#637467"/></linearGradient>
-        <linearGradient id="${id('case')}" x2="1" y2="1"><stop stop-color="#3f463d"/><stop offset=".5" stop-color="#151b16"/><stop offset="1" stop-color="#050806"/></linearGradient>
-        <linearGradient id="${id('rim')}" x2="0" y2="1"><stop stop-color="#ffeb6d"/><stop offset=".5" stop-color="#ffd600"/><stop offset="1" stop-color="#b79510"/></linearGradient>
-        <linearGradient id="${id('air')}"><stop stop-color="#edf2dd" stop-opacity="0"/><stop offset=".55" stop-color="#edf2dd" stop-opacity=".7"/><stop offset="1" stop-color="#ffd600" stop-opacity=".16"/></linearGradient>
+        <linearGradient id="${id('case')}" x2="1" y2=".2"><stop stop-color="#1a1f21"/><stop offset=".27" stop-color="#424b4e"/><stop offset=".6" stop-color="#252c2e"/><stop offset="1" stop-color="#101517"/></linearGradient>
+        <linearGradient id="${id('rim')}" x2=".3" y2="1"><stop stop-color="#747e80"/><stop offset=".28" stop-color="#394245"/><stop offset=".65" stop-color="#1d2426"/><stop offset="1" stop-color="#0d1214"/></linearGradient>
+        <linearGradient id="${id('blade')}" x2=".8" y2="1"><stop stop-color="#8c9698"/><stop offset=".4" stop-color="#414c50"/><stop offset="1" stop-color="#1b2427"/></linearGradient>
+        <radialGradient id="${id('well')}"><stop stop-color="#101619"/><stop offset=".8" stop-color="#070c0e"/><stop offset="1" stop-color="#323c3f"/></radialGradient>
+        <linearGradient id="${id('air')}"><stop stop-color="#dbe2df" stop-opacity="0"/><stop offset=".55" stop-color="#dbe2df" stop-opacity=".32"/><stop offset="1" stop-color="#dbe2df" stop-opacity="0"/></linearGradient>
         <radialGradient id="${id('shadow')}"><stop stop-color="#000" stop-opacity=".65"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
         <pattern id="${id('quilt')}" width="72" height="59" patternUnits="userSpaceOnUse"><path d="M-36 0L36 59L108 0M-36 59L36 0L108 59" fill="none" stroke="#8b9d8b" stroke-width="1.2" opacity=".3"/><circle cx="36" cy="29.5" r="2.5" fill="#fff" opacity=".8"/></pattern>
         <clipPath id="${id('surface')}"><rect width="640" height="360" rx="28"/></clipPath>
-        <clipPath id="${id('wetclip')}"><rect class="drying-wetclip" width="640" height="360"/></clipPath>
+        <pattern id="${id('weave')}" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 1h7M1 0v7" stroke="#607267" stroke-width=".6" opacity=".14"/><path d="M0 4h7M4 0v7" stroke="#fff" stroke-width=".6" opacity=".28"/></pattern>
+        <linearGradient id="${id('wetfade')}" class="drying-wetclip" gradientUnits="userSpaceOnUse" x1="640" x2="792"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <mask id="${id('wetmask')}" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="360" style="mask-type:alpha"><rect width="640" height="360" fill="url(#${id('wetfade')})"/></mask>
+        <clipPath id="${id('vents')}"><path d="M-105 -8V76C-102 132 102 132 105 76V-8Z"/></clipPath>
       </defs>
       <ellipse cx="416" cy="533" rx="376" ry="63" fill="url(#${id('shadow')})"/>
       <g class="drying-mattress">
@@ -40,7 +45,8 @@
             <rect width="640" height="360" rx="28" fill="url(#${id('top')})"/>
             <g clip-path="url(#${id('surface')})">
               <rect width="640" height="360" fill="url(#${id('quilt')})"/>
-              <g clip-path="url(#${id('wetclip')})"><rect width="640" height="360" fill="#344f49" opacity=".39"/><path d="M40 100Q180 70 280 130T580 140M70 240Q230 185 410 240T610 250" stroke="#c8ded5" stroke-width="16" opacity=".12" fill="none"/></g>
+              <rect width="640" height="360" fill="url(#${id('weave')})"/>
+              <g mask="url(#${id('wetmask')})"><rect width="640" height="360" fill="#334b46" opacity=".25"/><path d="M-30 110Q180 25 340 110T700 95" stroke="#d7e3df" stroke-width="65" opacity=".06" fill="none"/></g>
             </g>
             <rect x="8" y="8" width="624" height="344" rx="22" fill="none" stroke="#f8f9ed" stroke-width="3" opacity=".7"/>
           </g>
@@ -50,21 +56,26 @@
       <g class="drying-fan" opacity="0">
         <ellipse cx="835" cy="559" rx="174" ry="38" fill="url(#${id('shadow')})"/>
         <g transform="translate(827 413)">
-          <path d="M-101 48L-92 130H-74L-66 75M101 48L92 130H74L66 75" fill="#111711" stroke="#5c6658" stroke-width="3"/>
-          <path d="M-113 -17V78C-110 144 109 144 113 78V-17Z" fill="url(#${id('case')})" stroke="#3d493c" stroke-width="2"/>
-          ${ribs}
-          <path d="M-112 -9V76C-112 134 112 134 112 76V-9" fill="none" stroke="url(#${id('rim')})" stroke-width="13"/>
-          <ellipse cy="-19" rx="119" ry="66" fill="#111911" stroke="url(#${id('rim')})" stroke-width="15"/>
-          <g transform="translate(0 -19) scale(1 .53)"><g class="drying-rotor">${blades}</g><g opacity=".72">${grille}<path d="M-106 0H106M0 -106V106M-76 -76L76 76M76 -76L-76 76" stroke="#858d7f" stroke-width="3"/></g><circle r="18" fill="#252f24" stroke="#707a65" stroke-width="4"/></g>
-          <path d="M-95 -49Q0 -111 95 -49" fill="none" stroke="#fff3a7" stroke-width="3" opacity=".7"/>
-          <path d="M-47 -77V-96Q0 -118 47 -96V-77" fill="none" stroke="url(#${id('rim')})" stroke-width="12" stroke-linejoin="round"/>
-          <rect x="-29" y="60" width="58" height="23" rx="5" fill="#263124" stroke="#68745d"/><circle cx="15" cy="71" r="4" fill="#ffd600"/>
+          <path d="M-99 75L-94 124Q-93 132 -85 133H-73L-69 89M99 75L94 124Q93 132 85 133H73L69 89" fill="url(#${id('case')})" stroke="#596265" stroke-width="1"/>
+          <path d="M-96 129H-73M73 129H96" stroke="#080c0d" stroke-width="6" stroke-linecap="round"/>
+          <path d="M-113 -17V78C-110 144 109 144 113 78V-17Z" fill="url(#${id('case')})" stroke="#40494c" stroke-width="1"/>
+          <g clip-path="url(#${id('vents')})">${ribs}</g>
+          <path d="M-109 -6V76C-109 132 109 132 109 76V-6" fill="none" stroke="url(#${id('rim')})" stroke-width="7"/>
+          <path d="M-98 82Q0 138 98 82" fill="none" stroke="#ad963d" stroke-width="2.5" opacity=".75"/>
+          <ellipse cy="-19" rx="118" ry="66" fill="url(#${id('rim')})" stroke="#616d70" stroke-width="1"/>
+          <ellipse cy="-19" rx="109" ry="58" fill="url(#${id('well')})" stroke="#0c1113" stroke-width="3"/>
+          <g transform="translate(0 -17) scale(1 .53)"><g class="drying-rotor">${blades}</g><g opacity=".8">${grille}</g><circle r="16" fill="url(#${id('rim')})" stroke="#7c878a" stroke-width="1.3"/><circle r="5" fill="#182023"/></g>
+          <path d="M-99 -51Q0 -99 99 -51" fill="none" stroke="#c4ccce" stroke-width="1" opacity=".42"/>
+          <path d="M-40 -74V-92Q0 -111 40 -92V-74" fill="none" stroke="#151d20" stroke-width="11" stroke-linejoin="round"/>
+          <path d="M-40 -77V-92Q0 -111 40 -92V-77" fill="none" stroke="#6f7a7d" stroke-width="1.2"/>
+          <path d="M-24 -97Q0 -105 24 -97" fill="none" stroke="#b7a044" stroke-width="2.5"/>
+          <path d="M-94 -50l3 2M94 -50l-3 2M-83 20l3 -1M83 20l-3 -1" stroke="#a8b1b3" stroke-width="2"/>
+          <rect x="-26" y="59" width="52" height="19" rx="3" fill="#141b1e" stroke="#505c60" stroke-width=".8"/><rect x="8" y="63" width="10" height="10" rx="1.5" fill="#373f41"/><path d="M-17 66h16M-17 69h11" stroke="#909b9e" stroke-width=".7"/><circle cx="13" cy="66" r="1.2" fill="#c8b564"/>
         </g>
       </g>
-      <g class="drying-sparkle" fill="none" stroke="#fff4aa" stroke-width="2" stroke-linecap="round" opacity="0"><path d="M262 292v22m-11 -11h22M524 358v16m-8 -8h16M363 407v18m-9 -9h18"/></g>
     </svg><div class="drying-visual-meta"><span class="drying-stage">PO PRANIU · WILGOTNA TKANINA</span><span>Wizualizacja procesu</span></div><div class="drying-progress" aria-hidden="true"><span></span></div>`;
     const q = selector => visual.querySelector(selector);
-    const parts = {mattress:q('.drying-mattress'), wet:q('.drying-wetclip'), fan:q('.drying-fan'), rotor:q('.drying-rotor'), air:q('.drying-airflow'), streams:[...visual.querySelectorAll('.drying-air')], sparkle:q('.drying-sparkle'), stage:q('.drying-stage'), bar:q('.drying-progress span')};
+    const parts = {mattress:q('.drying-mattress'), wet:q('.drying-wetclip'), fan:q('.drying-fan'), rotor:q('.drying-rotor'), air:q('.drying-airflow'), streams:[...visual.querySelectorAll('.drying-air')], stage:q('.drying-stage'), bar:q('.drying-progress span')};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const shortScreen = matchMedia('(max-height: 600px)');
     const offer = host.querySelector('.drying-offer');
@@ -81,13 +92,14 @@
       const appear = ease(phase(p, .2, .35));
       const airflow = phase(p, .33, .4) * (1 - phase(p, .72, .9));
       parts.mattress.setAttribute('transform', `translate(0 ${8 - 15 * p}) rotate(${-1.8 + 3 * p} 400 400)`);
-      parts.wet.setAttribute('width', String(640 * (1 - dry)));
+      const wetEdge = 716 - 792 * dry;
+      parts.wet.setAttribute('x1', String(wetEdge - 76));
+      parts.wet.setAttribute('x2', String(wetEdge + 76));
       parts.fan.setAttribute('opacity', String(appear));
       parts.fan.setAttribute('transform', `translate(${70 * (1 - appear)} ${20 * (1 - appear) - 6 * p}) rotate(${-8 * (1 - appear)} 830 500)`);
       parts.rotor.setAttribute('transform', `rotate(${phase(p, .35, .85) * 2520})`);
-      parts.air.setAttribute('opacity', String(staticMode ? 0 : airflow * .8));
+      parts.air.setAttribute('opacity', String(staticMode ? 0 : airflow * .65));
       parts.streams.forEach((path, i) => path.setAttribute('stroke-dashoffset', String(p * 1050 + i * 22)));
-      parts.sparkle.setAttribute('opacity', String(phase(p, .73, .9) * .8));
       parts.bar.style.transform = `scaleX(${p})`;
       parts.stage.textContent = p < .35 ? 'PO PRANIU · WILGOTNA TKANINA' : p < .75 ? 'KONTROLOWANY PRZEPŁYW POWIETRZA' : 'FINAŁ SUSZENIA · ŚWIEŻA TKANINA';
       host.dataset.progress = p.toFixed(3);

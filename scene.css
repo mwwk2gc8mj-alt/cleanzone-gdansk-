@@ -1,4 +1,4 @@
-.cleaning-story{--scene-ink:#10110f;--scene-yellow:#ffd600;--scene-paper:#f0efe5;--scene-header:90px;--scene-dock:0px;--cleaning-progress:0;position:relative;min-height:220vh;min-height:220svh;background:var(--scene-ink);color:var(--scene-paper);isolation:isolate;overflow:clip}
+.cleaning-story{--scene-ink:#10110f;--scene-yellow:#ffd600;--scene-paper:#f0efe5;--scene-header:90px;--scene-dock:0px;--cleaning-progress:0;position:relative;min-height:calc(190vh - var(--scene-header)*.25 - var(--scene-dock)*.25);min-height:calc(190svh - var(--scene-header)*.25 - var(--scene-dock)*.25);background:var(--scene-ink);color:var(--scene-paper);isolation:isolate;overflow:clip}
 .cleaning-story *{box-sizing:border-box}
 .cleaning-story__sticky{position:sticky;top:var(--scene-header);height:calc(100vh - var(--scene-header) - var(--scene-dock));height:calc(100svh - var(--scene-header) - var(--scene-dock));min-height:0;max-width:1600px;margin:auto;display:grid;grid-template-columns:1fr;align-content:space-between;padding:clamp(34px,5vw,80px) clamp(24px,6vw,100px) 34px;overflow:hidden}
 .cleaning-story__heading{position:relative;z-index:2;pointer-events:none}
@@ -32,7 +32,7 @@
 @media(max-width:1000px){.cleaning-story__sticky{padding:35px 32px 30px}.cleaning-story__visual{width:82%;right:-6%;transform:translateY(-38%)}.cleaning-story__heading h2{font-size:62px}.cleaning-story__heading>p:last-child{font-size:12px;max-width:220px}.cleaning-story__footer{grid-template-columns:1fr 1fr;gap:25px}.cleaning-story__scroll-hint{display:none}}
 @media(max-width:760px){.cleaning-story{--scene-header:72px;--scene-dock:calc(67px + env(safe-area-inset-bottom, 0px))}}
 @media(max-width:600px){
- .cleaning-story{min-height:210vh;min-height:210svh}
+ .cleaning-story{min-height:calc(182.5vh - var(--scene-header)*.25 - var(--scene-dock)*.25);min-height:calc(182.5svh - var(--scene-header)*.25 - var(--scene-dock)*.25)}
  .cleaning-story__sticky{padding:26px 22px 22px}
  .cleaning-story__heading h2{font-size:clamp(39px,10.8vw,61px);line-height:1.02;letter-spacing:-.055em}
  .cleaning-story__eyebrow{font-size:8px;letter-spacing:.18em;margin-bottom:18px;gap:8px}

@@ -32,13 +32,15 @@
               <linearGradient id="${id('top')}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdf1"/><stop offset=".58" stop-color="#e9e8df"/><stop offset="1" stop-color="#c9cec8"/></linearGradient>
               <linearGradient id="${id('front')}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#cacbc0"/><stop offset=".45" stop-color="#a5afa7"/><stop offset="1" stop-color="#67776b"/></linearGradient>
               <linearGradient id="${id('left')}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c5c7bc"/><stop offset="1" stop-color="#6c7c6e"/></linearGradient>
-              <linearGradient id="${id('glass')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#cde8da" stop-opacity=".92"/><stop offset=".35" stop-color="#fff" stop-opacity=".28"/><stop offset=".7" stop-color="#d0eee2" stop-opacity=".8"/><stop offset="1" stop-color="#fafff5" stop-opacity=".93"/></linearGradient>
-              <linearGradient id="${id('metal')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#566357"/><stop offset=".24" stop-color="#e9eddf"/><stop offset=".5" stop-color="#a4afa1"/><stop offset=".74" stop-color="#fafced"/><stop offset="1" stop-color="#5b685e"/></linearGradient>
+              <linearGradient id="${id('glass')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#a8c2be" stop-opacity=".58"/><stop offset=".18" stop-color="#e8f3f0" stop-opacity=".2"/><stop offset=".52" stop-color="#fff" stop-opacity=".06"/><stop offset=".86" stop-color="#b7ceca" stop-opacity=".3"/><stop offset="1" stop-color="#e4efec" stop-opacity=".62"/></linearGradient>
+              <linearGradient id="${id('metal')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#303c3b"/><stop offset=".24" stop-color="#bbc4c0"/><stop offset=".49" stop-color="#778580"/><stop offset=".72" stop-color="#d7ded9"/><stop offset="1" stop-color="#35433e"/></linearGradient>
+              <linearGradient id="${id('channel')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#243a36" stop-opacity=".4"/><stop offset=".55" stop-color="#85aaa3" stop-opacity=".12"/><stop offset="1" stop-color="#d8e7e1" stop-opacity=".25"/></linearGradient>
+              <linearGradient id="${id('dirtedge')}" class="cleaning-story__dirtedge" gradientUnits="userSpaceOnUse" x1="-14" y1="0" x2="14" y2="0"><stop stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
               <radialGradient id="${id('stain')}"><stop stop-color="#735b34" stop-opacity=".68"/><stop offset=".64" stop-color="#8d744a" stop-opacity=".3"/><stop offset="1" stop-color="#aa956c" stop-opacity="0"/></radialGradient>
               <pattern id="${id('fabric')}" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 1h8M1 0v8" stroke="#818e83" stroke-width=".65" opacity=".18"/><path d="M0 5h8M5 0v8" stroke="#fff" stroke-width=".8" opacity=".45"/></pattern>
               <pattern id="${id('quilting')}" width="72" height="59" patternUnits="userSpaceOnUse"><path d="M-36 0L36 59L108 0M-36 59L36 0L108 59" fill="none" stroke="#b3b9ad" stroke-width="1.5" opacity=".3"/><path d="M-36 2L36 61L108 2M-36 61L36 2L108 61" fill="none" stroke="#fff" stroke-width="1.5" opacity=".6"/></pattern>
               <clipPath id="${id('surface')}"><rect x="0" y="0" width="640" height="360" rx="28"/></clipPath>
-              <clipPath id="${id('dirtclip')}"><rect class="cleaning-story__dirtclip" x="0" y="0" width="640" height="360"/></clipPath>
+              <mask id="${id('dirtclip')}" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="360"><rect class="cleaning-story__dirtclip" x="0" y="0" width="640" height="360" fill="url(#${id('dirtedge')})"/></mask>
               <filter id="${id('shadow')}" x="-30%" y="-70%" width="160%" height="240%"><feGaussianBlur stdDeviation="19"/></filter>
             </defs>
             <ellipse cx="514" cy="558" rx="356" ry="44" fill="#000" opacity=".42" filter="url(#${id('shadow')})"/>
@@ -53,7 +55,7 @@
                   <rect width="640" height="360" fill="url(#${id('fabric')})"/>
                   <rect width="640" height="360" fill="url(#${id('quilting')})"/>
                   ${tufts}
-                  <g clip-path="url(#${id('dirtclip')})">
+                  <g mask="url(#${id('dirtclip')})">
                     <rect width="640" height="360" fill="#968467" opacity=".21"/>
                     <ellipse cx="122" cy="112" rx="115" ry="89" fill="url(#${id('stain')})"/>
                     <ellipse cx="314" cy="230" rx="153" ry="106" fill="url(#${id('stain')})"/>
@@ -61,31 +63,35 @@
                     <ellipse cx="540" cy="310" rx="136" ry="67" fill="url(#${id('stain')})"/>
                     ${dotMarkup}
                   </g>
-                  <rect class="cleaning-story__waterline" x="0" y="8" width="18" height="344" rx="8" fill="#fffedc" opacity=".5"/>
+                  <rect class="cleaning-story__waterline" x="0" y="8" width="9" height="344" rx="4" fill="#c7ded7" opacity=".14"/>
                 </g>
                 <rect x="8" y="8" width="624" height="344" rx="22" fill="none" stroke="#f8f9ed" stroke-width="3.5" opacity=".7"/>
                 <rect x="15" y="15" width="610" height="330" rx="19" fill="none" stroke="#7a897e" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
               </g>
               <g class="cleaning-story__wand">
                 <path class="cleaning-story__hose-shadow" fill="none" stroke="#030704" stroke-width="35" stroke-linecap="round" opacity=".3"/>
-                <path class="cleaning-story__hose" fill="none" stroke="#303d33" stroke-width="29" stroke-linecap="round"/>
-                <path class="cleaning-story__hose-ribs" fill="none" stroke="#667061" stroke-width="28" stroke-dasharray="2.5 7" opacity=".75"/>
+                <path class="cleaning-story__hose" fill="none" stroke="#252c29" stroke-width="29" stroke-linecap="round"/>
+                <path class="cleaning-story__hose-ribs" fill="none" stroke="#67716b" stroke-width="28" stroke-dasharray="1.5 6" opacity=".46"/>
                 <path class="cleaning-story__tube" fill="none" stroke="url(#${id('metal')})" stroke-width="22" stroke-linecap="round"/>
-                <path class="cleaning-story__tube-shine" fill="none" stroke="#f1f5e6" stroke-width="3" opacity=".55" stroke-linecap="round"/>
+                <path class="cleaning-story__tube-shine" fill="none" stroke="#e3eae3" stroke-width="1.6" opacity=".46" stroke-linecap="round"/>
               </g>
               <g class="cleaning-story__nozzle-plane" transform="matrix(.95 .25 -.7 .47 330 220)">
                 <g class="cleaning-story__nozzle">
-                  <rect x="-21" y="9" width="72" height="346" rx="12" fill="#182b1c" opacity=".13" transform="translate(10 10)"/>
-                  <path d="M-17 21Q-17 12 -8 12H23Q34 12 36 26L48 135Q56 144 66 147V214Q56 217 48 225L36 334Q34 348 23 348H-8Q-17 348 -17 339Z" fill="url(#${id('glass')})" stroke="#e7f1e2" stroke-width="3"/>
-                  <path d="M-16 26V334" fill="none" stroke="#677e69" stroke-width="9" stroke-linecap="round"/>
-                  <path d="M-20 26V334" fill="none" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M-1 28L23 148V212L-1 332M22 32L37 146V214L22 328" fill="none" stroke="#fff" stroke-width="3" opacity=".66"/>
-                  <rect x="39" y="151" width="41" height="60" rx="13" fill="url(#${id('metal')})" stroke="#6e8070" stroke-width="2"/>
-                  <rect x="54" y="160" width="24" height="42" rx="6" fill="#26392b"/>
-                  <g class="cleaning-story__droplets">${Array.from({ length: 13 }, (_, i) => `<circle data-drop="${i}" cx="0" cy="0" r="${2.2+i%3}" fill="${i%3===0?'#967946':'#f8ffed'}" opacity=".8"/>`).join('')}</g>
+                  <path d="M-18 22Q-18 14 -8 14H24L42 139L70 152V212L42 225L24 348H-8Q-18 348 -18 338Z" fill="#11211b" opacity=".16" transform="translate(5 6)"/>
+                  <path d="M-17 21Q-17 12 -8 12H23Q34 12 36 26L48 135Q56 144 66 147V214Q56 217 48 225L36 334Q34 348 23 348H-8Q-17 348 -17 339Z" fill="url(#${id('glass')})" stroke="#a9bbb4" stroke-width="1.4"/>
+                  <path d="M-15 22V338" fill="none" stroke="#344c45" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M-17 23V337" fill="none" stroke="#d5e2db" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M-8 29L24 155L48 169V193L24 207L-8 331L4 327L35 217L61 201V160L35 143L4 33Z" fill="url(#${id('channel')})" stroke="#809a90" stroke-width=".8" stroke-opacity=".45"/>
+                  <path d="M2 27L25 134M2 334L25 226M29 31L42 132" fill="none" stroke="#fff" stroke-width="1.6" opacity=".46" stroke-linecap="round"/>
+                  <path d="M-9 21H21M-9 339H21" fill="none" stroke="#eaf1eb" stroke-width="1.1" opacity=".62"/>
+                  <rect x="44" y="152" width="36" height="58" rx="10" fill="url(#${id('metal')})" stroke="#4d6056" stroke-width="1"/>
+                  <rect x="56" y="160" width="26" height="42" rx="5" fill="#222d28"/>
+                  <path d="M61 164V198M67 164V198M73 164V198" stroke="#59685e" stroke-width="1.3" opacity=".55"/>
+                  <circle cx="49" cy="159" r="1.6" fill="#d5ddd6"/><circle cx="49" cy="203" r="1.6" fill="#d5ddd6"/>
+                  <g class="cleaning-story__droplets">${Array.from({ length: 13 }, (_, i) => `<ellipse data-drop="${i}" cx="0" cy="0" rx="${1+i%2*.5}" ry="${2+i%3*.5}" fill="${i%3===0?'#7e8270':'#b8d4cc'}" opacity=".35"/>`).join('')}</g>
                 </g>
               </g>
-              <g class="cleaning-story__fresh" opacity="0" fill="none" stroke="#fffedb" stroke-width="2" stroke-linecap="round"><path d="M312 292v22m-11-11h22M546 374v16m-8-8h16M393 440v20m-10-10h20"/></g>
+              <g class="cleaning-story__fresh" opacity="0" fill="none" stroke="#edf2e9" stroke-width="1" stroke-linecap="round"><path d="M270 339q88 22 152 38M457 373q63 16 116 30"/></g>
             </g>
           </svg>
           <span class="cleaning-story__tag cleaning-story__tag--before">ZABRUDZENIA</span>
@@ -102,7 +108,7 @@
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const sticky = q('.cleaning-story__sticky');
     const parts = {
-      assembly:q('.cleaning-story__assembly'), dirt:q('.cleaning-story__dirtclip'), nozzle:q('.cleaning-story__nozzle'),
+      assembly:q('.cleaning-story__assembly'), dirt:q('.cleaning-story__dirtclip'), edge:q('.cleaning-story__dirtedge'), nozzle:q('.cleaning-story__nozzle'),
       water:q('.cleaning-story__waterline'), hose:q('.cleaning-story__hose'), ribs:q('.cleaning-story__hose-ribs'), shadow:q('.cleaning-story__hose-shadow'),
       tube:q('.cleaning-story__tube'), shine:q('.cleaning-story__tube-shine'), fresh:q('.cleaning-story__fresh'),
       track:q('.cleaning-story__track span'), number:q('.cleaning-story__number'), title:q('.cleaning-story__step-title'), copy:q('.cleaning-story__step-copy'),
@@ -124,11 +130,12 @@
       const raw = reduced.matches ? 1 : clamp((stickyTop - rect.top) / duration);
       const p = reduced.matches ? 1 : clamp((raw - .04) / .89);
       const x = mix(8, 659, p);
-      parts.dirt.setAttribute('x', Math.min(640, x));
-      parts.dirt.setAttribute('width', Math.max(0, 640-x));
+      parts.dirt.setAttribute('x', Math.min(640, x - 14));
+      parts.dirt.setAttribute('width', Math.max(0, 654-x));
+      parts.edge.setAttribute('gradientTransform', `translate(${x} 0)`);
       parts.nozzle.setAttribute('transform', `translate(${x} 0)`);
       parts.water.setAttribute('x', x - 28);
-      parts.water.setAttribute('opacity', p > .985 ? '0' : '.48');
+      parts.water.setAttribute('opacity', p > .985 ? '0' : '.14');
       parts.assembly.setAttribute('transform', `translate(0 ${mix(7,-6,p)}) rotate(${mix(-2.8,2.2,p)} 530 390)`);
       const ax = 330 + .95 * (x + 66) - .7 * 180;
       const ay = 220 + .25 * (x + 66) + .47 * 180 - 4;
@@ -142,9 +149,9 @@
         const startY = 27 + (i * 37 % 298);
         drop.setAttribute('cx', mix(-7, 65, t));
         drop.setAttribute('cy', mix(startY, 180, t*t));
-        drop.setAttribute('opacity', p > .985 || reduced.matches ? '0' : String(Math.sin(t*Math.PI)*.9));
+        drop.setAttribute('opacity', p > .985 || reduced.matches ? '0' : String(Math.sin(t*Math.PI)*.38));
       });
-      parts.fresh.setAttribute('opacity', String(clamp((p-.73)/.25)*.75));
+      parts.fresh.setAttribute('opacity', String(clamp((p-.73)/.25)*.22));
       parts.track.style.transform = `scaleX(${raw})`;
       parts.before.style.opacity = String(1-clamp((p-.46)/.3));
       parts.after.style.opacity = String(clamp((p-.15)/.35));
