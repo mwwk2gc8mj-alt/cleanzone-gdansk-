@@ -1,7 +1,8 @@
 /* Google Ads + GA4: load only after opt-in; count only server-confirmed leads. */
 (() => {
   'use strict';
-  const key = 'cleanzone-measurement-consent-v3';
+  // New consent is required because Meta measurement is now included.
+  const key = 'cleanzone-measurement-consent-v4';
   const measurementId = 'G-DD4EGC87V8';
   window['ga-disable-' + measurementId] = true;
   let allowed = false;
@@ -45,6 +46,7 @@
   function enable() {
     if (allowed) return;
     allowed = true;
+    window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}}));
     window['ga-disable-' + measurementId] = false;
     gtag('consent', 'update', {...denied, ad_storage:'granted', analytics_storage:'granted', ad_user_data:'granted'});
     if (loaded) { configureCalls(); return; }
@@ -61,7 +63,7 @@
   const panel = document.createElement('section');
   panel.className = 'ads-consent';
   panel.setAttribute('aria-label', 'Ustawienia prywatności');
-  panel.innerHTML = '<strong>Pomóż nam mierzyć odwiedziny i skuteczność reklam</strong><p>Za Twoją zgodą użyjemy Google Analytics 4 i Google Ads do pomiaru odwiedzin, źródeł ruchu, wysłanych zapytań i połączeń telefonicznych. Google może wyświetlić numer przekierowujący do Cleanzone oraz zmierzyć czas i długość połączenia. Bez personalizacji reklam i bez treści formularza. Odmowa nie wpływa na zamówienie usługi. Zgodę możesz wycofać w stopce.</p><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
+  panel.innerHTML = '<strong>Pomóż nam mierzyć odwiedziny i skuteczność reklam</strong><p>Za Twoją zgodą użyjemy Google Analytics 4, Google Ads i Meta Pixel do pomiaru odwiedzin, źródeł ruchu, wysłanych zapytań i połączeń telefonicznych. Google może wyświetlić numer przekierowujący do Cleanzone oraz zmierzyć czas i długość połączenia. Meta otrzyma dane techniczne wizyty i zdarzenia PageView oraz Lead, bez treści formularza. Google Ads nie otrzymuje sygnałów personalizacji reklam. Zdarzenia Meta służą pomiarowi i optymalizacji reklam. Odmowa nie wpływa na zamówienie usługi. Zgodę możesz wycofać w stopce.</p><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
   document.body.append(panel);
   const privacy = document.querySelector('#privacyDialog');
   if (privacy) {
@@ -82,12 +84,13 @@
     if (choice === 'yes') enable();
     else {
       allowed = false;
+      window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:false}}));
       window['ga-disable-' + measurementId] = true;
       restorePhones();
       if (loaded) gtag('consent', 'update', denied);
       for (const cookie of document.cookie.split(';')) {
         const name = cookie.split('=')[0].trim();
-        if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$)/.test(name)) continue;
+        if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$|_fbp$|_fbc$)/.test(name)) continue;
         for (const domain of ['', location.hostname, '.'+location.hostname, '.cleanzone-uslugi.pl']) {
           document.cookie = name+'=; Max-Age=0; path=/'+(domain?'; domain='+domain:'');
         }

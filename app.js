@@ -158,6 +158,8 @@
       if (typeof window.cleanzoneConfirmedConversion === 'function') {
         try { await window.cleanzoneConfirmedConversion(); } catch (_) { /* Delivery already confirmed. */ }
       }
+      try { window.cleanzoneMarkConfirmedLead?.(); } catch (_) { /* Delivery already confirmed. */ }
+      try { window.location.assign('/dziekujemy/'); } catch (_) { /* Keep the confirmed-success message. */ }
     } catch (_) {
       if (production) { ticket = null; ticketFetchedAt = 0; }
       status.className = 'error'; status.textContent = 'Nie udało się potwierdzić wysłania. Twoje dane pozostały w formularzu. Zadzwoń: 730 135 133, aby ustalić termin.';
