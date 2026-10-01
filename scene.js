@@ -119,43 +119,57 @@
       ['Wypłukujemy zabrudzenia.', 'Ssawka odciąga wodę wraz z rozpuszczonym brudem.'],
       ['Czas na świeżość.', 'Po wyschnięciu — znowu Twój ulubiony kąt.']
     ];
-    let frame = 0, lastStep = -1;
+    let frame = 0, lastStep = -1, lastRaw = -1, lastReduced = null;
+    let geometryDirty = true, stickyTop = 0, duration = 1;
+    const attributes = new WeakMap();
+    function setSvg(element, name, value) {
+      value = String(value);
+      let saved = attributes.get(element);
+      if (!saved) { saved = new Map(); attributes.set(element, saved); }
+      if (saved.get(name) === value) return;
+      element.setAttribute(name, value); saved.set(name, value);
+    }
     function render() {
       frame = 0;
       const rect = host.getBoundingClientRect();
       const vh = window.innerHeight;
       if (!reduced.matches && (rect.bottom < -100 || rect.top > vh + 100)) return;
-      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-      const duration = Math.max(1, host.offsetHeight - sticky.offsetHeight);
+      // Sticky geometry changes on resize, not on each scroll frame.
+      if (geometryDirty) {
+        stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+        duration = Math.max(1, host.offsetHeight - sticky.offsetHeight);
+        geometryDirty = false;
+      }
       const raw = reduced.matches ? 1 : clamp((stickyTop - rect.top) / duration);
+      if (raw === lastRaw && reduced.matches === lastReduced) return;
+      lastRaw = raw; lastReduced = reduced.matches;
       const p = reduced.matches ? 1 : clamp((raw - .04) / .89);
       const x = mix(8, 659, p);
-      parts.dirt.setAttribute('x', Math.min(640, x - 14));
-      parts.dirt.setAttribute('width', Math.max(0, 654-x));
-      parts.edge.setAttribute('gradientTransform', `translate(${x} 0)`);
-      parts.nozzle.setAttribute('transform', `translate(${x} 0)`);
-      parts.water.setAttribute('x', x - 28);
-      parts.water.setAttribute('opacity', p > .985 ? '0' : '.14');
-      parts.assembly.setAttribute('transform', `translate(0 ${mix(7,-6,p)}) rotate(${mix(-2.8,2.2,p)} 530 390)`);
+      setSvg(parts.dirt, 'x', Math.min(640, x - 14));
+      setSvg(parts.dirt, 'width', Math.max(0, 654-x));
+      setSvg(parts.edge, 'gradientTransform', `translate(${x} 0)`);
+      setSvg(parts.nozzle, 'transform', `translate(${x} 0)`);
+      setSvg(parts.water, 'x', x - 28);
+      setSvg(parts.water, 'opacity', p > .985 ? '0' : '.14');
+      parts.assembly.style.transform = `translate(0px,${mix(7,-6,p)}px) rotate(${mix(-2.8,2.2,p)}deg)`;
       const ax = 330 + .95 * (x + 66) - .7 * 180;
       const ay = 220 + .25 * (x + 66) + .47 * 180 - 4;
       const bx = ax + 78, by = ay - 145;
       const hose = `M${bx} ${by} C${bx+90} ${by-55} ${930+30*p} ${by-155} 1077 ${130+80*p}`;
       const tube = `M${ax} ${ay} L${bx} ${by}`;
-      parts.hose.setAttribute('d', hose); parts.ribs.setAttribute('d', hose); parts.shadow.setAttribute('d', hose);
-      parts.tube.setAttribute('d', tube); parts.shine.setAttribute('d', `M${ax-4} ${ay-3} L${bx-4} ${by-3}`);
+      setSvg(parts.hose, 'd', hose); setSvg(parts.ribs, 'd', hose); setSvg(parts.shadow, 'd', hose);
+      setSvg(parts.tube, 'd', tube); setSvg(parts.shine, 'd', `M${ax-4} ${ay-3} L${bx-4} ${by-3}`);
       parts.drops.forEach((drop,i) => {
         const t = (p * 12 + i / 13) % 1;
         const startY = 27 + (i * 37 % 298);
-        drop.setAttribute('cx', mix(-7, 65, t));
-        drop.setAttribute('cy', mix(startY, 180, t*t));
-        drop.setAttribute('opacity', p > .985 || reduced.matches ? '0' : String(Math.sin(t*Math.PI)*.38));
+        const visible = p <= .985 && !reduced.matches;
+        if (visible) setSvg(drop, 'transform', `translate(${mix(-7, 65, t)} ${mix(startY, 180, t*t)})`);
+        setSvg(drop, 'opacity', visible ? Math.sin(t*Math.PI)*.38 : '0');
       });
-      parts.fresh.setAttribute('opacity', String(clamp((p-.73)/.25)*.22));
+      setSvg(parts.fresh, 'opacity', String(clamp((p-.73)/.25)*.22));
       parts.track.style.transform = `scaleX(${raw})`;
       parts.before.style.opacity = String(1-clamp((p-.46)/.3));
       parts.after.style.opacity = String(clamp((p-.15)/.35));
-      host.style.setProperty('--cleaning-progress', p.toFixed(3));
       const step = Math.min(2, Math.floor(raw * 3));
       if (step !== lastStep) {
         parts.number.textContent = '0' + (step+1) + ' / 03';
@@ -163,12 +177,16 @@
       }
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(render); }
+    function resize() { geometryDirty = true; schedule(); }
     window.addEventListener('scroll', schedule, {passive:true});
-    window.addEventListener('resize', schedule, {passive:true});
+    window.addEventListener('resize', resize, {passive:true});
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resize) : null;
+    if (observer) { observer.observe(host); observer.observe(sticky); }
     if (reduced.addEventListener) reduced.addEventListener('change', schedule);
     render();
     return { update: schedule, destroy: function () {
-      window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule);
+      window.removeEventListener('scroll', schedule); window.removeEventListener('resize', resize);
+      if (observer) observer.disconnect();
       if (reduced.removeEventListener) reduced.removeEventListener('change', schedule);
       cancelAnimationFrame(frame); delete host.dataset.sceneReady;
     } };

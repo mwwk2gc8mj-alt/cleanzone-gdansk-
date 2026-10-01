@@ -16,22 +16,33 @@
   matchMedia('(min-width: 761px)').addEventListener('change', closeMenu);
 
   const hero = $('.hero'); const ribbon = $('.ribbon-track');
-  let raf = 0;
+  const sofa = $('.hero-sofa'), badge = $('.floating-price'), note = $('.material-note');
+  const ribbonHost = $('.service-ribbon');
+  let raf = 0, heroHeight = hero.offsetHeight, lastHeroProgress = -1;
   function paintScroll() {
-    raf = 0; if (reduced.matches) return;
-    const y = window.scrollY; const height = hero.offsetHeight;
-    if (y < height + 100) {
-      const progress = Math.min(y / height, 1);
-      hero.style.setProperty('--hero-y', `${progress * 75}px`);
-      hero.style.setProperty('--hero-rotate', `${progress * -5}deg`);
-      hero.style.setProperty('--hero-scale', String(1 + progress * .08));
-      hero.style.setProperty('--badge-y', `${progress * -55}px`);
+    raf = 0;
+    if (reduced.matches) {
+      sofa.style.transform = badge.style.transform = note.style.transform = ribbon.style.transform = '';
+      lastHeroProgress = -1;
+      return;
     }
-    const rect = $('.service-ribbon').getBoundingClientRect();
-    if (rect.bottom > 0 && rect.top < innerHeight) ribbon.style.setProperty('--ribbon-x', `${-y * .22}px`);
+    // Read geometry before writing styles; keep transforms on the moving layers.
+    const y = window.scrollY, rect = ribbonHost.getBoundingClientRect();
+    const progress = Math.min(Math.max(y / Math.max(1, heroHeight), 0), 1);
+    if (progress !== lastHeroProgress) {
+      sofa.style.transform = `translate3d(0,${progress * 75}px,0) rotateZ(${progress * -5}deg) scale(${1 + progress * .08})`;
+      badge.style.transform = `translate3d(0,${progress * -55}px,0) rotate(-4deg)`;
+      note.style.transform = `translate3d(0,${progress * -55}px,0)`;
+      lastHeroProgress = progress;
+    }
+    if (rect.bottom > 0 && rect.top < innerHeight) ribbon.style.transform = `translate3d(${-y * .22}px,0,0)`;
   }
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(paintScroll); }, { passive: true });
-  reduced.addEventListener('change', paintScroll); paintScroll();
+  const scheduleScroll = () => { if (!raf) raf = requestAnimationFrame(paintScroll); };
+  addEventListener('scroll', scheduleScroll, { passive: true });
+  const measureHero = () => { heroHeight = hero.offsetHeight; scheduleScroll(); };
+  addEventListener('resize', measureHero, { passive: true });
+  if (typeof ResizeObserver === 'function') new ResizeObserver(measureHero).observe(hero);
+  reduced.addEventListener('change', scheduleScroll); paintScroll();
 
   $$('.price-filters button').forEach(button => button.addEventListener('click', () => {
     $$('.price-filters button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));

@@ -11,6 +11,7 @@
 .cleaning-story__halo{position:absolute;inset:20% 10% 7% 2%;border-radius:50%;background:radial-gradient(ellipse,#a3b77c14,transparent 66%);transform:rotate(-18deg);border:1px solid #ffffff05}
 .cleaning-story__halo:after{content:"";position:absolute;inset:12%;border:1px solid #ffffff04;border-radius:50%}
 .cleaning-story__svg{position:relative;width:100%;height:100%;overflow:visible;display:block}
+.cleaning-story__assembly{transform-box:view-box;transform-origin:530px 390px;will-change:transform}
 .cleaning-story__tag{position:absolute;font-size:9px;letter-spacing:.14em;font-weight:600;line-height:1;z-index:2;transition:opacity .1s linear;white-space:nowrap}
 .cleaning-story__tag:before{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:currentColor}
 .cleaning-story__tag--before{top:46%;right:9%;color:#c7c6b1;transform:translateY(-35px)}
