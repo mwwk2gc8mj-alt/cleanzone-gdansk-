@@ -1,8 +1,8 @@
 /* Google Ads + GA4: load only after opt-in; count only server-confirmed leads. */
 (() => {
   'use strict';
-  // New consent is required because Meta measurement is now included.
-  const key = 'cleanzone-measurement-consent-v4';
+  // Renew consent when session recordings are added to measurement.
+  const key = 'cleanzone-measurement-consent-v5';
   const measurementId = 'G-DD4EGC87V8';
   window['ga-disable-' + measurementId] = true;
   let allowed = false;
@@ -63,7 +63,7 @@
   const panel = document.createElement('section');
   panel.className = 'ads-consent';
   panel.setAttribute('aria-label', 'Ustawienia prywatności');
-  panel.innerHTML = '<strong>Ustawienia prywatności</strong><p>Za zgodą mierzymy ruch z reklam, kliknięcia i wysłane zapytania. Treści formularza nie trafiają do analityki. Odmowa nie wpływa na usługę.</p><details><summary>Szczegóły pomiaru</summary><p>Używamy Google Analytics 4, Google Ads i Meta Pixel do pomiaru źródeł ruchu, oglądanych sekcji i cen, wyboru mebli, kliknięć telefonu, kroków formularza, błędów i potwierdzonych zapytań. Google może wyświetlić numer przekierowujący do Cleanzone i zmierzyć czas oraz długość połączenia. Meta otrzymuje PageView i Lead, bez treści formularza. Google Ads nie otrzymuje sygnałów personalizacji reklam. Zdarzenia Meta służą pomiarowi i optymalizacji reklam. Zgodę możesz wycofać w stopce.</p></details><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
+  panel.innerHTML = '<strong>Ustawienia prywatności</strong><p>Za zgodą mierzymy ruch z reklam, kliknięcia i wysłane zapytania oraz analizujemy nagrania wizyt w Microsoft Clarity. Treści formularza nie trafiają do analityki. Odmowa nie wpływa na usługę.</p><details><summary>Szczegóły pomiaru</summary><p>Używamy Google Analytics 4, Google Ads i Meta Pixel do pomiaru źródeł ruchu, oglądanych sekcji i cen, wyboru mebli, kliknięć telefonu, kroków formularza, błędów i potwierdzonych zapytań. Google może wyświetlić numer przekierowujący do Cleanzone i zmierzyć czas oraz długość połączenia. Meta otrzymuje PageView i Lead, bez treści formularza. Google Ads nie otrzymuje sygnałów personalizacji reklam. Zdarzenia Meta służą pomiarowi i optymalizacji reklam. Microsoft Clarity tworzy mapy kliknięć i przewijania oraz nagrania działań na stronie. Treść formularzy jest maskowana. Zgodę możesz wycofać w stopce.</p></details><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
   document.body.append(panel);
   const privacy = document.querySelector('#privacyDialog');
   if (privacy) {
@@ -90,7 +90,7 @@
       if (loaded) gtag('consent', 'update', denied);
       for (const cookie of document.cookie.split(';')) {
         const name = cookie.split('=')[0].trim();
-        if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$|_fbp$|_fbc$)/.test(name)) continue;
+        if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$|_fbp$|_fbc$|_clck$|_clsk$)/.test(name)) continue;
         for (const domain of ['', location.hostname, '.'+location.hostname, '.cleanzone-uslugi.pl']) {
           document.cookie = name+'=; Max-Age=0; path=/'+(domain?'; domain='+domain:'');
         }

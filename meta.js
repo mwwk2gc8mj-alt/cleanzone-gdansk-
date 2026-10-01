@@ -4,7 +4,7 @@
   if (window.cleanzoneMetaPixelReady) return;
   window.cleanzoneMetaPixelReady = true;
   const pixelId = '1125559183140836';
-  const consentKey = 'cleanzone-measurement-consent-v4';
+  const consentKey = 'cleanzone-measurement-consent-v5';
   const leadKey = 'cleanzone-confirmed-lead-v1';
   const isThankYouPage = /^\/dziekujemy\/?$/.test(location.pathname);
   let initialized = false;

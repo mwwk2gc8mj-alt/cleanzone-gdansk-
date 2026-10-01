@@ -3,7 +3,7 @@
   'use strict';
   if (window.cleanzoneJourney) return;
   const measurementId = 'G-DD4EGC87V8';
-  const consentKey = 'cleanzone-measurement-consent-v4';
+  const consentKey = 'cleanzone-measurement-consent-v5';
   const services = new Set(['sofa2','sofa3','cornerl','corneru','pullout','stool','chair','office','armchair','mattress1','mattress2','headboard','rug','multiple','other','partner3','partner5','partner8','partner12','partnerOther']);
   const fields = new Set(['name','phone','city','service','date','comment','expressDrying']);
   const errors = new Set(['required','invalid','config_unavailable','network','timeout','http_error','invalid_response','delivery_unconfirmed','script_error','asset_error']);
@@ -32,6 +32,7 @@
     if (typeof params.option_selected === 'boolean') safe.option_selected = params.option_selected;
     if (Number.isInteger(params.http_status) && params.http_status >= 400 && params.http_status < 600) safe.http_status = params.http_status;
     if (document.getElementById('bookingForm') && name.startsWith('booking_')) safe.form_id = pageType === 'partner' ? 'partner' : 'booking';
+    try { window.cleanzoneClarityEvent?.(name); } catch (_) { /* Replay cannot block GA or booking. */ }
     try { window.gtag('event', name, safe); return true; } catch (_) { return false; }
   }
   function once(key, name, params) {
