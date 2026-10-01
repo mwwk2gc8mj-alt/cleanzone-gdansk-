@@ -43,11 +43,13 @@ document.querySelectorAll('[data-tier]').forEach(a=>a.addEventListener('click',(
     if (!form.reportValidity()) return;
     const status = $('#bookingStatus'); const button = $('.submit-button');
     if (button.disabled) return;
+    window.cleanzoneJourney?.submitAttempt();
     button.disabled = true; button.firstElementChild.textContent = 'Wysyłanie…';
     status.className = ''; status.textContent = '';
     await configReady;
     if (production && (!bookingEnabled || Date.now() - ticketFetchedAt > 12 * 60 * 1000)) await loadBookingConfig();
     if (!bookingEnabled) {
+      window.cleanzoneJourney?.submitError('config_unavailable');
       status.className = 'error';
       status.textContent = production ? 'Formularz jest chwilowo niedostępny. Zapytanie nie zostało wysłane. Zadzwoń: 730 135 133.' : 'To podgląd nowej strony — zapytanie nie zostało wysłane. Aby zamówić usługę teraz, zadzwoń: 730 135 133.';
       button.disabled = false; button.firstElementChild.textContent = 'Zapytaj o współpracę';
@@ -58,11 +60,17 @@ document.querySelectorAll('[data-tier]').forEach(a=>a.addEventListener('click',(
     data.startedAt = startedAt;
     if (ticket) data.ticket = ticket;
     button.disabled = true; button.firstElementChild.textContent = 'Wysyłanie…';
+    let deliveryError = 'network', deliveryStatus;
     try {
       if (ticket && Date.now() - ticketFetchedAt < 1100) await new Promise(resolve => setTimeout(resolve, 1100 - (Date.now() - ticketFetchedAt)));
       const response = await fetch(apiBase + '/api/booking', { method: 'POST', headers: {'Content-Type': 'application/json'}, credentials: 'omit', body: JSON.stringify(data), signal: AbortSignal.timeout(16000) });
+      deliveryStatus = response.status;
+      deliveryError = response.ok ? 'invalid_response' : 'http_error';
       const result = await response.json();
-      if (!response.ok || result.ok !== true) throw new Error(result.error || 'delivery');
+      if (!response.ok) throw new Error('delivery');
+      deliveryError = 'delivery_unconfirmed';
+      if (result.ok !== true) throw new Error('delivery');
+      window.cleanzoneJourney?.submitSuccess();
       status.className = 'success'; status.textContent = 'Dziękujemy! Zapytanie o współpracę dotarło. Skontaktujemy się, aby ustalić szczegóły.';
       form.reset();
       if (ticket) { ticket = null; ticketFetchedAt = 0; }
@@ -73,7 +81,8 @@ document.querySelectorAll('[data-tier]').forEach(a=>a.addEventListener('click',(
       }
       try { window.cleanzoneMarkConfirmedLead?.(); } catch (_) { /* Delivery already confirmed. */ }
       try { window.location.assign('/dziekujemy/'); } catch (_) { /* Keep the confirmed-success message. */ }
-    } catch (_) {
+    } catch (error) {
+      window.cleanzoneJourney?.submitError(['TimeoutError','AbortError'].includes(error.name) ? 'timeout' : deliveryError, deliveryStatus);
       if (production) { ticket = null; ticketFetchedAt = 0; }
       status.className = 'error'; status.textContent = 'Nie udało się potwierdzić wysłania. Twoje dane pozostały w formularzu. Zadzwoń: 730 135 133, aby ustalić termin.';
     } finally { button.disabled = false; button.firstElementChild.textContent = 'Zapytaj o współpracę'; }

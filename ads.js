@@ -46,10 +46,9 @@
   function enable() {
     if (allowed) return;
     allowed = true;
-    window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}}));
     window['ga-disable-' + measurementId] = false;
     gtag('consent', 'update', {...denied, ad_storage:'granted', analytics_storage:'granted', ad_user_data:'granted'});
-    if (loaded) { configureCalls(); return; }
+    if (loaded) { configureCalls(); window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}})); return; }
     loaded = true;
     gtag('js', new Date());
     gtag('config', 'AW-17004498635', {allow_ad_personalization_signals:false});
@@ -59,11 +58,12 @@
     script.async = true;
     script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17004498635';
     document.head.append(script);
+    window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}}));
   }
   const panel = document.createElement('section');
   panel.className = 'ads-consent';
   panel.setAttribute('aria-label', 'Ustawienia prywatności');
-  panel.innerHTML = '<strong>Pomóż nam mierzyć odwiedziny i skuteczność reklam</strong><p>Za Twoją zgodą użyjemy Google Analytics 4, Google Ads i Meta Pixel do pomiaru odwiedzin, źródeł ruchu, wysłanych zapytań i połączeń telefonicznych. Google może wyświetlić numer przekierowujący do Cleanzone oraz zmierzyć czas i długość połączenia. Meta otrzyma dane techniczne wizyty i zdarzenia PageView oraz Lead, bez treści formularza. Google Ads nie otrzymuje sygnałów personalizacji reklam. Zdarzenia Meta służą pomiarowi i optymalizacji reklam. Odmowa nie wpływa na zamówienie usługi. Zgodę możesz wycofać w stopce.</p><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
+  panel.innerHTML = '<strong>Ustawienia prywatności</strong><p>Za zgodą mierzymy ruch z reklam, kliknięcia i wysłane zapytania. Treści formularza nie trafiają do analityki. Odmowa nie wpływa na usługę.</p><details><summary>Szczegóły pomiaru</summary><p>Używamy Google Analytics 4, Google Ads i Meta Pixel do pomiaru źródeł ruchu, oglądanych sekcji i cen, wyboru mebli, kliknięć telefonu, kroków formularza, błędów i potwierdzonych zapytań. Google może wyświetlić numer przekierowujący do Cleanzone i zmierzyć czas oraz długość połączenia. Meta otrzymuje PageView i Lead, bez treści formularza. Google Ads nie otrzymuje sygnałów personalizacji reklam. Zdarzenia Meta służą pomiarowi i optymalizacji reklam. Zgodę możesz wycofać w stopce.</p></details><div><button type="button" data-choice="no">Odrzuć</button><button type="button" data-choice="yes">Zgadzam się</button></div>';
   document.body.append(panel);
   const privacy = document.querySelector('#privacyDialog');
   if (privacy) {
@@ -108,10 +108,15 @@
   } catch (_) {}
   window.cleanzoneConfirmedConversion = () => {
     if (!allowed) return;
-    gtag('event', 'generate_lead', {send_to:measurementId});
+    // Await dispatch (bounded) before leaving the page; blocked analytics must not block booking.
+    const sent = new Promise(resolve => {
+      const timer = setTimeout(resolve, 800);
+      gtag('event', 'generate_lead', {send_to:measurementId, form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking', page_type:document.body.classList.contains('partner-page') ? 'partner' : 'home', event_timeout:800, event_callback:() => { clearTimeout(timer); resolve(); }});
+    });
     gtag('event', 'conversion', {
       send_to:'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
       transaction_id:crypto.randomUUID(), value:0, currency:'PLN'
     });
+    return sent;
   };
 })();
