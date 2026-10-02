@@ -52,24 +52,32 @@
   const chosen = new Map(); const form = $('#bookingForm'); const select = $('#serviceSelect');
   const summary = $('#selectionSummary'); const toast = $('.selection-toast'); let toastTimer;
   const drying = $('#expressDrying');
+  const firstOrder = $('#firstOrder');
   function dryingSubtotal() {
     return window.cleanzoneDryingPrice.selection(chosen.size ? [...chosen.keys()] : select.value ? [select.value] : []);
   }
   function renderDrying() {
     const subtotal = dryingSubtotal();
-    const free = subtotal !== null && subtotal >= 400;
+    const quote = subtotal === null ? null : window.cleanzoneDryingPrice.quote(subtotal, drying.checked, firstOrder.checked);
+    const free = quote !== null && quote.cleaning >= 400;
+    $('#firstOrderEstimate').textContent = firstOrder.checked
+      ? quote ? `Pranie po rabacie od ${quote.cleaning} zł. Minimum po rabacie: 150 zł. Cenę i rabat potwierdzimy przed wizytą.`
+        : '20% rabatu na pranie według aktualnego cennika; minimum po rabacie: 150 zł. Wycena i rabat do potwierdzenia przed wizytą.'
+      : 'Zaznacz, jeśli zamawiasz w CleanZone po raz pierwszy. Rabat potwierdzimy przed wizytą.';
     $('#dryingOptionLabel').textContent = free ? 'Ekspresowe suszenie — GRATIS ✓' : 'Ekspresowe suszenie +50 zł';
     let copy = 'Ostateczną cenę prania i suszenia potwierdzimy przed wizytą.';
     if (drying.checked && subtotal !== null) {
-      const quote = window.cleanzoneDryingPrice.quote(subtotal, true);
-      copy = `Wybrane meble: pranie od ${quote.cleaning} zł. Suszenie: ${free ? 'GRATIS' : '+50 zł jednorazowo'}. `;
+      copy = `Wybrane meble: pranie ${firstOrder.checked ? 'po rabacie ' : ''}od ${quote.cleaning} zł. Suszenie: ${free ? 'GRATIS' : '+50 zł jednorazowo'}. `;
       // Range/from prices may cross the free-drying threshold: do not show a false minimum total.
-      copy += free ? 'Próg 400 zł osiągnięty już przy cenach wyjściowych.' : 'Jeśli potwierdzona cena samego prania osiągnie 400 zł, suszenie będzie GRATIS.';
+      copy += free ? 'Próg 400 zł osiągnięty już przy cenach wyjściowych po uwzględnieniu wybranego rabatu.' : 'Jeśli potwierdzona cena samego prania po rabacie osiągnie 400 zł, suszenie będzie GRATIS.';
       copy += ' Kwotę końcową potwierdzimy po wycenie.';
-    } else if (drying.checked) copy = 'Suszenie: +50 zł za całe zamówienie albo GRATIS przy potwierdzonej cenie samego prania od 400 zł. Opisz liczbę i rodzaj mebli powyżej — potwierdzimy wycenę.';
+    } else if (drying.checked) copy = 'Suszenie: +50 zł za całe zamówienie albo GRATIS przy potwierdzonej cenie samego prania po rabacie od 400 zł. Opisz liczbę i rodzaj mebli powyżej — potwierdzimy wycenę.';
     $('#dryingEstimate').textContent = copy;
   }
   drying.addEventListener('change', renderDrying);
+  firstOrder.addEventListener('change', renderDrying);
+  $$('a[href="#pierwsze-zamowienie"]').forEach(link => link.addEventListener('click', () => { $('#pierwsze-zamowienie').open = true; }));
+  if (location.hash === '#pierwsze-zamowienie') $('#pierwsze-zamowienie').open = true;
   $$('[data-add-drying]').forEach(link => link.addEventListener('click', () => { drying.checked = true; renderDrying(); }));
   renderDrying();
   function renderSelection() {
@@ -151,10 +159,12 @@
     data.service = selectedDescription || select.selectedOptions[0].textContent;
     if (drying.checked) {
       const subtotal = dryingSubtotal();
-      data.service += subtotal !== null && subtotal >= 400
-        ? ' | Ekspresowe suszenie: GRATIS (pranie od 400 zł)'
-        : ' | Ekspresowe suszenie: +50 zł za całe zamówienie; GRATIS, jeśli wycena samego prania wyniesie min. 400 zł';
+      const quote = subtotal === null ? null : window.cleanzoneDryingPrice.quote(subtotal, true, firstOrder.checked);
+      data.service += quote !== null && quote.cleaning >= 400
+        ? ' | Ekspresowe suszenie: GRATIS (pranie po rabacie od 400 zł)'
+        : ' | Ekspresowe suszenie: +50 zł za całe zamówienie; GRATIS, jeśli wycena samego prania po rabacie wyniesie min. 400 zł';
     }
+    if (firstOrder.checked) data.service += ' | Pierwsze zamówienie: rabat 20% na pranie; min. 150 zł po rabacie. Suszenie bez rabatu; bez łączenia rabatów. Do potwierdzenia.';
     data.startedAt = startedAt;
     if (ticket) data.ticket = ticket;
     button.disabled = true; button.firstElementChild.textContent = 'Wysyłanie…';

@@ -1,9 +1,10 @@
 /* Quote helper: the threshold uses cleaning only, never the total with drying. */
 (function (root) {
   'use strict';
-  const minimumPrices = Object.freeze({sofa2:160,sofa3:180,cornerl:220,corneru:240,pullout:40,stool:25,chair:35,office:40,armchair:60,mattress1:70,mattress2:140,headboard:120});
-  function quote(cleaning, selected) {
+  const minimumPrices = Object.freeze({sofa2:180,sofa3:200,cornerl:240,corneru:260,pullout:45,stool:30,chair:40,office:45,armchair:65,mattress1:80,mattress2:150,headboard:130});
+  function quote(cleaning, selected, firstOrder = false) {
     if (!Number.isFinite(cleaning) || cleaning < 0) return null;
+    if (firstOrder) cleaning = Math.max(150, Math.round(cleaning * 80) / 100);
     const drying = selected && cleaning < 400 ? 50 : 0;
     return {cleaning, drying, total:cleaning + drying};
   }
