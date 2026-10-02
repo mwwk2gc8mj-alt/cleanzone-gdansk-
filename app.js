@@ -88,7 +88,14 @@
       const clear = document.createElement('button'); clear.type = 'button'; clear.textContent = 'Wyczyść wybór';
       clear.addEventListener('click', () => { chosen.clear(); select.value = ''; renderSelection(); }); summary.append(clear);
     }
-    $$('.choose-service').forEach(b => { const active = chosen.has(b.dataset.service); b.setAttribute('aria-pressed', String(active)); b.closest('.price-card').classList.toggle('selected', active); b.querySelector('span:last-child').textContent = active ? '✓' : '↗'; });
+    $$('.choose-service').forEach(b => {
+      const active = chosen.has(b.dataset.service), card = b.closest('.price-card');
+      b.setAttribute('aria-pressed', String(active));
+      b.setAttribute('aria-label', `${active ? 'Usuń z wyboru' : 'Wybierz'}: ${card.querySelector('h3').textContent}`);
+      card.classList.toggle('selected', active);
+      b.querySelector('span:first-child').textContent = active ? 'Wybrano' : 'Wybierz';
+      b.querySelector('span:last-child').textContent = active ? '✓' : '↗';
+    });
     if (chosen.size === 1) select.value = [...chosen.keys()][0];
     if (chosen.size > 1) select.value = 'multiple';
     if (!chosen.size) { toast.hidden = true; }
