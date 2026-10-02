@@ -50,7 +50,7 @@
   }));
 
   const chosen = new Map(); const form = $('#bookingForm'); const select = $('#serviceSelect');
-  const summary = $('#selectionSummary'); const toast = $('.selection-toast'); let toastTimer;
+  const summary = $('#selectionSummary'); const toast = $('.selection-toast');
   const drying = $('#expressDrying');
   const firstOrder = $('#firstOrder');
   function dryingSubtotal() {
@@ -106,7 +106,7 @@
     if (chosen.has(id)) { chosen.delete(id); if (!chosen.size) select.value = ''; }
     else chosen.set(id, button.closest('.price-card').querySelector('h3').textContent);
     renderSelection();
-    if (chosen.size) { $('#toastText').textContent = `Wybrano: ${[...chosen.values()].join(', ')}`; toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.hidden = true; }, 6500); }
+    if (chosen.size) { $('#toastText').textContent = `Wybrano: ${[...chosen.values()].join(', ')}`; toast.hidden = false; }
   }));
   select.addEventListener('change', () => {
     // A manual selection replaces the earlier set, including the generic "several items" option.
