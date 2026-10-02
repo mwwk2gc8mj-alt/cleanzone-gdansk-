@@ -9,6 +9,9 @@
   placeholder.style.minWidth = '0';
   const body = dialog.querySelector('.quick-booking-body');
   const close = dialog.querySelector('.quick-booking-close');
+  const footer = dialog.querySelector('.quick-booking-footer');
+  const submit = form.querySelector('.submit-button');
+  const actions = [...form.querySelectorAll('.submit-button,.form-bottom,#bookingStatus')].map(node => ({node, marker:document.createComment('booking-action')}));
   const toast = document.querySelector('.selection-toast');
   let opener = null;
   function open(link) {
@@ -18,6 +21,8 @@
     placeholder.style.height = form.getBoundingClientRect().height + 'px';
     form.before(placeholder);
     body.append(form);
+    actions.forEach(({node, marker}) => { node.before(marker); footer.append(node); });
+    submit.setAttribute('form', form.id);
     dialog.showModal();
     body.scrollTop = 0;
     document.documentElement.classList.add('quick-booking-open');
@@ -35,6 +40,8 @@
   });
   close.addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => {
+    actions.forEach(({node, marker}) => marker.replaceWith(node));
+    submit.removeAttribute('form');
     placeholder.replaceWith(form);
     document.documentElement.classList.remove('quick-booking-open');
     if (!document.getElementById('selectionSummary').hidden) toast.hidden = false;

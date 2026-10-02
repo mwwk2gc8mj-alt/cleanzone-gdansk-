@@ -45,7 +45,7 @@ footer{padding:48px 0 25px;background:#0c0e09;border-top:1px solid var(--line)}.
 .booking-extra .form-grid{padding:8px 0 20px}
 html.quick-booking-open{overflow:hidden}
 .quick-booking{width:min(620px,calc(100% - 32px));max-width:620px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);padding:0;border:1px solid #ffd60042;background:var(--panel);color:var(--paper);overflow:hidden}
-.quick-booking[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}
+.quick-booking[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 .quick-booking-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 24px;border-bottom:1px solid var(--line)}
 .quick-booking-heading h2{font-size:24px;letter-spacing:-.04em}
 .quick-booking-close{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--paper);font-size:12px}
@@ -59,3 +59,10 @@ html.quick-booking-open{overflow:hidden}
 @media(max-width:760px){.quick-booking{width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:14px}.quick-booking-heading{padding:8px 16px}.quick-booking-heading h2{font-size:22px}.quick-booking .booking-form{padding:20px 16px}.selection-toast{flex-direction:row;align-items:center;gap:12px}.selection-toast #toastText{max-height:3em;overflow:auto}.selection-toast a{white-space:normal;min-width:120px;min-height:44px;display:flex;align-items:center;justify-content:center;background:var(--yellow);color:var(--ink);border-radius:7px;padding:8px 12px}.city-help{font-size:11px}}
 
 .quick-booking .drying-option:not(:has(input:checked))>p{display:none}
+
+.quick-booking-footer{padding:14px 24px 10px;border-top:1px solid var(--line);background:var(--panel)}
+.quick-booking-footer .submit-button{width:100%;margin:0;text-decoration:none}
+.quick-booking-footer .form-bottom{margin:9px 0 0;text-align:center}
+.quick-booking-footer #bookingStatus{margin:8px 0 0;font-size:12px;line-height:1.5}
+.quick-booking-footer #bookingStatus:empty{display:none}
+@media(max-width:760px){.quick-booking-footer{padding:10px 16px}.quick-booking-footer .submit-button{min-height:48px}}
