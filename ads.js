@@ -108,15 +108,25 @@
   } catch (_) {}
   window.cleanzoneConfirmedConversion = () => {
     if (!allowed) return;
-    // Await dispatch (bounded) before leaving the page; blocked analytics must not block booking.
-    const sent = new Promise(resolve => {
-      const timer = setTimeout(resolve, 800);
-      gtag('event', 'generate_lead', {send_to:measurementId, form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking', page_type:document.body.classList.contains('partner-page') ? 'partner' : 'home', event_timeout:800, event_callback:() => { clearTimeout(timer); resolve(); }});
+    // Wait for both destinations before redirecting, with one shared maximum of 800 ms.
+    // A callback acknowledges dispatch, not receipt or attribution in either dashboard.
+    function dispatch(name, params) {
+      return new Promise(resolve => {
+        const finish = () => { clearTimeout(timer); resolve(); };
+        const timer = setTimeout(finish, 800);
+        try { gtag('event', name, {...params, event_timeout:800, event_callback:finish}); }
+        catch (_) { finish(); } // Measurement cannot turn a confirmed booking into an error.
+      });
+    }
+    const ga = dispatch('generate_lead', {
+      send_to:measurementId,
+      form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking',
+      page_type:document.body.classList.contains('partner-page') ? 'partner' : 'home'
     });
-    gtag('event', 'conversion', {
+    const ads = dispatch('conversion', {
       send_to:'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
       transaction_id:crypto.randomUUID(), value:0, currency:'PLN'
     });
-    return sent;
+    return Promise.all([ga, ads]);
   };
 })();

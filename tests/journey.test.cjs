@@ -21,7 +21,7 @@ function setup(saved = null) {
       addEventListener:(name,fn) => docHandlers[name] = fn}};
   ctx.window=ctx;ctx.gtag=(...args) => events.push(args);
   vm.runInNewContext(source,ctx);
-  return {ctx,events,formHandlers,consent:allowed => handlers['cleanzone:measurement-consent']({detail:{allowed}}),
+  return {ctx,events,formHandlers,error:event=>handlers.error(event),consent:allowed => handlers['cleanzone:measurement-consent']({detail:{allowed}}),
     view:() => observer([{target:section,isIntersecting:true,boundingClientRect:{height:3000,width:390},intersectionRect:{height:600,width:390}}]),
     flush:() => {const callbacks=[...timers.values()];timers.clear();callbacks.forEach(fn=>fn());}};
 }
@@ -61,4 +61,19 @@ test('validation reports only a field name and category',()=>{
 test('analytics failure cannot escape into the booking code',()=>{
   const s=setup();s.consent(true);s.ctx.gtag=()=>{throw Error('blocked');};
   assert.doesNotThrow(()=>{s.ctx.cleanzoneJourney.submitAttempt();s.ctx.cleanzoneJourney.submitSuccess();});
+});
+test('an error while recording a site error cannot recursively re-enter telemetry',()=>{
+  const s=setup();s.consent(true);let calls=0;
+  const error={filename:'https://www.cleanzone-uslugi.pl/journey.js?v=test',lineno:120,colno:8};
+  s.ctx.gtag=()=>{calls++;if(calls>10)throw Error('recursive telemetry');s.error(error);};
+  assert.doesNotThrow(()=>s.error(error));assert.equal(calls,1);
+});
+test('error diagnostics allow only known script names and numeric positions, never error contents',()=>{
+  const s=setup();s.consent(true);s.events.length=0;
+  s.error({filename:'https://www.cleanzone-uslugi.pl/booking-access.js?phone=secret',lineno:20,colno:4,message:'Private error contents'});
+  assert.equal(s.events.length,1);const params=s.events[0][2];
+  assert.equal(params.script_file,'booking-access.js');assert.equal(params.error_line,20);assert.equal(params.error_column,4);
+  assert.ok(!JSON.stringify(s.events).includes('secret'));assert.ok(!JSON.stringify(s.events).includes('Private error'));
+  s.ctx.cleanzoneJourney.track('site_error',{script_file:'private.js',error_line:'private',error_column:-1});
+  const last=s.events.at(-1)[2];assert.equal(last.script_file,undefined);assert.equal(last.error_line,undefined);assert.equal(last.error_column,undefined);
 });

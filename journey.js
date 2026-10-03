@@ -11,6 +11,7 @@
   const actions = new Set(['menu','clear_selection','privacy','instagram','google_reviews','partners','local_area','home','drying','process','results','faq']);
   const locations = new Set(['header','hero','prices','drying','results','reviews','process','faq','form','footer','dock','selection_toast','partner_offer','local_page','page']);
   const names = new Set(['section_view','price_view','price_filter','select_service','remove_service','booking_cta_click','booking_form_start','booking_field_complete','booking_validation_error','booking_submit_click','booking_submit_attempt','booking_submit_error','booking_submit_success','phone_click','faq_open','compare_interaction','drying_option','scroll_depth','site_error','navigation_click','interaction_click']);
+  const scripts = new Set(['app.js','partners.js','scene.js','drying-scene.js','drying-price.js','journey.js','ads.js','clarity.js','meta.js','booking-access.js']);
   let allowed = false;
   try { const saved = JSON.parse(localStorage.getItem(consentKey)); allowed = saved?.choice === 'yes' && saved.expires > Date.now(); } catch (_) {}
   const seen = new Set();
@@ -19,13 +20,15 @@
   function track(name, params = {}) {
     if (!allowed || !names.has(name) || typeof window.gtag !== 'function') return false;
     // Explicit allowlist: callers cannot leak user input or an error message into analytics.
-    const safe = {send_to:measurementId, page_type:pageType, tracking_version:'20261001'};
+    const safe = {send_to:measurementId, page_type:pageType, tracking_version:'20261003'};
     if (actions.has(params.action_id)) safe.action_id = params.action_id;
     if (sections.has(params.section_id)) safe.section_id = params.section_id;
     if (locations.has(params.action_location)) safe.action_location = params.action_location;
     if (services.has(params.service_id)) safe.service_id = params.service_id;
     if (fields.has(params.field_name)) safe.field_name = params.field_name;
     if (errors.has(params.error_type)) safe.error_type = params.error_type;
+    if (scripts.has(params.script_file)) safe.script_file = params.script_file;
+    for (const key of ['error_line','error_column']) if (Number.isInteger(params[key]) && params[key] > 0 && params[key] < 1000000) safe[key] = params[key];
     if (['all','sofy','fotele','materace','dywany'].includes(params.filter_id)) safe.filter_id = params.filter_id;
     if ([25,50,75,90].includes(params.scroll_percent)) safe.scroll_percent = params.scroll_percent;
     if (Number.isInteger(params.item_index) && params.item_index > 0 && params.item_index < 30) safe.item_index = params.item_index;
@@ -37,7 +40,9 @@
   }
   function once(key, name, params) {
     if (seen.has(key)) return;
-    if (track(name, params)) seen.add(key);
+    // Reserve before dispatch: an SDK error must not recursively record itself.
+    seen.add(key);
+    if (!track(name, params)) seen.delete(key);
   }
   function start() {
     if (!allowed || started) return;
@@ -144,7 +149,10 @@
   addEventListener('error', event => {
     const resource = event.target;
     if (resource?.tagName === 'IMG' && resource.closest('main')) once('asset_error', 'site_error', {error_type:'asset_error'});
-    else if (event.filename && /\/(app|partners|scene|drying-scene|drying-price|journey)\.js(?:\?|$)/.test(event.filename)) once('script_error', 'site_error', {error_type:'script_error'});
+    else if (typeof event.filename === 'string') {
+      const file = event.filename.split(/[?#]/)[0].split('/').pop();
+      if (scripts.has(file)) once('script_error:'+file, 'site_error', {error_type:'script_error',script_file:file,error_line:event.lineno,error_column:event.colno});
+    }
   }, true);
   addEventListener('cleanzone:measurement-consent', event => {
     allowed = event.detail?.allowed === true;
