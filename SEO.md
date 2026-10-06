@@ -45,3 +45,13 @@ llms.txt не добавлялся: в проверенных официальн
 - https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler — Claude-SearchBot, Claude-User и ClaudeBot.
 - https://www.indexnow.org/documentation — подтверждение владения и протокол уведомления.
 - https://developers.google.com/search/docs/appearance/ai-features — обычные SEO-основы, отсутствие специальных AI-файлов, индексация не гарантирована.
+
+## Подтверждения после публикации
+
+GitHub Pages deployment коммита cf0dd44485b21e58e58b96f71c528145e557d75d завершился успешно. Все 11 sitemap URL проверены по HTTP: 200, self-canonical, без noindex; новые JSON-LD графы присутствуют. IndexNow уведомление отправлено 6.10.2026, ответ HTTP 202 для 11 URL.
+
+В браузере: главная и четыре новые страницы проверены на ширинах 390, 430, 768, 1440 и 1920 с подтверждением фактического viewport; horizontal overflow не обнаружен. CTA остаётся в первом блоке; новая навигация не меняет формы и анимационные скрипты. Console ошибок на просмотренных главной и странице канапы нет. Существующие WebP сохранены (hero около 168 КБ, новые карточки мебели около 12 КБ), before/after lazy-loaded. Полевые LCP/CLS не измерены — в GSC нет данных; результат мобильного layout-теста не заменяет измерение Core Web Vitals.
+
+Schema.org Validator для опубликованной страницы канапы: нет ошибок и предупреждений, обнаружены Service, BreadcrumbList и FAQPage; LocalBusiness связан через provider. Это проверка словаря schema.org, не обещание Google rich results.
+
+Главная также проверена Schema.org Validator: LocalBusiness и FAQPage, ошибок и предупреждений нет. Sitemap повторно отправлен через GSC 6.10.2026, интерфейс подтвердил «Файл Sitemap отправлен». Отображаемые 7 URL и дата обхода 4.10 — результат предыдущей обработки, новые 11 URL ещё должны быть перечитаны Google.
