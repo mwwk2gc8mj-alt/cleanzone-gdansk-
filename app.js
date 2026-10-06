@@ -49,6 +49,12 @@
     $$('.price-card').forEach(card => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; });
   }));
 
+  // The service ribbon uses the same filters, without selecting a service for the visitor.
+  $$('[data-price-filter]').forEach(link => link.addEventListener('click', () => {
+    const filter = $('.price-filters button[data-filter="' + link.dataset.priceFilter + '"]');
+    filter?.click();
+  }));
+
   const chosen = new Map(); const form = $('#bookingForm'); const select = $('#serviceSelect');
   const summary = $('#selectionSummary'); const toast = $('.selection-toast');
   const drying = $('#expressDrying');

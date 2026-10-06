@@ -73,7 +73,7 @@
           <rect x="-26" y="59" width="52" height="19" rx="3" fill="#141b1e" stroke="#505c60" stroke-width=".8"/><rect x="8" y="63" width="10" height="10" rx="1.5" fill="#373f41"/><path d="M-17 66h16M-17 69h11" stroke="#909b9e" stroke-width=".7"/><circle cx="13" cy="66" r="1.2" fill="#c8b564"/>
         </g>
       </g>
-    </svg><div class="drying-visual-meta"><span class="drying-stage">PO PRANIU · WILGOTNA TKANINA</span><span class="drying-meta-actions"><span>Wizualizacja procesu</span><span class="drying-scroll-hint">Przewiń dalej <span aria-hidden="true">↓</span></span></span></div><div class="drying-progress" aria-hidden="true"><span></span></div>`;
+    </svg><div class="drying-visual-meta"><span class="drying-stage">PO PRANIU · WILGOTNA TKANINA</span><span class="drying-meta-actions"><span>Wizualizacja procesu</span><a class="drying-scroll-hint" href="#cennik" aria-label="Pomiń animację suszenia i zobacz ceny">Zobacz ceny <span aria-hidden="true">↓</span></a></span></div><div class="drying-progress" aria-hidden="true"><span></span></div>`;
     const q = selector => visual.querySelector(selector);
     const parts = {mattress:q('.drying-mattress'), wet:q('.drying-wetclip'), fan:q('.drying-fan'), rotor:q('.drying-rotor'), air:q('.drying-airflow'), streams:[...visual.querySelectorAll('.drying-air')], stage:q('.drying-stage'), bar:q('.drying-progress span')};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');

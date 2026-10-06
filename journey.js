@@ -10,7 +10,7 @@
   const sections = new Set(['home','cleaning-story','drying-story','cennik','efekty','opinie','jak-dzialamy','faq','rezerwacja','warunki','bookingForm']);
   const actions = new Set(['menu','clear_selection','privacy','instagram','google_reviews','partners','local_area','home','drying','process','results','faq']);
   const locations = new Set(['header','hero','prices','drying','results','reviews','process','faq','form','footer','dock','selection_toast','partner_offer','local_page','page']);
-  const names = new Set(['section_view','price_view','price_filter','select_service','remove_service','booking_cta_click','booking_form_start','booking_field_complete','booking_validation_error','booking_submit_click','booking_submit_attempt','booking_submit_error','booking_submit_success','phone_click','faq_open','compare_interaction','drying_option','scroll_depth','site_error','navigation_click','interaction_click']);
+  const names = new Set(['section_view','price_view','price_filter','select_service','remove_service','booking_cta_click','booking_form_open','booking_form_close','booking_form_scroll','booking_form_start','booking_field_complete','booking_validation_error','booking_submit_click','booking_submit_attempt','booking_submit_error','booking_submit_success','phone_click','faq_open','compare_interaction','drying_option','scroll_depth','site_error','navigation_click','interaction_click']);
   const scripts = new Set(['app.js','partners.js','scene.js','drying-scene.js','drying-price.js','journey.js','ads.js','clarity.js','meta.js','booking-access.js']);
   let allowed = false;
   try { const saved = JSON.parse(localStorage.getItem(consentKey)); allowed = saved?.choice === 'yes' && saved.expires > Date.now(); } catch (_) {}

@@ -101,7 +101,7 @@
         <div class="cleaning-story__footer">
           <div class="cleaning-story__step"><span class="cleaning-story__number">01 / 03</span><p class="cleaning-story__step-title">Docieramy głębiej.</p><p class="cleaning-story__step-copy">Czyszczenie nie kończy się na powierzchni.</p></div>
           <div class="cleaning-story__track" aria-hidden="true"><span></span></div>
-          <span class="cleaning-story__scroll-hint">PRZEWIŃ DALEJ <span>↓</span></span>
+          <a class="cleaning-story__scroll-hint" href="#cennik" aria-label="Pomiń animacje i zobacz ceny">ZOBACZ CENY <span aria-hidden="true">↓</span></a>
         </div>
       </div>`;
     const q = selector => host.querySelector(selector);

@@ -77,3 +77,14 @@ test('error diagnostics allow only known script names and numeric positions, nev
   s.ctx.cleanzoneJourney.track('site_error',{script_file:'private.js',error_line:'private',error_column:-1});
   const last=s.events.at(-1)[2];assert.equal(last.script_file,undefined);assert.equal(last.error_line,undefined);assert.equal(last.error_column,undefined);
 });
+test('modal diagnostics do not count as submissions and respect analytics refusal',()=>{
+  const s=setup();
+  const names=['booking_form_open','booking_form_scroll','booking_form_close'];
+  names.forEach(name=>s.ctx.cleanzoneJourney.track(name));
+  assert.equal(s.events.length,0);
+  s.consent(true);s.events.length=0;
+  names.forEach(name=>s.ctx.cleanzoneJourney.track(name));
+  assert.deepEqual(s.events.map(e=>e[1]),names);
+  s.ctx.cleanzoneJourney.submitSuccess();
+  assert.ok(!s.events.some(e=>e[1]==='booking_submit_success'));
+});

@@ -35,3 +35,13 @@ test('only approved event names; visitor input is never passed as parameters or 
   assert.ok(!JSON.stringify(s.calls()).includes('secret'));assert.ok(!s.calls().some(c=>c[0]==='identify'));
   s.ctx.clarity=()=>{throw Error('blocked');};assert.doesNotThrow(()=>s.ctx.cleanzoneClarityEvent('phone_click'));
 });
+test('selection and modal diagnostics stay consent-gated and carry no form data',()=>{
+  const s=setup(null);
+  const names=['select_service','remove_service','booking_form_open','booking_form_close','booking_form_scroll'];
+  names.forEach(name=>s.ctx.cleanzoneClarityEvent(name,{phone:'private',city:'private'}));
+  assert.equal(s.calls().length,0);
+  s.consent(true);
+  names.forEach(name=>s.ctx.cleanzoneClarityEvent(name,{phone:'private',city:'private'}));
+  assert.deepEqual(s.calls().filter(c=>c[0]==='event'),names.map(name=>['event',name]));
+  assert.ok(!JSON.stringify(s.calls()).includes('private'));
+});
