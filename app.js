@@ -79,6 +79,23 @@
       copy += ' Kwotę końcową potwierdzimy po wycenie.';
     } else if (drying.checked) copy = 'Suszenie: +50 zł za całe zamówienie albo GRATIS przy potwierdzonej cenie samego prania po rabacie od 400 zł. Opisz liczbę i rodzaj mebli powyżej — potwierdzimy wycenę.';
     $('#dryingEstimate').textContent = copy;
+    const ids = chosen.size ? [...chosen.keys()] : select.value ? [select.value] : [];
+    const estimate = window.cleanzoneDryingPrice.estimate(ids,drying.checked,firstOrder.checked);
+    const amount = value => new Intl.NumberFormat('pl-PL',{maximumFractionDigits:2}).format(value);
+    const range = values => values[1] === null ? `od ${amount(values[0])} zł` : values[0] === values[1] ? `${amount(values[0])} zł` : `${amount(values[0])}–${amount(values[1])} zł`;
+    const output = $('#bookingQuote');
+    if (output) {
+      output.replaceChildren();
+      const line = (label,text) => { const p=document.createElement('p'); const strong=document.createElement('strong');strong.textContent=label+' ';p.append(strong,text);output.append(p); };
+      if (estimate) {
+        line(firstOrder.checked ? 'Pranie po rabacie:' : 'Pranie:',range(estimate.cleaning));
+        line('Suszenie:',estimate.drying === 'none' ? 'nie wybrano' : estimate.drying === 'free' ? 'GRATIS' : estimate.drying === 'paid' ? '+50 zł za całe zamówienie' : '+50 zł lub GRATIS, jeśli samo pranie po rabacie wyniesie min. 400 zł');
+        if (estimate.total) line('Razem orientacyjnie:',range(estimate.total));
+        line('Minimum 150 zł uwzględnione.','Cenę, zakres i rabat potwierdzimy przed wizytą.');
+      } else line('Wycena po zdjęciu lub rozmowie.','Minimum zamówienia po rabacie: 150 zł. Suszenie opcjonalnie +50 zł albo GRATIS przy praniu od 400 zł po rabacie.');
+    }
+    const toastQuote = $('#toastQuote');
+    if (toastQuote) toastQuote.textContent = estimate ? `Pranie ${firstOrder.checked ? 'po rabacie ' : ''}${range(estimate.cleaning)} · cenę potwierdzimy` : 'Cenę potwierdzimy po zdjęciu lub rozmowie';
   }
   drying.addEventListener('change', renderDrying);
   firstOrder.addEventListener('change', renderDrying);
