@@ -1,6 +1,7 @@
 /* Session replay starts only after renewed opt-in. Never identify visitors by form data. */
 (() => {
   'use strict';
+  if (window.cleanzoneClarityEvent) return;
   const projectId = 'yr0iqsk14t';
   const consentKey = 'cleanzone-measurement-consent-v5';
   let loaded = false, allowed = false, stopped = false;
@@ -39,7 +40,7 @@
     const saved = JSON.parse(localStorage.getItem(consentKey));
     if (saved?.choice === 'yes' && saved.expires > Date.now()) enable();
   } catch (_) { /* Refusing storage must never block booking. */ }
-  const events = new Set(['select_service','remove_service','booking_form_open','booking_form_close','booking_form_scroll','booking_cta_click','phone_click','booking_form_start','booking_validation_error','booking_submit_attempt','booking_submit_error','booking_submit_success','site_error']);
+  const events = new Set(['view_pricing','before_after_interaction','form_view','lead','select_service','remove_service','booking_form_open','booking_form_close','booking_form_scroll','booking_cta_click','phone_click','booking_form_start','booking_validation_error','booking_submit_attempt','booking_submit_error','booking_submit_success','site_error']);
   window.cleanzoneClarityEvent = name => {
     if (allowed && events.has(name) && typeof window.clarity === 'function') {
       try { window.clarity('event', name); } catch (_) { /* Analytics is optional. */ }

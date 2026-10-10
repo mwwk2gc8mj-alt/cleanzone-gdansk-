@@ -15,13 +15,17 @@
     try {
       const saved = JSON.parse(sessionStorage.getItem(leadKey));
       sessionStorage.removeItem(leadKey);
-      if (saved?.id && saved.createdAt > Date.now() - 10 * 60 * 1000) pendingLead = saved.id;
+      if (typeof saved?.id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(saved.id) && saved.createdAt > Date.now() - 10 * 60 * 1000 && saved.createdAt <= Date.now()) pendingLead = saved.id;
     } catch (_) { /* Browsing without session storage still works. */ }
   }
 
+  const markedLeads = new Set();
   window.cleanzoneMarkConfirmedLead = () => {
+    const id = window.cleanzoneJourney?.getConfirmedLeadId();
+    if (!hasConsent() || !id || markedLeads.has(id)) return;
+    markedLeads.add(id);
     try {
-      sessionStorage.setItem(leadKey, JSON.stringify({id:crypto.randomUUID(), createdAt:Date.now()}));
+      sessionStorage.setItem(leadKey, JSON.stringify({id, createdAt:Date.now()}));
     } catch (_) { /* Booking and redirect must not depend on analytics storage. */ }
   };
 
@@ -33,8 +37,9 @@
   }
   function trackLead() {
     if (!pendingLead || !initialized) return;
+    const id = pendingLead;
     pendingLead = null;
-    window.fbq('track', 'Lead');
+    window.fbq('track', 'Lead', {}, {eventID:id});
   }
   function enable() {
     if (initialized) {

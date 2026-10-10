@@ -208,7 +208,7 @@
       if (!response.ok) throw new Error('delivery');
       deliveryError = 'delivery_unconfirmed';
       if (result.ok !== true) throw new Error('delivery');
-      window.cleanzoneJourney?.submitSuccess();
+      window.cleanzoneJourney?.submitSuccess(result.requestId);
       status.className = 'success'; status.textContent = 'Dziękujemy! Zapytanie dotarło. Skontaktujemy się, aby potwierdzić cenę i termin.';
       form.reset(); chosen.clear(); renderSelection();
       if (ticket) { ticket = null; ticketFetchedAt = 0; }

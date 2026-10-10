@@ -70,7 +70,7 @@ document.querySelectorAll('[data-tier]').forEach(a=>a.addEventListener('click',(
       if (!response.ok) throw new Error('delivery');
       deliveryError = 'delivery_unconfirmed';
       if (result.ok !== true) throw new Error('delivery');
-      window.cleanzoneJourney?.submitSuccess();
+      window.cleanzoneJourney?.submitSuccess(result.requestId);
       status.className = 'success'; status.textContent = 'Dziękujemy! Zapytanie o współpracę dotarło. Skontaktujemy się, aby ustalić szczegóły.';
       form.reset();
       if (ticket) { ticket = null; ticketFetchedAt = 0; }

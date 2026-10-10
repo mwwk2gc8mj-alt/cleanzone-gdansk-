@@ -7,7 +7,7 @@ const source = fs.readFileSync(path.join(__dirname, '../ads.js'), 'utf8');
 function setup(consent = true) {
   const timers = new Map(); let id = 0;
   const element = () => ({setAttribute(){},append(){},addEventListener(){}});
-  const ctx = {Date,JSON,Promise,crypto:{randomUUID:()=>'confirmed-test-id'},
+  const ctx = {Date,JSON,Promise,location:{pathname:'/'},cleanzoneJourney:{getConfirmedLeadId:()=>'confirmed-test-id'},
     localStorage:{getItem:()=>JSON.stringify({choice:consent?'yes':'no',expires:Date.now()+1e6})},
     CustomEvent:class {constructor(type, options){this.type=type;this.detail=options.detail;}},
     dispatchEvent(){},setTimeout:fn=>{timers.set(++id,fn);return id;},clearTimeout:id=>timers.delete(id),
@@ -37,4 +37,17 @@ test('consent refusal dispatches neither GA nor Ads conversion',()=>{
 test('measurement queue failure cannot reject confirmed booking',async()=>{
   const s=setup();s.ctx.dataLayer.push=()=>{throw Error('measurement unavailable');};
   await assert.doesNotReject(async()=>s.ctx.cleanzoneConfirmedConversion());
+});
+test('no conversion without a server-confirmed receipt, including direct thank-you visits',()=>{
+  const s=setup();s.ctx.cleanzoneJourney.getConfirmedLeadId=()=>null;
+  assert.equal(s.ctx.cleanzoneConfirmedConversion(),undefined);assert.equal(s.events().length,0);
+});
+test('repeated success callbacks dispatch one GA lead and one Ads conversion using the same receipt',async()=>{
+  const s=setup();const first=s.ctx.cleanzoneConfirmedConversion();
+  assert.equal(s.ctx.cleanzoneConfirmedConversion(),first);
+  assert.deepEqual(Array.from(s.events(),e=>e[1]),['generate_lead','conversion']);
+  assert.equal(s.events()[0][2].event_id,s.events()[1][2].transaction_id);
+  s.flush();await first;s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,2);
+  s.ctx.cleanzoneJourney.getConfirmedLeadId=()=> 'another-confirmed-receipt';
+  const second=s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,4);s.flush();await second;
 });

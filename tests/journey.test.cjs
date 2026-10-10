@@ -7,7 +7,7 @@ const source = fs.readFileSync(path.join(__dirname, '../journey.js'), 'utf8');
 function setup(saved = null) {
   const events = [], handlers = {}, docHandlers = {}, formHandlers = {}, timers = new Map();
   let timerId = 0, observer;
-  const form = {id:'bookingForm', addEventListener:(name, fn) => formHandlers[name] = fn};
+  const form = {id:'bookingForm', matches:()=>false, addEventListener:(name, fn) => formHandlers[name] = fn};
   const section = {id:'cennik', matches:() => false};
   const ctx = {location:{pathname:'/'},innerHeight:844,innerWidth:390,scrollY:0,
     localStorage:{getItem:() => saved}, Set,Map,Date,JSON,
@@ -22,7 +22,7 @@ function setup(saved = null) {
   ctx.window=ctx;ctx.gtag=(...args) => events.push(args);
   vm.runInNewContext(source,ctx);
   return {ctx,events,formHandlers,error:event=>handlers.error(event),consent:allowed => handlers['cleanzone:measurement-consent']({detail:{allowed}}),
-    view:() => observer([{target:section,isIntersecting:true,boundingClientRect:{height:3000,width:390},intersectionRect:{height:600,width:390}}]),
+    view:(target=section) => observer([{target,isIntersecting:true,boundingClientRect:{height:3000,width:390},intersectionRect:{height:600,width:390}}]),
     flush:() => {const callbacks=[...timers.values()];timers.clear();callbacks.forEach(fn=>fn());}};
 }
 test('no events before opt-in, after refusal or with expired consent',()=>{
@@ -44,13 +44,14 @@ test('server confirmation is distinct from a submit attempt and success cannot r
   const s=setup();s.consent(true);s.events.length=0;const api=s.ctx.cleanzoneJourney;
   api.submitSuccess();assert.equal(s.events.length,0);
   api.submitAttempt();api.submitError('network');api.submitSuccess();
-  assert.deepEqual(s.events.map(e=>e[1]),['booking_form_start','booking_submit_attempt','booking_submit_error']);
+  assert.deepEqual(s.events.map(e=>e[1]),['form_view','booking_form_start','booking_submit_attempt','booking_submit_error']);
   api.submitAttempt();api.submitSuccess();api.submitSuccess();
   assert.equal(s.events.filter(e=>e[1]==='booking_submit_success').length,1);
 });
 test('viewport-sized visibility handles tall animation sections and deduplicates views',()=>{
   const s=setup();s.view();s.flush();assert.equal(s.events.length,0);s.consent(true);s.flush();s.view();s.flush();
-  assert.equal(s.events.filter(e=>e[1]==='section_view').length,1);
+  assert.equal(s.events.filter(e=>e[1]==='view_pricing').length,1);
+  assert.equal(s.events.filter(e=>e[1]==='section_view').length,0);
 });
 test('validation reports only a field name and category',()=>{
   const s=setup();s.consent(true);s.events.length=0;
@@ -84,7 +85,31 @@ test('modal diagnostics do not count as submissions and respect analytics refusa
   assert.equal(s.events.length,0);
   s.consent(true);s.events.length=0;
   names.forEach(name=>s.ctx.cleanzoneJourney.track(name));
-  assert.deepEqual(s.events.map(e=>e[1]),names);
+  assert.deepEqual(s.events.map(e=>e[1]),[names[0],'form_view',...names.slice(1)]);
   s.ctx.cleanzoneJourney.submitSuccess();
   assert.ok(!s.events.some(e=>e[1]==='booking_submit_success'));
+});
+test('modal reopen, dwell and immediate input share one form view; anonymous checkbox starts the form',()=>{
+  const s=setup();s.consent(true);s.events.length=0;
+  s.ctx.cleanzoneJourney.track('booking_form_open');
+  s.ctx.cleanzoneJourney.track('booking_form_close');
+  s.ctx.cleanzoneJourney.track('booking_form_open');
+  s.view(s.ctx.document.getElementById('bookingForm'));s.flush();
+  s.formHandlers.input({target:{name:'',id:'firstOrder'}});
+  s.formHandlers.input({target:{name:'name'}});
+  assert.equal(s.events.filter(e=>e[1]==='form_view').length,1);
+  assert.equal(s.events.filter(e=>e[1]==='booking_form_start').length,1);
+  assert.ok(s.events.findIndex(e=>e[1]==='form_view')<s.events.findIndex(e=>e[1]==='booking_form_start'));
+});
+test('only a valid server receipt after an in-flight attempt unlocks a lead; failure and revoke clear it',()=>{
+  const s=setup();s.consent(true);const api=s.ctx.cleanzoneJourney;
+  const id='11111111-2222-4333-8444-555555555555';
+  api.submitSuccess(id);assert.equal(api.getConfirmedLeadId(),null);
+  api.submitAttempt();api.submitAttempt();assert.equal(s.events.filter(e=>e[1]==='booking_submit_attempt').length,1);
+  api.submitError('http_error',502);api.submitSuccess(id);assert.equal(api.getConfirmedLeadId(),null);
+  api.submitAttempt();api.submitSuccess(id);assert.equal(api.getConfirmedLeadId(),id);
+  api.submitSuccess('another');assert.equal(api.getConfirmedLeadId(),id);
+  api.submitAttempt();assert.equal(api.getConfirmedLeadId(),null);api.submitSuccess('private input');assert.equal(api.getConfirmedLeadId(),null);
+  api.submitAttempt();api.submitSuccess(id);s.consent(false);assert.equal(api.getConfirmedLeadId(),null);
+  assert.ok(!JSON.stringify(s.events).includes('private input'));
 });

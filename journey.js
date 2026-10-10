@@ -5,22 +5,22 @@
   const measurementId = 'G-DD4EGC87V8';
   const consentKey = 'cleanzone-measurement-consent-v5';
   const services = new Set(['sofa2','sofa3','cornerl','corneru','pullout','stool','chair','office','armchair','mattress1','mattress2','headboard','rug','multiple','other','partner3','partner5','partner8','partner12','partnerOther']);
-  const fields = new Set(['name','phone','city','service','date','comment','expressDrying']);
+  const fields = new Set(['name','phone','city','service','date','comment','expressDrying','firstOrder']);
   const errors = new Set(['required','invalid','config_unavailable','network','timeout','http_error','invalid_response','delivery_unconfirmed','script_error','asset_error']);
   const sections = new Set(['home','cleaning-story','drying-story','cennik','efekty','opinie','jak-dzialamy','faq','rezerwacja','warunki','bookingForm']);
   const actions = new Set(['menu','clear_selection','privacy','instagram','google_reviews','partners','local_area','home','drying','process','results','faq']);
   const locations = new Set(['header','hero','prices','drying','results','reviews','process','faq','form','footer','dock','selection_toast','partner_offer','local_page','page']);
-  const names = new Set(['section_view','price_view','price_filter','select_service','remove_service','booking_cta_click','booking_form_open','booking_form_close','booking_form_scroll','booking_form_start','booking_field_complete','booking_validation_error','booking_submit_click','booking_submit_attempt','booking_submit_error','booking_submit_success','phone_click','faq_open','compare_interaction','drying_option','scroll_depth','site_error','navigation_click','interaction_click']);
+  const names = new Set(['section_view','view_pricing','form_view','price_view','price_filter','select_service','remove_service','booking_cta_click','booking_form_open','booking_form_close','booking_form_scroll','booking_form_start','booking_field_complete','booking_validation_error','booking_submit_click','booking_submit_attempt','booking_submit_error','booking_submit_success','phone_click','faq_open','before_after_interaction','drying_option','scroll_depth','site_error','navigation_click','interaction_click']);
   const scripts = new Set(['app.js','partners.js','scene.js','drying-scene.js','drying-price.js','journey.js','ads.js','clarity.js','meta.js','booking-access.js']);
   let allowed = false;
   try { const saved = JSON.parse(localStorage.getItem(consentKey)); allowed = saved?.choice === 'yes' && saved.expires > Date.now(); } catch (_) {}
   const seen = new Set();
-  let started = false, completed = false, inFlight = false;
+  let started = false, completed = false, inFlight = false, confirmedLeadId = null;
   const pageType = /^\/partnerzy\/?$/.test(location.pathname) ? 'partner' : /^\/dziekujemy\/?$/.test(location.pathname) ? 'thank_you' : location.pathname === '/' ? 'home' : 'local';
   function track(name, params = {}) {
     if (!allowed || !names.has(name) || typeof window.gtag !== 'function') return false;
     // Explicit allowlist: callers cannot leak user input or an error message into analytics.
-    const safe = {send_to:measurementId, page_type:pageType, tracking_version:'20261003'};
+    const safe = {send_to:measurementId, page_type:pageType, tracking_version:'20261010-funnel'};
     if (actions.has(params.action_id)) safe.action_id = params.action_id;
     if (sections.has(params.section_id)) safe.section_id = params.section_id;
     if (locations.has(params.action_location)) safe.action_location = params.action_location;
@@ -34,9 +34,13 @@
     if (Number.isInteger(params.item_index) && params.item_index > 0 && params.item_index < 30) safe.item_index = params.item_index;
     if (typeof params.option_selected === 'boolean') safe.option_selected = params.option_selected;
     if (Number.isInteger(params.http_status) && params.http_status >= 400 && params.http_status < 600) safe.http_status = params.http_status;
-    if (document.getElementById('bookingForm') && name.startsWith('booking_')) safe.form_id = pageType === 'partner' ? 'partner' : 'booking';
+    if (document.getElementById('bookingForm') && (name.startsWith('booking_') || name === 'form_view')) safe.form_id = pageType === 'partner' ? 'partner' : 'booking';
     try { window.cleanzoneClarityEvent?.(name); } catch (_) { /* Replay cannot block GA or booking. */ }
-    try { window.gtag('event', name, safe); return true; } catch (_) { return false; }
+    let dispatched = false;
+    try { window.gtag('event', name, safe); dispatched = true; } catch (_) { /* Optional measurement. */ }
+    // A successful modal open proves visibility before the first input, without waiting for dwell.
+    if (name === 'booking_form_open') formView();
+    return dispatched;
   }
   function once(key, name, params) {
     if (seen.has(key)) return;
@@ -46,14 +50,25 @@
   }
   function start() {
     if (!allowed || started) return;
+    formView(); // Fast input must not precede its own visibility step in the funnel.
     started = true; completed = false;
     track('booking_form_start');
   }
+  function formView() { once('form_view', 'form_view', {section_id:'bookingForm'}); }
   window.cleanzoneJourney = {
     track,
-    submitAttempt() { start(); inFlight = true; track('booking_submit_attempt'); },
-    submitError(errorType, httpStatus) { inFlight = false; track('booking_submit_error', {error_type:errorType, http_status:httpStatus}); },
-    submitSuccess() { if (completed || !inFlight) return; completed = true; inFlight = false; track('booking_submit_success'); }
+    submitAttempt() { if (inFlight) return; start(); inFlight = true; completed = false; confirmedLeadId = null; track('booking_submit_attempt'); },
+    submitError(errorType, httpStatus) { inFlight = false; confirmedLeadId = null; track('booking_submit_error', {error_type:errorType, http_status:httpStatus}); },
+    submitSuccess(requestId) {
+      if (completed || !inFlight) return;
+      completed = true; inFlight = false;
+      if (allowed) {
+        // Only this callback, invoked after response.ok && result.ok, unlocks lead tracking.
+        confirmedLeadId = typeof requestId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(requestId) ? requestId : null;
+        track('booking_submit_success');
+      }
+    },
+    getConfirmedLeadId() { return allowed && completed ? confirmedLeadId : null; }
   };
   function placement(element) {
     if (element.closest('.mobile-dock')) return 'dock';
@@ -89,16 +104,17 @@
   }, true); // Capture sees the selection state before the existing UI toggles it.
   const form = document.getElementById('bookingForm');
   if (form) {
-    form.addEventListener('input', event => { if (fields.has(event.target.name)) start(); });
+    form.addEventListener('input', event => { if (fields.has(event.target.name || event.target.id)) start(); });
     form.addEventListener('focusout', event => {
       const field = event.target;
       if (fields.has(field.name) && field.type !== 'checkbox' && field.value && field.checkValidity()) once('field:'+field.name, 'booking_field_complete', {field_name:field.name});
     });
     form.addEventListener('change', event => {
       const field = event.target;
-      if (!fields.has(field.name)) return;
+      const fieldName = field.name || field.id;
+      if (!fields.has(fieldName)) return;
       start();
-      if (field.type === 'checkbox' || (field.value && field.checkValidity())) once('field:'+field.name, 'booking_field_complete', {field_name:field.name});
+      if (field.type === 'checkbox' || (field.value && field.checkValidity())) once('field:'+fieldName, 'booking_field_complete', {field_name:fieldName});
       if (field.name === 'service') track('select_service', {service_id:field.value,action_location:'form'});
       if (field.id === 'expressDrying') track('drying_option', {option_selected:field.checked,action_location:'form'});
     });
@@ -110,7 +126,7 @@
   document.querySelectorAll('.faq-list details').forEach((element, index) => element.addEventListener('toggle', () => {
     if (element.open) track('faq_open', {item_index:index+1});
   }));
-  document.querySelectorAll('.compare-images input').forEach((element, index) => element.addEventListener('input', () => once('compare:'+index, 'compare_interaction', {item_index:index+1})));
+  document.querySelectorAll('.compare-images input').forEach((element, index) => element.addEventListener('input', () => once('compare:'+index, 'before_after_interaction', {item_index:index+1})));
   // Observe a viewport-sized slice of large sections. A 50% ratio on a tall scroll scene is unreachable.
   const visible = new Map();
   const timers = new Map();
@@ -118,7 +134,8 @@
   function reportView(element) {
     if (!allowed || !visible.get(element)) return;
     if (element.matches('.price-card')) once('price:'+element.id, 'price_view', {service_id:element.querySelector('[data-service]')?.dataset.service});
-    else once('section:'+element.id, 'section_view', {section_id:element.id});
+    else if (element.id === 'bookingForm') formView();
+    else once('section:'+element.id, element.id === 'cennik' ? 'view_pricing' : 'section_view', {section_id:element.id});
   }
   function dwell(element) {
     clearTimeout(timers.get(element));
@@ -156,7 +173,7 @@
   }, true);
   addEventListener('cleanzone:measurement-consent', event => {
     allowed = event.detail?.allowed === true;
-    if (!allowed) { seen.clear(); started = false; completed = false; inFlight = false; }
+    if (!allowed) { seen.clear(); started = false; completed = false; inFlight = false; confirmedLeadId = null; }
     for (const element of targets) dwell(element);
     if (allowed) scrollDepth();
   });

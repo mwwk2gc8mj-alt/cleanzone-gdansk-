@@ -1,9 +1,12 @@
 /* Google Ads + GA4: load only after opt-in; count only server-confirmed leads. */
 (() => {
   'use strict';
+  if (window.cleanzoneGoogleTrackingReady) return;
+  window.cleanzoneGoogleTrackingReady = true;
   // Renew consent when session recordings are added to measurement.
   const key = 'cleanzone-measurement-consent-v5';
   const measurementId = 'G-DD4EGC87V8';
+  const pageType = /^\/partnerzy\/?$/.test(location.pathname) ? 'partner' : /^\/dziekujemy\/?$/.test(location.pathname) ? 'thank_you' : location.pathname === '/' ? 'home' : 'local';
   window['ga-disable-' + measurementId] = true;
   let allowed = false;
   let loaded = false;
@@ -52,7 +55,7 @@
     loaded = true;
     gtag('js', new Date());
     gtag('config', 'AW-17004498635', {allow_ad_personalization_signals:false});
-    gtag('config', measurementId, {allow_google_signals:false, allow_ad_personalization_signals:false});
+    gtag('config', measurementId, {allow_google_signals:false, allow_ad_personalization_signals:false, page_type:pageType});
     configureCalls();
     const script = document.createElement('script');
     script.async = true;
@@ -106,8 +109,12 @@
       if (saved.choice === 'yes') enable();
     }
   } catch (_) {}
+  const dispatchedLeads = new Map();
   window.cleanzoneConfirmedConversion = () => {
     if (!allowed) return;
+    const leadId = window.cleanzoneJourney?.getConfirmedLeadId();
+    if (!leadId) return; // A click, native form event or /dziekujemy visit cannot unlock a lead.
+    if (dispatchedLeads.has(leadId)) return dispatchedLeads.get(leadId);
     // Wait for both destinations before redirecting, with one shared maximum of 800 ms.
     // A callback acknowledges dispatch, not receipt or attribution in either dashboard.
     function dispatch(name, params) {
@@ -118,15 +125,20 @@
         catch (_) { finish(); } // Measurement cannot turn a confirmed booking into an error.
       });
     }
+    // Reserve before SDK dispatch: repeated callbacks cannot send the same server receipt twice.
+    dispatchedLeads.set(leadId, Promise.resolve());
+    try { window.cleanzoneClarityEvent?.('lead'); } catch (_) { /* Replay is optional. */ }
     const ga = dispatch('generate_lead', {
       send_to:measurementId,
       form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking',
-      page_type:document.body.classList.contains('partner-page') ? 'partner' : 'home'
+      page_type:pageType, event_id:leadId, tracking_version:'20261010-funnel'
     });
     const ads = dispatch('conversion', {
       send_to:'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
-      transaction_id:crypto.randomUUID(), value:0, currency:'PLN'
+      transaction_id:leadId, value:0, currency:'PLN'
     });
-    return Promise.all([ga, ads]);
+    const pending = Promise.all([ga, ads]);
+    dispatchedLeads.set(leadId, pending);
+    return pending;
   };
 })();
