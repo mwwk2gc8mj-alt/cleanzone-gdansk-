@@ -54,12 +54,15 @@
 .results figcaption{font-size:11px;line-height:1.5}
 .review-grid figure{background:#ecece3;border:1px solid #d8dacc;border-radius:14px}
 .booking-form{border-color:#ffffff26;box-shadow:0 20px 50px #0002}
-.form-grid input,.form-grid select,.form-grid textarea{transition:border-color .2s,box-shadow .2s;background:#f6f6ef}
+.form-grid input,.form-grid select,.form-grid textarea{transition:border-color .2s,box-shadow .2s;background:#f6f6ef;color:#20251c;color-scheme:light}
+.form-grid input::placeholder,.form-grid textarea::placeholder{color:#656d59;opacity:1}
+.form-grid label{font-size:12px}
+.drying-offer>small{font-size:11px;line-height:1.5}
 .form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{box-shadow:0 0 0 3px #ffd60024;border-color:#8c8251}
 .quick-booking{box-shadow:0 24px 80px #0008}
 .quick-booking[open]{animation:cz-dialog-in .24s var(--ease) both}
-.motion-ready [data-premium-reveal]{transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.motion-ready [data-premium-reveal="pending"]{opacity:0;transform:translateY(18px)}
+.motion-ready [data-premium-reveal]{transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.motion-ready [data-premium-reveal="pending"]{opacity:0;transform:translateY(12px)}
 @keyframes cz-dialog-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:1600px){.hero-inner{min-height:720px}.hero-copy h1{font-size:78px}.hero-visual{margin-right:-65px}.hero-visual .material-note{top:24%;right:5%}}
 @media(min-width:761px) and (max-width:1050px){.hero-inner{grid-template-columns:1.12fr 1fr;min-height:610px}.hero-copy h1{font-size:clamp(38px,5.1vw,53px)}.hero-visual{margin-left:-24px;margin-right:-32px}.hero-visual .material-note{display:none}.hero-visual .floating-price{left:12%;bottom:20%;padding:13px 43px 13px 15px}.hero-visual .floating-price strong{font-size:32px}.hero-actions{gap:16px}.hero-actions .button{gap:15px;padding-inline:18px}.hero-actions .text-button{font-size:12px}}
@@ -82,9 +85,13 @@
  .hero-footer{padding:16px 20px}
  .section-pad{padding-block:64px}
  .price-body>p{font-size:12px;line-height:1.5}
+ .price-filters button{min-height:44px;font-size:11px}
  .price-bottom strong{font-size:19px}
  .compare-label,.pair-photos span{font-size:10px}
- .compare-help{font-size:11px}
+ .compare-help{font-size:12px}
+ .form-grid select{font-size:16px}
+ .drying-heading p:not(.eyebrow){font-size:12px}
+ .drying-offer>small{font-size:10px;line-height:1.5}
  .site-header nav.open{animation:cz-dialog-in .22s var(--ease) both}
  .site-header nav a:after{display:none}
 }
