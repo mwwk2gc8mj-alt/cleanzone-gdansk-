@@ -20,7 +20,7 @@
       <title id="${id('title')}">Ekspresowe suszenie tapicerki po praniu</title>
       <desc id="${id('desc')}">Ilustracja procesu: profesjonalny wentylator kieruje powietrze na wyprany materac, a wilgotna powierzchnia stopniowo jaśnieje. Animacja jest poglądowa i nie określa czasu suszenia.</desc>
       <defs>
-        <linearGradient id="${id('top')}" x2="1" y2="1"><stop stop-color="#fffef3"/><stop offset=".6" stop-color="#e2e5d9"/><stop offset="1" stop-color="#aebcaf"/></linearGradient>
+        <linearGradient id="${id('top')}" x2="1" y2="1"><stop stop-color="#eeece3"/><stop offset=".6" stop-color="#dce1d6"/><stop offset="1" stop-color="#aebcaf"/></linearGradient>
         <linearGradient id="${id('edge')}" x2="0" y2="1"><stop stop-color="#c6cfc0"/><stop offset="1" stop-color="#637467"/></linearGradient>
         <linearGradient id="${id('case')}" x2="1" y2=".2"><stop stop-color="#1a1f21"/><stop offset=".27" stop-color="#424b4e"/><stop offset=".6" stop-color="#252c2e"/><stop offset="1" stop-color="#101517"/></linearGradient>
         <linearGradient id="${id('rim')}" x2=".3" y2="1"><stop stop-color="#747e80"/><stop offset=".28" stop-color="#394245"/><stop offset=".65" stop-color="#1d2426"/><stop offset="1" stop-color="#0d1214"/></linearGradient>
@@ -53,6 +53,7 @@
         </g>
       </g>
       <g class="drying-airflow" opacity="0">${streams}</g>
+      <g class="drying-moisture" opacity="0" fill="none" stroke="#cad4ce" stroke-width="1.2" stroke-linecap="round"><path d="M335 340q-10 -13 0 -26t0 -24"/><path d="M457 369q-8 -14 2 -26t0 -25"/><path d="M576 387q-8 -12 0 -24t1 -22"/></g>
       <g class="drying-fan" opacity="0">
         <ellipse cx="835" cy="559" rx="174" ry="38" fill="url(#${id('shadow')})"/>
         <g transform="translate(827 413)">
@@ -75,19 +76,25 @@
       </g>
     </svg><div class="drying-visual-meta"><span class="drying-stage">PO PRANIU · WILGOTNA TKANINA</span><span class="drying-meta-actions"><span>Wizualizacja procesu</span><a class="drying-scroll-hint" href="#cennik" aria-label="Pomiń animację suszenia i zobacz ceny">Zobacz ceny <span aria-hidden="true">↓</span></a></span></div><div class="drying-progress" aria-hidden="true"><span></span></div>`;
     const q = selector => visual.querySelector(selector);
-    const parts = {mattress:q('.drying-mattress'), wet:q('.drying-wetclip'), fan:q('.drying-fan'), rotor:q('.drying-rotor'), air:q('.drying-airflow'), streams:[...visual.querySelectorAll('.drying-air')], stage:q('.drying-stage'), bar:q('.drying-progress span')};
+    const parts = {mattress:q('.drying-mattress'), wet:q('.drying-wetclip'), fan:q('.drying-fan'), rotor:q('.drying-rotor'), air:q('.drying-airflow'), moisture:q('.drying-moisture'), streams:[...visual.querySelectorAll('.drying-air')], stage:q('.drying-stage'), bar:q('.drying-progress span')};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const shortScreen = matchMedia('(max-height: 600px)');
     const offer = host.querySelector('.drying-offer');
-    let frame = 0;
+    let frame = 0, geometryDirty = true, top = 0, duration = 1, lastProgress = -1, lastStatic = null, lastStage = -1;
     host.classList.add('drying-enhanced');
     function render() {
       frame = 0;
       const staticMode = reduced.matches || shortScreen.matches;
       const rect = host.getBoundingClientRect();
       if (!staticMode && (rect.bottom < -100 || rect.top > innerHeight + 100)) return;
-      const top = parseFloat(getComputedStyle(sticky).top) || 0;
-      const p = staticMode ? 1 : clamp((top - rect.top) / Math.max(1, host.offsetHeight - sticky.offsetHeight));
+      if (geometryDirty) {
+        top = parseFloat(getComputedStyle(sticky).top) || 0;
+        duration = Math.max(1, host.offsetHeight - sticky.offsetHeight);
+        geometryDirty = false;
+      }
+      const p = staticMode ? 1 : clamp((top - rect.top) / duration);
+      if (p === lastProgress && staticMode === lastStatic) return;
+      lastProgress = p; lastStatic = staticMode;
       const dry = ease(phase(p, .35, .75));
       const appear = ease(phase(p, .2, .35));
       const airflow = phase(p, .33, .4) * (1 - phase(p, .72, .9));
@@ -99,26 +106,36 @@
       parts.fan.setAttribute('transform', `translate(${70 * (1 - appear)} ${20 * (1 - appear) - 6 * p}) rotate(${-8 * (1 - appear)} 830 500)`);
       parts.rotor.setAttribute('transform', `rotate(${phase(p, .35, .85) * 2520})`);
       parts.air.setAttribute('opacity', String(staticMode ? 0 : airflow * .65));
+      parts.moisture.setAttribute('opacity', String(staticMode ? 0 : airflow * .22));
+      parts.moisture.setAttribute('transform', `translate(${-dry * 9} ${-dry * 30})`);
       parts.streams.forEach((path, i) => path.setAttribute('stroke-dashoffset', String(p * 1050 + i * 22)));
       parts.bar.style.transform = `scaleX(${p})`;
-      parts.stage.textContent = p < .35 ? 'PO PRANIU · WILGOTNA TKANINA' : p < .75 ? 'KONTROLOWANY PRZEPŁYW POWIETRZA' : 'FINAŁ SUSZENIA · ŚWIEŻA TKANINA';
+      const stage = p < .35 ? 0 : p < .75 ? 1 : 2;
+      if (stage !== lastStage) {
+        parts.stage.textContent = ['PO PRANIU · WILGOTNA TKANINA','KONTROLOWANY PRZEPŁYW POWIETRZA','FINAŁ SUSZENIA · ŚWIEŻA TKANINA'][stage];
+        lastStage = stage;
+      }
       host.dataset.progress = p.toFixed(3);
       if (offer) {
-        const revealed = staticMode || p >= .9;
-        offer.style.opacity = String(staticMode ? 1 : phase(p, .9, 1));
-        offer.style.transform = `translateY(${staticMode ? 0 : 12 * (1 - phase(p, .9, 1))}px)`;
+        const revealed = staticMode || p >= .72;
+        offer.style.opacity = String(staticMode ? 1 : phase(p, .72, .86));
+        offer.style.transform = `translateY(${staticMode ? 0 : 12 * (1 - phase(p, .72, .86))}px)`;
         offer.inert = !revealed;
       }
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(render); }
+    function resize() { geometryDirty = true; schedule(); }
     addEventListener('scroll', schedule, {passive:true});
-    addEventListener('resize', schedule, {passive:true});
-    reduced.addEventListener('change', schedule);
-    shortScreen.addEventListener('change', schedule);
+    addEventListener('resize', resize, {passive:true});
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resize) : null;
+    if (observer) { observer.observe(host); observer.observe(sticky); }
+    reduced.addEventListener('change', resize);
+    shortScreen.addEventListener('change', resize);
     render();
     return {update:schedule, destroy:function () {
-      removeEventListener('scroll', schedule); removeEventListener('resize', schedule);
-      reduced.removeEventListener('change', schedule); shortScreen.removeEventListener('change', schedule);
+      removeEventListener('scroll', schedule); removeEventListener('resize', resize);
+      reduced.removeEventListener('change', resize); shortScreen.removeEventListener('change', resize);
+      if (observer) observer.disconnect();
       cancelAnimationFrame(frame); host.classList.remove('drying-enhanced'); delete host.dataset.dryingReady;
       if (offer) {offer.style.opacity = ''; offer.style.transform = ''; offer.inert = false;}
     }};

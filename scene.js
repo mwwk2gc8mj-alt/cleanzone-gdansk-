@@ -29,7 +29,7 @@
             <title id="${id('title')}">Animacja prania ekstrakcyjnego materaca</title>
             <desc id="${id('desc')}">Podczas przewijania przez materac przechodzi przezroczysta ssawka. Zabrudzenia znikają, odsłaniając czystą tkaninę. To ilustracja procesu, nie zdjęcie realizacji.</desc>
             <defs>
-              <linearGradient id="${id('top')}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdf1"/><stop offset=".58" stop-color="#e9e8df"/><stop offset="1" stop-color="#c9cec8"/></linearGradient>
+              <linearGradient id="${id('top')}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eeece3"/><stop offset=".58" stop-color="#dedfd7"/><stop offset="1" stop-color="#bcc5be"/></linearGradient>
               <linearGradient id="${id('front')}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#cacbc0"/><stop offset=".45" stop-color="#a5afa7"/><stop offset="1" stop-color="#67776b"/></linearGradient>
               <linearGradient id="${id('left')}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c5c7bc"/><stop offset="1" stop-color="#6c7c6e"/></linearGradient>
               <linearGradient id="${id('glass')}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#a8c2be" stop-opacity=".58"/><stop offset=".18" stop-color="#e8f3f0" stop-opacity=".2"/><stop offset=".52" stop-color="#fff" stop-opacity=".06"/><stop offset=".86" stop-color="#b7ceca" stop-opacity=".3"/><stop offset="1" stop-color="#e4efec" stop-opacity=".62"/></linearGradient>
@@ -40,6 +40,7 @@
               <pattern id="${id('fabric')}" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 1h8M1 0v8" stroke="#818e83" stroke-width=".65" opacity=".18"/><path d="M0 5h8M5 0v8" stroke="#fff" stroke-width=".8" opacity=".45"/></pattern>
               <pattern id="${id('quilting')}" width="72" height="59" patternUnits="userSpaceOnUse"><path d="M-36 0L36 59L108 0M-36 59L36 0L108 59" fill="none" stroke="#b3b9ad" stroke-width="1.5" opacity=".3"/><path d="M-36 2L36 61L108 2M-36 61L36 2L108 61" fill="none" stroke="#fff" stroke-width="1.5" opacity=".6"/></pattern>
               <clipPath id="${id('surface')}"><rect x="0" y="0" width="640" height="360" rx="28"/></clipPath>
+              <clipPath id="${id('extraction-window')}"><path d="M-8 29L24 155L48 169V193L24 207L-8 331L4 327L35 217L61 201V160L35 143L4 33Z"/></clipPath>
               <mask id="${id('dirtclip')}" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="360"><rect class="cleaning-story__dirtclip" x="0" y="0" width="640" height="360" fill="url(#${id('dirtedge')})"/></mask>
               <filter id="${id('shadow')}" x="-30%" y="-70%" width="160%" height="240%"><feGaussianBlur stdDeviation="19"/></filter>
             </defs>
@@ -82,12 +83,14 @@
                   <path d="M-15 22V338" fill="none" stroke="#344c45" stroke-width="5" stroke-linecap="round"/>
                   <path d="M-17 23V337" fill="none" stroke="#d5e2db" stroke-width="1.2" stroke-linecap="round"/>
                   <path d="M-8 29L24 155L48 169V193L24 207L-8 331L4 327L35 217L61 201V160L35 143L4 33Z" fill="url(#${id('channel')})" stroke="#809a90" stroke-width=".8" stroke-opacity=".45"/>
+                  <g class="cleaning-story__suction" clip-path="url(#${id('extraction-window')})" opacity="0"><path d="M-8 40Q5 113 26 162L59 179M-8 320Q5 245 26 199L59 182" fill="none" stroke="#b6c7bd" stroke-width="2" stroke-dasharray="8 18"/><path d="M-3 63Q13 129 30 166L57 180M-3 297Q13 231 30 195L57 182" fill="none" stroke="#6f7664" stroke-width="1.3" stroke-dasharray="4 23"/></g>
                   <path d="M2 27L25 134M2 334L25 226M29 31L42 132" fill="none" stroke="#fff" stroke-width="1.6" opacity=".46" stroke-linecap="round"/>
                   <path d="M-9 21H21M-9 339H21" fill="none" stroke="#eaf1eb" stroke-width="1.1" opacity=".62"/>
                   <rect x="44" y="152" width="36" height="58" rx="10" fill="url(#${id('metal')})" stroke="#4d6056" stroke-width="1"/>
                   <rect x="56" y="160" width="26" height="42" rx="5" fill="#222d28"/>
                   <path d="M61 164V198M67 164V198M73 164V198" stroke="#59685e" stroke-width="1.3" opacity=".55"/>
                   <circle cx="49" cy="159" r="1.6" fill="#d5ddd6"/><circle cx="49" cy="203" r="1.6" fill="#d5ddd6"/>
+                  <path d="M-10 49H-3M-10 311H-3" stroke="#e1e9e3" stroke-width="1.5" opacity=".7"/><circle cx="27" cy="40" r="2" fill="#52655b" stroke="#b9c7c0" stroke-width=".7"/><circle cx="27" cy="320" r="2" fill="#52655b" stroke="#b9c7c0" stroke-width=".7"/>
                   <g class="cleaning-story__droplets">${Array.from({ length: 13 }, (_, i) => `<ellipse data-drop="${i}" cx="0" cy="0" rx="${1+i%2*.5}" ry="${2+i%3*.5}" fill="${i%3===0?'#7e8270':'#b8d4cc'}" opacity=".35"/>`).join('')}</g>
                 </g>
               </g>
@@ -112,7 +115,7 @@
       water:q('.cleaning-story__waterline'), hose:q('.cleaning-story__hose'), ribs:q('.cleaning-story__hose-ribs'), shadow:q('.cleaning-story__hose-shadow'),
       tube:q('.cleaning-story__tube'), shine:q('.cleaning-story__tube-shine'), fresh:q('.cleaning-story__fresh'),
       track:q('.cleaning-story__track span'), number:q('.cleaning-story__number'), title:q('.cleaning-story__step-title'), copy:q('.cleaning-story__step-copy'),
-      before:q('.cleaning-story__tag--before'), after:q('.cleaning-story__tag--after'), drops:[...host.querySelectorAll('[data-drop]')]
+      before:q('.cleaning-story__tag--before'), after:q('.cleaning-story__tag--after'), suction:q('.cleaning-story__suction'), drops:[...host.querySelectorAll('[data-drop]')]
     };
     const steps = [
       ['Docieramy głębiej.', 'Czyszczenie nie kończy się na powierzchni.'],
@@ -151,6 +154,8 @@
       setSvg(parts.nozzle, 'transform', `translate(${x} 0)`);
       setSvg(parts.water, 'x', x - 28);
       setSvg(parts.water, 'opacity', p > .985 ? '0' : '.14');
+      setSvg(parts.suction, 'opacity', !reduced.matches && p > .015 && p < .985 ? '.6' : '0');
+      setSvg(parts.suction, 'stroke-dashoffset', -p * 680);
       parts.assembly.style.transform = `translate(0px,${mix(7,-6,p)}px) rotate(${mix(-2.8,2.2,p)}deg)`;
       const ax = 330 + .95 * (x + 66) - .7 * 180;
       const ay = 220 + .25 * (x + 66) + .47 * 180 - 4;

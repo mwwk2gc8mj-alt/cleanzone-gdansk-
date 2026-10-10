@@ -1,15 +1,17 @@
-.hero-copy{min-width:0}
-.hero-copy h1{font-size:clamp(42px,4.3vw,64px);line-height:1.08;letter-spacing:-.055em;white-space:normal}
-.hero-inner{gap:40px;min-height:650px}
-.hero-visual{margin:38px 0 65px;align-self:center;display:block;aspect-ratio:591/520;max-height:none;overflow:visible}
-.hero-visual .hero-sofa{position:relative;left:0;top:0;width:100%;height:auto;max-width:100%;aspect-ratio:591/520;object-fit:cover;border-radius:20px;mask-image:none;box-shadow:0 24px 70px #0005;will-change:auto;transform:none!important}
-.hero-visual .floating-price,.hero-visual .material-note{transform:none!important}
-.hero-orbit{display:none}
-.hero-before{position:absolute;z-index:4;right:12px;bottom:-32px;width:36%;overflow:hidden;border:3px solid #e9e9db;border-radius:12px;background:#e9e9db;box-shadow:0 8px 30px #0005;color:#11120f}
-.hero-before img{width:100%;height:auto;display:block;aspect-ratio:591/520;object-fit:cover}
-.hero-before span{display:block;padding:8px 5px;font-size:11px;text-align:center;font-weight:700}
-.hero-visual .floating-price{left:14px;bottom:18px;padding:13px 38px 13px 14px}
-.hero-visual .material-note{right:14px;top:14px;padding:8px 12px;border-radius:8px;background:#11120fcc;color:#fff;line-height:1.4}
+/* Premium presentation; booking, prices and event handlers remain shared. */
+.hero-copy{min-width:0;padding:68px 0 66px}
+.hero-copy h1{font-size:clamp(42px,4.8vw,74px);line-height:1.045;letter-spacing:-.055em;white-space:normal;margin-bottom:26px}
+.hero-inner{gap:16px;min-height:660px;grid-template-columns:1fr 1.18fr}
+.hero-sub{font-size:16px;line-height:1.7;max-width:390px;color:#bec0b5}
+.hero-visual{margin:0 -38px 0 -48px;align-self:stretch;display:flex;align-items:center;aspect-ratio:auto;max-height:none;overflow:visible}
+.hero-visual .hero-sofa{position:relative;left:auto;top:auto;width:100%;max-width:none;height:auto;aspect-ratio:3/2;object-fit:contain;border-radius:0;box-shadow:none;mask-image:radial-gradient(ellipse 68% 65% at 50% 51%,#000 49%,transparent 88%)}
+.hero-orbit{display:block;border-color:#e9ddb315;box-shadow:none;top:18%;width:93%;pointer-events:none}
+.hero-light{position:absolute;inset:22% 2% 10%;background:radial-gradient(ellipse at 65% 50%,#ad8c2714,transparent 65%);pointer-events:none}
+.hero-visual .floating-price{left:9%;bottom:14%;padding:17px 54px 17px 19px;box-shadow:0 12px 32px #0003;background:#24251ef0;border-color:#e9ddb330}
+.hero-visual .floating-price strong{font-size:42px}
+.hero-visual .material-note{right:2%;top:22%;font-size:10px;line-height:1.5;color:#c8c4b5;max-width:190px}
+.hero-visual .material-note>span{color:#e1c756;font-size:34px}
+.hero-footer{border-top-color:#ffffff12}
 .hero-actions{flex-wrap:wrap}
 .photo-quote-link{display:block;flex-basis:100%;font-size:13px;text-decoration:underline;text-underline-offset:4px}
 .hero-trust{margin:20px 0 14px;color:#ffd600;font-size:14px}
@@ -20,16 +22,74 @@
 #toastQuote{display:block;font-size:11px;color:#c6d4b4;margin-top:5px}
 .selection-toast a{display:block;flex-shrink:0;border-radius:7px;padding:10px 12px;background:#ffd600;color:#11120f;font-weight:700;text-align:center}
 @media(max-width:760px){
- .hero-copy h1{font-size:clamp(34px,9vw,48px)}
- .hero-inner{gap:0;min-height:0}
- .hero-visual{margin:22px 0 50px}
- .hero-visual .hero-sofa{border-radius:12px}
- .hero-trust{margin:16px 0 10px}
- .hero-before{right:8px;bottom:-24px;width:34%}
- .hero-before span{font-size:9px;padding:6px 2px}
- .hero-visual .floating-price{left:10px;bottom:14px;padding:10px 32px 10px 12px}
- .hero-visual .material-note{top:8px;right:8px;font-size:9px;padding:5px 8px}
  .selection-toast{gap:10px;padding:12px;align-items:center}
  .selection-toast a{max-width:135px;font-size:11px;padding:10px}
  .booking-quote{padding:10px 12px}
+}
+
+/* Calm surfaces, clear type, restrained depth. */
+.section-pad{padding-block:100px}
+.section-heading>p{line-height:1.7}
+.price-card{border-color:#d5d6ca;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
+.price-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px #1821100d}
+.price-card.selected{border-color:#6e735d;box-shadow:0 0 0 2px #6e735d}
+.price-body>p{font-size:12px;color:#626858}
+.choose-service{min-height:44px}
+.price-bottom strong{font-weight:600}
+.button{transition:background .2s,transform .25s var(--ease),box-shadow .25s}
+.button span[aria-hidden]{transition:transform .25s var(--ease)}
+.button:hover{transform:translateY(-2px)}
+.button:hover span[aria-hidden]{transform:translate(2px,-2px)}
+.button:active{transform:translateY(0)}
+.site-header nav a{position:relative}
+.site-header nav a:after{content:"";position:absolute;bottom:-7px;left:0;right:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.site-header nav a:hover:after,.site-header nav a:focus-visible:after{transform:scaleX(1)}
+.results{background:#151713}
+.compare-images,.pair-photos{border-radius:16px;border:1px solid #ffffff20}
+.compare-label,.pair-photos span{font-size:11px;letter-spacing:.1em}
+.compare-divider{width:1px}
+.compare-divider span{box-shadow:0 4px 18px #0004;width:48px;height:48px}
+.compare-help{display:flex;gap:10px;align-items:center;font-size:12px;color:#c6cabc;margin:17px 0 0}
+.compare-help>span{color:#ffd600;font-size:18px}
+.results figcaption{font-size:11px;line-height:1.5}
+.review-grid figure{background:#ecece3;border:1px solid #d8dacc;border-radius:14px}
+.booking-form{border-color:#ffffff26;box-shadow:0 20px 50px #0002}
+.form-grid input,.form-grid select,.form-grid textarea{transition:border-color .2s,box-shadow .2s;background:#f6f6ef}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{box-shadow:0 0 0 3px #ffd60024;border-color:#8c8251}
+.quick-booking{box-shadow:0 24px 80px #0008}
+.quick-booking[open]{animation:cz-dialog-in .24s var(--ease) both}
+.motion-ready [data-premium-reveal]{transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.motion-ready [data-premium-reveal="pending"]{opacity:0;transform:translateY(18px)}
+@keyframes cz-dialog-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1600px){.hero-inner{min-height:720px}.hero-copy h1{font-size:78px}.hero-visual{margin-right:-65px}.hero-visual .material-note{top:24%;right:5%}}
+@media(min-width:761px) and (max-width:1050px){.hero-inner{grid-template-columns:1.12fr 1fr;min-height:610px}.hero-copy h1{font-size:clamp(38px,5.1vw,53px)}.hero-visual{margin-left:-24px;margin-right:-32px}.hero-visual .material-note{display:none}.hero-visual .floating-price{left:12%;bottom:20%;padding:13px 43px 13px 15px}.hero-visual .floating-price strong{font-size:32px}.hero-actions{gap:16px}.hero-actions .button{gap:15px;padding-inline:18px}.hero-actions .text-button{font-size:12px}}
+@media(max-width:760px){
+ .hero-inner{gap:0;min-height:0;display:flex}
+ .hero-copy{padding:35px 0 0}
+ .hero-copy h1{font-size:clamp(36px,9.2vw,56px);margin-bottom:20px}
+ .hero-sub{font-size:14px;line-height:1.65;max-width:100%;margin-bottom:22px}
+ .hero .eyebrow{margin-bottom:20px}
+ .hero-actions{gap:16px 24px}
+ .hero-trust{margin:18px 0 0;font-size:13px}
+ .hero-facts{margin-top:18px;gap:10px 14px}
+ .hero-visual{margin:0 -20px;min-height:280px;aspect-ratio:1.3;max-height:400px;overflow:clip}
+ .hero-visual .hero-sofa{position:absolute;width:112%;left:-6%;top:-1%;height:auto}
+ .hero-orbit{top:9%;left:9%;width:84%}
+ .hero-visual .floating-price{left:9%;bottom:25%;padding:12px 42px 12px 14px}
+ .hero-visual .floating-price strong{font-size:32px}
+ .hero-visual .material-note{top:14%;right:20px;font-size:8px;max-width:135px}
+ .hero-visual .material-note>span{font-size:25px}
+ .hero-footer{padding:16px 20px}
+ .section-pad{padding-block:64px}
+ .price-body>p{font-size:12px;line-height:1.5}
+ .price-bottom strong{font-size:19px}
+ .compare-label,.pair-photos span{font-size:10px}
+ .compare-help{font-size:11px}
+ .site-header nav.open{animation:cz-dialog-in .22s var(--ease) both}
+ .site-header nav a:after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .motion-ready [data-premium-reveal]{opacity:1;transform:none;transition:none}
+ .quick-booking[open],.site-header nav.open{animation:none}
+ .hero-orbit{transform:none}
 }

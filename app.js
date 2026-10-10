@@ -30,9 +30,9 @@
     const y = window.scrollY, rect = ribbonHost.getBoundingClientRect();
     const progress = Math.min(Math.max(y / Math.max(1, heroHeight), 0), 1);
     if (progress !== lastHeroProgress) {
-      sofa.style.transform = `translate3d(0,${progress * 75}px,0) rotateZ(${progress * -5}deg) scale(${1 + progress * .08})`;
-      badge.style.transform = `translate3d(0,${progress * -55}px,0) rotate(-4deg)`;
-      note.style.transform = `translate3d(0,${progress * -55}px,0)`;
+      sofa.style.transform = `translate3d(0,${progress * 32}px,0) rotateZ(${progress * -2}deg) scale(${1 + progress * .025})`;
+      badge.style.transform = `translate3d(0,${progress * -18}px,0) rotate(-4deg)`;
+      note.style.transform = `translate3d(0,${progress * -18}px,0)`;
       lastHeroProgress = progress;
     }
     if (rect.bottom > 0 && rect.top < innerHeight) ribbon.style.transform = `translate3d(${-y * .22}px,0,0)`;
