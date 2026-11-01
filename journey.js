@@ -107,14 +107,14 @@
     form.addEventListener('input', event => { if (fields.has(event.target.name || event.target.id)) start(); });
     form.addEventListener('focusout', event => {
       const field = event.target;
-      if (fields.has(field.name) && field.type !== 'checkbox' && field.value && field.checkValidity()) once('field:'+field.name, 'booking_field_complete', {field_name:field.name});
+      if (fields.has(field.name) && field.type !== 'checkbox' && field.value && field.validity.valid) once('field:'+field.name, 'booking_field_complete', {field_name:field.name});
     });
     form.addEventListener('change', event => {
       const field = event.target;
       const fieldName = field.name || field.id;
       if (!fields.has(fieldName)) return;
       start();
-      if (field.type === 'checkbox' || (field.value && field.checkValidity())) once('field:'+fieldName, 'booking_field_complete', {field_name:fieldName});
+      if (field.type === 'checkbox' || (field.value && field.validity.valid)) once('field:'+fieldName, 'booking_field_complete', {field_name:fieldName});
       if (field.name === 'service') track('select_service', {service_id:field.value,action_location:'form'});
       if (field.id === 'expressDrying') track('drying_option', {option_selected:field.checked,action_location:'form'});
     });

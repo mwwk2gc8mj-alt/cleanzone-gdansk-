@@ -113,3 +113,12 @@ test('only a valid server receipt after an in-flight attempt unlocks a lead; fai
   api.submitAttempt();api.submitSuccess(id);s.consent(false);assert.equal(api.getConfirmedLeadId(),null);
   assert.ok(!JSON.stringify(s.events).includes('private input'));
 });
+test('measurement reads validity without firing browser invalid events on blur or change',()=>{
+  const s=setup();s.consent(true);s.events.length=0;
+  const field={name:'phone',type:'tel',value:'123',validity:{valid:false},checkValidity(){throw new Error('measurement must not trigger native validation');}};
+  s.formHandlers.focusout({target:field});s.formHandlers.change({target:field});
+  assert.equal(s.events.filter(e=>e[1]==='booking_validation_error').length,0);
+  assert.equal(s.events.filter(e=>e[1]==='booking_field_complete').length,0);
+  field.validity.valid=true;s.formHandlers.focusout({target:field});
+  assert.equal(s.events.filter(e=>e[1]==='booking_field_complete').length,1);
+});

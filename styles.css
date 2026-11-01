@@ -77,3 +77,6 @@ html.quick-booking-open{overflow:hidden}
 @media(max-width:760px){.quick-booking-scroll-hint{font-size:10px;max-width:220px}}
 .cleaning-story__scroll-hint,.drying-scroll-hint{min-height:44px;touch-action:pan-y}
 .cleaning-story__scroll-hint:hover,.drying-scroll-hint:hover{border-color:#ffd600;color:#ffd600}
+
+/* Booking validation stays beside its field, including inside the quick dialog. */
+.form-field-error{display:block;color:#ffb4a9;font-size:.82rem;line-height:1.4;margin-top:6px}.form-field-error[hidden]{display:none}#bookingForm [aria-invalid="true"]{border-color:#ffb4a9}
