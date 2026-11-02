@@ -80,3 +80,8 @@ html.quick-booking-open{overflow:hidden}
 
 /* Booking validation stays beside its field, including inside the quick dialog. */
 .form-field-error{display:block;color:#ffb4a9;font-size:.82rem;line-height:1.4;margin-top:6px}.form-field-error[hidden]{display:none}#bookingForm [aria-invalid="true"]{border-color:#ffb4a9}
+
+/* Keep the existing palette while making small captions readable on pale panels. */
+.reviews .review-rating small,.reviews .review-rating p span,.reviews .review-grid time,.reviews .reviews-bottom p{color:#5f6655}
+.pricing .section-heading>p,.pricing .price-disclaimer,.pricing .price-help p,.process .steps p,.process .step-number,.process .area-text .eyebrow,.process .area-text p:not(.eyebrow),.faq-section .faq-intro{color:#606753}
+.pricing .drying-price strong{color:#735f00}
