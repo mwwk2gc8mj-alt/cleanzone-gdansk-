@@ -19,7 +19,7 @@ function setup(saved = null) {
       getElementById:id => id === 'bookingForm' ? form : null,
       querySelectorAll:selector => selector.startsWith('section') ? [section] : [],
       addEventListener:(name,fn) => docHandlers[name] = fn}};
-  ctx.window=ctx;ctx.gtag=(...args) => events.push(args);
+  ctx.window=ctx;ctx.cleanzoneMeasurement=(name,params) => { events.push(['event',name,params]); return true; };
   vm.runInNewContext(source,ctx);
   return {ctx,events,formHandlers,error:event=>handlers.error(event),consent:allowed => handlers['cleanzone:measurement-consent']({detail:{allowed}}),
     view:(target=section) => observer([{target,isIntersecting:true,boundingClientRect:{height:3000,width:390},intersectionRect:{height:600,width:390}}]),
@@ -60,13 +60,13 @@ test('validation reports only a field name and category',()=>{
   assert.equal(s.events.length,1);assert.equal(s.events[0][2].error_type,'required');assert.ok(!JSON.stringify(s.events).includes('secret'));
 });
 test('analytics failure cannot escape into the booking code',()=>{
-  const s=setup();s.consent(true);s.ctx.gtag=()=>{throw Error('blocked');};
+  const s=setup();s.consent(true);s.ctx.cleanzoneMeasurement=()=>{throw Error('blocked');};
   assert.doesNotThrow(()=>{s.ctx.cleanzoneJourney.submitAttempt();s.ctx.cleanzoneJourney.submitSuccess();});
 });
 test('an error while recording a site error cannot recursively re-enter telemetry',()=>{
   const s=setup();s.consent(true);let calls=0;
   const error={filename:'https://www.cleanzone-uslugi.pl/journey.js?v=test',lineno:120,colno:8};
-  s.ctx.gtag=()=>{calls++;if(calls>10)throw Error('recursive telemetry');s.error(error);};
+  s.ctx.cleanzoneMeasurement=()=>{calls++;if(calls>10)throw Error('recursive telemetry');s.error(error);};
   assert.doesNotThrow(()=>s.error(error));assert.equal(calls,1);
 });
 test('error diagnostics allow only known script names and numeric positions, never error contents',()=>{

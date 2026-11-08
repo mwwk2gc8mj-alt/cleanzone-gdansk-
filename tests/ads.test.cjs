@@ -14,21 +14,19 @@ function setup(consent = true) {
     document:{createElement:element,querySelectorAll:()=>[],querySelector:selector=>selector==='#privacyDialog'?null:element(),
       head:element(),body:{append(){},classList:{contains:()=>false}}}};
   ctx.window=ctx;vm.runInNewContext(source,ctx);
-  return {ctx,events:()=>ctx.dataLayer.filter(e=>e[0]==='event'),flush:()=>{for(const fn of [...timers.values()])fn();}};
+  return {ctx,events:()=>ctx.dataLayer.filter(e=>e.event==='cleanzone_measurement_v2'),flush:()=>{for(const fn of [...timers.values()])fn();}};
 }
-test('GA callback alone cannot redirect before the Ads conversion callback',async()=>{
+test('a confirmed receipt queues one GTM event and waits for its tag callback',async()=>{
   const s=setup();let finished=false;
   const pending=s.ctx.cleanzoneConfirmedConversion().then(()=>{finished=true;});
-  const events=s.events();assert.deepEqual(Array.from(events,e=>e[1]),['generate_lead','conversion']);
-  events[0][2].event_callback();await Promise.resolve();await Promise.resolve();
+  const events=s.events();assert.deepEqual(Array.from(events,e=>e.cz_event_name),['generate_lead']);
+  assert.equal(events[0].cz_event_data.event_id,'confirmed-test-id');
   assert.equal(finished,false);
-  assert.equal(typeof events[1][2].event_callback,'function');
-  events[1][2].event_callback();await pending;assert.equal(finished,true);
-  assert.equal(events[1][2].transaction_id,'confirmed-test-id');
+  events[0].eventCallback();await pending;assert.equal(finished,true);
 });
 test('blocked analytics has a bounded timeout and cannot strand confirmed booking',async()=>{
   const s=setup();const pending=s.ctx.cleanzoneConfirmedConversion();
-  assert.ok(s.events().every(e=>e[2].event_timeout===800));
+  assert.ok(s.events().every(e=>e.eventTimeout===800));
   s.flush();await pending;
 });
 test('consent refusal dispatches neither GA nor Ads conversion',()=>{
@@ -42,12 +40,12 @@ test('no conversion without a server-confirmed receipt, including direct thank-y
   const s=setup();s.ctx.cleanzoneJourney.getConfirmedLeadId=()=>null;
   assert.equal(s.ctx.cleanzoneConfirmedConversion(),undefined);assert.equal(s.events().length,0);
 });
-test('repeated success callbacks dispatch one GA lead and one Ads conversion using the same receipt',async()=>{
+test('repeated success callbacks enqueue one GTM lead per confirmed receipt',async()=>{
   const s=setup();const first=s.ctx.cleanzoneConfirmedConversion();
   assert.equal(s.ctx.cleanzoneConfirmedConversion(),first);
-  assert.deepEqual(Array.from(s.events(),e=>e[1]),['generate_lead','conversion']);
-  assert.equal(s.events()[0][2].event_id,s.events()[1][2].transaction_id);
-  s.flush();await first;s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,2);
+  assert.deepEqual(Array.from(s.events(),e=>e.cz_event_name),['generate_lead']);
+  assert.equal(s.events()[0].cz_event_data.event_id,'confirmed-test-id');
+  s.flush();await first;s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,1);
   s.ctx.cleanzoneJourney.getConfirmedLeadId=()=> 'another-confirmed-receipt';
-  const second=s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,4);s.flush();await second;
+  const second=s.ctx.cleanzoneConfirmedConversion();assert.equal(s.events().length,2);s.flush();await second;
 });

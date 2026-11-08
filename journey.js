@@ -2,7 +2,6 @@
 (() => {
   'use strict';
   if (window.cleanzoneJourney) return;
-  const measurementId = 'G-DD4EGC87V8';
   const consentKey = 'cleanzone-measurement-consent-v5';
   const services = new Set(['sofa2','sofa3','cornerl','corneru','pullout','stool','chair','office','armchair','mattress1','mattress2','headboard','rug','multiple','other','partner3','partner5','partner8','partner12','partnerOther']);
   const fields = new Set(['name','phone','city','service','date','comment','expressDrying','firstOrder']);
@@ -18,9 +17,9 @@
   let started = false, completed = false, inFlight = false, confirmedLeadId = null;
   const pageType = /^\/partnerzy\/?$/.test(location.pathname) ? 'partner' : /^\/dziekujemy\/?$/.test(location.pathname) ? 'thank_you' : location.pathname === '/' ? 'home' : 'local';
   function track(name, params = {}) {
-    if (!allowed || !names.has(name) || typeof window.gtag !== 'function') return false;
+    if (!allowed || !names.has(name) || typeof window.cleanzoneMeasurement !== 'function') return false;
     // Explicit allowlist: callers cannot leak user input or an error message into analytics.
-    const safe = {send_to:measurementId, page_type:pageType, tracking_version:'20261010-funnel'};
+    const safe = {page_type:pageType, tracking_version:'20261010-funnel'};
     if (actions.has(params.action_id)) safe.action_id = params.action_id;
     if (sections.has(params.section_id)) safe.section_id = params.section_id;
     if (locations.has(params.action_location)) safe.action_location = params.action_location;
@@ -37,7 +36,7 @@
     if (document.getElementById('bookingForm') && (name.startsWith('booking_') || name === 'form_view')) safe.form_id = pageType === 'partner' ? 'partner' : 'booking';
     try { window.cleanzoneClarityEvent?.(name); } catch (_) { /* Replay cannot block GA or booking. */ }
     let dispatched = false;
-    try { window.gtag('event', name, safe); dispatched = true; } catch (_) { /* Optional measurement. */ }
+    try { dispatched = window.cleanzoneMeasurement(name, safe); } catch (_) { /* Optional measurement. */ }
     // A successful modal open proves visibility before the first input, without waiting for dwell.
     if (name === 'booking_form_open') formView();
     return dispatched;

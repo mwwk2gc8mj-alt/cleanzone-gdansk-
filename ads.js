@@ -1,15 +1,12 @@
-/* Google Ads + GA4: load only after opt-in; count only server-confirmed leads. */
+/* Cookie consent and the site-to-GTM event bridge. */
 (() => {
   'use strict';
   if (window.cleanzoneGoogleTrackingReady) return;
   window.cleanzoneGoogleTrackingReady = true;
   // Renew consent when session recordings are added to measurement.
   const key = 'cleanzone-measurement-consent-v5';
-  const measurementId = 'G-DD4EGC87V8';
   const pageType = /^\/partnerzy\/?$/.test(location.pathname) ? 'partner' : /^\/dziekujemy\/?$/.test(location.pathname) ? 'thank_you' : location.pathname === '/' ? 'home' : 'local';
-  window['ga-disable-' + measurementId] = true;
   let allowed = false;
-  let loaded = false;
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
@@ -30,38 +27,27 @@
       for (const text of item.text) text.node.nodeValue = text.value;
     }
   }
-  function configureCalls() {
-    gtag('config', 'AW-17004498635/S5eWCNed3PMcEMudsKw_', {
-      phone_conversion_number:'730 135 133',
-      phone_conversion_options:{timeout:5000, cache:false},
-      phone_conversion_callback(formatted, mobile) {
-        if (!allowed || typeof formatted !== 'string' || !/^\+?\d{7,15}$/.test(String(mobile))) return;
-        for (const item of phoneLinks) {
-          item.link.setAttribute('href', 'tel:'+mobile);
-          item.link.setAttribute('aria-label', 'Zadzwoń: '+formatted);
-          for (const text of item.text) text.node.nodeValue = text.value.replaceAll('730 135 133', formatted);
-        }
-      }
-    });
-  }
+  window.cleanzoneApplyForwardingNumber = (formatted, mobile) => {
+    if (!allowed || typeof formatted !== 'string' || !/^\+?\d{7,15}$/.test(String(mobile))) return;
+    for (const item of phoneLinks) {
+      item.link.setAttribute('href', 'tel:'+mobile);
+      item.link.setAttribute('aria-label', 'Zadzwoń: '+formatted);
+      for (const text of item.text) text.node.nodeValue = text.value.replaceAll('730 135 133', formatted);
+    }
+  };
+  window.cleanzoneMeasurement = (name, data, completion = {}) => {
+    if (!allowed) return false;
+    window.dataLayer.push({cz_event_data: null});
+    window.dataLayer.push({event: 'cleanzone_measurement_v2', cz_event_name: name, cz_event_data: data, ...completion});
+    return true;
+  };
   const denied = {ad_storage:'denied', analytics_storage:'denied', ad_user_data:'denied', ad_personalization:'denied'};
   gtag('consent', 'default', denied);
   function enable() {
     if (allowed) return;
     allowed = true;
-    window['ga-disable-' + measurementId] = false;
     gtag('consent', 'update', {...denied, ad_storage:'granted', analytics_storage:'granted', ad_user_data:'granted'});
-    if (loaded) { configureCalls(); window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}})); return; }
-    loaded = true;
-    gtag('js', new Date());
-    gtag('config', 'AW-17004498635', {allow_ad_personalization_signals:false});
-    gtag('config', measurementId, {allow_google_signals:false, allow_ad_personalization_signals:false, page_type:pageType});
-    configureCalls();
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17004498635';
-    document.head.append(script);
-    window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true}}));
+    window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:true, gtmVersion:2}}));
   }
   const panel = document.createElement('section');
   panel.className = 'ads-consent';
@@ -88,9 +74,8 @@
     else {
       allowed = false;
       window.dispatchEvent(new CustomEvent('cleanzone:measurement-consent', {detail:{allowed:false}}));
-      window['ga-disable-' + measurementId] = true;
       restorePhones();
-      if (loaded) gtag('consent', 'update', denied);
+      gtag('consent', 'update', denied);
       for (const cookie of document.cookie.split(';')) {
         const name = cookie.split('=')[0].trim();
         if (!/^(_ga(?:_|$)|_gid$|_gat|_gcl_|_gac_|gwcc$|_fbp$|_fbc$|_clck$|_clsk$)/.test(name)) continue;
@@ -115,29 +100,20 @@
     const leadId = window.cleanzoneJourney?.getConfirmedLeadId();
     if (!leadId) return; // A click, native form event or /dziekujemy visit cannot unlock a lead.
     if (dispatchedLeads.has(leadId)) return dispatchedLeads.get(leadId);
-    // Wait for both destinations before redirecting, with one shared maximum of 800 ms.
-    // A callback acknowledges dispatch, not receipt or attribution in either dashboard.
-    function dispatch(name, params) {
-      return new Promise(resolve => {
-        const finish = () => { clearTimeout(timer); resolve(); };
-        const timer = setTimeout(finish, 800);
-        try { gtag('event', name, {...params, event_timeout:800, event_callback:finish}); }
-        catch (_) { finish(); } // Measurement cannot turn a confirmed booking into an error.
-      });
-    }
-    // Reserve before SDK dispatch: repeated callbacks cannot send the same server receipt twice.
     dispatchedLeads.set(leadId, Promise.resolve());
-    try { window.cleanzoneClarityEvent?.('lead'); } catch (_) { /* Replay is optional. */ }
-    const ga = dispatch('generate_lead', {
-      send_to:measurementId,
-      form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking',
-      page_type:pageType, event_id:leadId, tracking_version:'20261010-funnel'
+    const pending = new Promise(resolve => {
+      const finish = () => { clearTimeout(timer); resolve(); };
+      const timer = setTimeout(finish, 800);
+      try {
+        window.cleanzoneClarityEvent?.('lead');
+      } catch (_) { /* Replay is optional. */ }
+      try {
+        window.cleanzoneMeasurement('generate_lead', {
+          form_id:document.body.classList.contains('partner-page') ? 'partner' : 'booking',
+          page_type:pageType, event_id:leadId, tracking_version:'20261010-funnel'
+        }, {eventCallback:finish, eventTimeout:800});
+      } catch (_) { finish(); }
     });
-    const ads = dispatch('conversion', {
-      send_to:'AW-17004498635/Ymz2CPKt3eccEMudsKw_',
-      transaction_id:leadId, value:0, currency:'PLN'
-    });
-    const pending = Promise.all([ga, ads]);
     dispatchedLeads.set(leadId, pending);
     return pending;
   };
