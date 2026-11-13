@@ -4,7 +4,7 @@
   if (window.cleanzoneJourney) return;
   const consentKey = 'cleanzone-measurement-consent-v5';
   const services = new Set(['sofa2','sofa3','cornerl','corneru','pullout','stool','chair','office','armchair','mattress1','mattress2','headboard','rug','multiple','other','partner3','partner5','partner8','partner12','partnerOther']);
-  const fields = new Set(['name','phone','city','service','date','comment','expressDrying','firstOrder']);
+  const fields = new Set(['name','phone','serviceArea','city','service','date','comment','expressDrying']);
   const errors = new Set(['required','invalid','config_unavailable','network','timeout','http_error','invalid_response','delivery_unconfirmed','script_error','asset_error']);
   const sections = new Set(['home','cleaning-story','drying-story','cennik','efekty','opinie','jak-dzialamy','faq','rezerwacja','warunki','bookingForm']);
   const actions = new Set(['menu','clear_selection','privacy','instagram','google_reviews','partners','local_area','home','drying','process','results','faq']);

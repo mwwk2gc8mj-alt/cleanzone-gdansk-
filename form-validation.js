@@ -3,8 +3,11 @@
   'use strict';
   const form = document.getElementById('bookingForm');
   if (!form) return;
-  const labels = {name:'imię',phone:'numer telefonu',city:'miejscowość',service:'usługę'};
+  const labels = {name:'imię',phone:'numer telefonu',serviceArea:'miejscowość lub okolice',city:'dokładną miejscowość lub dzielnicę',service:'usługę'};
   const messages = new Map();
+  const area = form.elements.namedItem('serviceArea');
+  const city = form.elements.namedItem('city');
+  const cityRequired = document.getElementById('cityRequired');
   let pendingFocus = false;
   function validate(field) {
     if (!labels[field.name]) return;
@@ -43,6 +46,18 @@
     const ids = new Set((field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
     ids.add(message.id);
     field.setAttribute('aria-describedby',[...ids].join(' '));
+  }
+  if (area && city && cityRequired) {
+    function updateCityRequirement() {
+      city.required = area.value === 'other';
+      cityRequired.hidden = !city.required;
+      validate(city);
+      if (city.validity.valid) clear(city);
+      else if (city.getAttribute('aria-invalid') === 'true') show(city);
+    }
+    area.addEventListener('change', updateCityRequirement);
+    form.addEventListener('reset', () => queueMicrotask(updateCityRequirement));
+    updateCityRequirement();
   }
   form.addEventListener('invalid', event => {
     const field = event.target;

@@ -89,13 +89,13 @@ test('modal diagnostics do not count as submissions and respect analytics refusa
   s.ctx.cleanzoneJourney.submitSuccess();
   assert.ok(!s.events.some(e=>e[1]==='booking_submit_success'));
 });
-test('modal reopen, dwell and immediate input share one form view; anonymous checkbox starts the form',()=>{
+test('modal reopen, dwell and the service area input share one form view and start',()=>{
   const s=setup();s.consent(true);s.events.length=0;
   s.ctx.cleanzoneJourney.track('booking_form_open');
   s.ctx.cleanzoneJourney.track('booking_form_close');
   s.ctx.cleanzoneJourney.track('booking_form_open');
   s.view(s.ctx.document.getElementById('bookingForm'));s.flush();
-  s.formHandlers.input({target:{name:'',id:'firstOrder'}});
+  s.formHandlers.input({target:{name:'serviceArea'}});
   s.formHandlers.input({target:{name:'name'}});
   assert.equal(s.events.filter(e=>e[1]==='form_view').length,1);
   assert.equal(s.events.filter(e=>e[1]==='booking_form_start').length,1);

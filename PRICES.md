@@ -1,4 +1,4 @@
-# Cennik i oferta pierwszego zamówienia — 2.10.2026
+# Cennik CleanZone
 
 Zmiana zatwierdzona przez właściciela: około +10%, z zaokrągleniem kwot. Stawki za metr kwadratowy zaokrąglono do pełnego złotego. Małe usługi do 5 zł, pozostałe do 10 zł.
 
@@ -18,9 +18,9 @@ Zmiana zatwierdzona przez właściciela: około +10%, z zaokrągleniem kwot. Sta
 | Zagłówek łóżka | 120 zł | 130 zł |
 | Dywan / wykładzina | od 15 zł/m² | od 17 zł/m² |
 
-Suszenie pozostaje 50 zł za całe zamówienie. Jest bezpłatne przy potwierdzonej cenie samego prania po rabacie od 400 zł. Minimum zamówienia po rabacie: 150 zł.
+Suszenie kosztuje 50 zł za całe zamówienie. Jest bezpłatne przy potwierdzonej cenie samego prania od 400 zł. Minimum zamówienia: 150 zł.
 
-Oferta: 20% od aktualnego cennika prania na pierwsze zamówienie nowego klienta. Bez rabatu na suszenie i bez łączenia z rabatami partnerskimi. Formularz przekazuje prośbę o rabat w istniejącym polu service; uprawnienie i końcowa cena potwierdzane przez właściciela.
+Oferta na pierwsze zamówienie zakończyła się 13.11.2026. Cennik i formularz pokazują ceny regularne.
 
 Właściciel potwierdził 2.10.2026, że przez poprzednie 30 dni nie było cen ani rabatów niższych od dotychczasowego cennika. Ceny odniesienia dla tej oferty zapisano przy usługach. Cennik regularny oraz cena odniesienia muszą pozostać odrębnymi wartościami; późniejsze zmiany nie powinny zastępować historii.
 

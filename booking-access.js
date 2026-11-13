@@ -44,8 +44,6 @@
     if (link && !event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
       if (open(link)) event.preventDefault();
     }
-    // An offer link inside the modal must close it before navigating to the offer's details.
-    if (dialog.open && event.target.closest('a[href="#pierwsze-zamowienie"]')) dialog.close();
   });
   close.addEventListener('click', () => dialog.close());
   // Dismiss only a tap which both starts and ends outside the window, never a scroll drag.
