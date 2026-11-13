@@ -44,10 +44,27 @@
   if (typeof ResizeObserver === 'function') new ResizeObserver(measureHero).observe(hero);
   reduced.addEventListener('change', scheduleScroll); paintScroll();
 
-  $$('.price-filters button').forEach(button => button.addEventListener('click', () => {
-    $$('.price-filters button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-    $$('.price-card').forEach(card => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; });
-  }));
+  const priceFilters = $('.price-filters');
+  const filterButtons = [...priceFilters.querySelectorAll('button')];
+  const priceCards = $$('.price-card');
+  function showPrices(filter) {
+    filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
+    priceCards.forEach(card => {
+      const matches = filter === 'featured' ? card.hasAttribute('data-featured') : card.dataset.category === filter;
+      card.hidden = filter !== 'all' && !matches;
+    });
+  }
+  function revealLinkedPrice() {
+    const card = priceCards.find(item => '#' + item.id === location.hash);
+    if (!card?.hidden) return;
+    showPrices('all');
+    card.scrollIntoView();
+  }
+  filterButtons.forEach(button => button.addEventListener('click', () => showPrices(button.dataset.filter)));
+  showPrices('featured');
+  priceFilters.hidden = false;
+  revealLinkedPrice();
+  addEventListener('hashchange', revealLinkedPrice);
 
   // The service ribbon uses the same filters, without selecting a service for the visitor.
   $$('[data-price-filter]').forEach(link => link.addEventListener('click', () => {
@@ -142,7 +159,11 @@
 
   $$('.compare-images input').forEach(range => { range.addEventListener('input', () => range.closest('.compare-images').style.setProperty('--split', `${range.value}%`)); });
   const dock = $('.mobile-dock');
-  const dockObserver = new IntersectionObserver(entries => { dock.classList.toggle('dock-hidden', entries[0].isIntersecting); }, { threshold: .1 }); dockObserver.observe(form);
+  const dockObserver = new IntersectionObserver(([entry]) => {
+    dock.classList.toggle('dock-hidden', entry.isIntersecting);
+    toast.classList.toggle('inline-form-visible', entry.isIntersecting);
+  }, { threshold: .1 });
+  dockObserver.observe(form);
 
   const dialog = $('#privacyDialog');
   $$('.privacy-open').forEach(button => button.addEventListener('click', () => dialog.showModal()));
