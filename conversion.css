@@ -111,10 +111,18 @@
 .review-rating .review-stars{width:max-content;background:linear-gradient(90deg,#8b7515 90%,#656d59 90%);background-clip:text;color:transparent}
 @media(max-width:760px){
  .pricing.section-pad,.booking-section.section-pad{padding-block:36px 42px}
+ .pricing .eyebrow,.booking-copy .eyebrow{margin-bottom:12px}
  .pricing .section-heading>p{margin-top:12px}
- .pricing .pricing-info{margin-bottom:14px}
+ .pricing .pricing-info{margin-bottom:12px;gap:8px 16px;padding-block:12px}
  .pricing .welcome-terms{margin-block:14px}
- .pricing .price-image{aspect-ratio:4/3}
+ .pricing .welcome-terms>summary{padding:12px;font-size:13px}
+ .pricing .price-filters{flex-wrap:wrap;gap:6px;margin:0 0 14px;padding:0;overflow:visible}
+ .pricing .price-filters button{min-height:40px;padding:8px 11px}
+ .pricing .price-image{aspect-ratio:1.9}
+ .pricing .price-body h3{min-height:0}
+ .pricing .price-body>p:not(.price-history){min-height:0;margin-bottom:10px}
+ .pricing .price-body>.price-history{margin-top:9px}
+ .pricing .item-index{display:none}
  .booking-layout{gap:22px}
  .booking-copy h2{font-size:clamp(34px,8.5vw,46px)}
  .booking-copy>p:not(.eyebrow){margin-block:14px}
